@@ -5,6 +5,7 @@ Public Class MainForm
     Private var_year As Integer = 2024
     Private var_month As Integer = 4
     ' Declare DateTimePicker1 with WithEvents
+    ' Hello from VS
     Private Sub dgvRecords_CellBeginEdit(sender As Object, e As DataGridViewCellCancelEventArgs) Handles dgvRecords.CellBeginEdit
         originalValue = dgvRecords.Rows(e.RowIndex).Cells(e.ColumnIndex).Value
         edited_ID = CInt(dgvRecords.Rows(e.RowIndex).Cells("ID").Value)
