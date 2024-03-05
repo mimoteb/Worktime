@@ -1,4 +1,5 @@
-﻿Imports io
+﻿Imports System.Data.Entity.Infrastructure.Interception
+Imports io
 Public Class MainForm
     Private originalValue As Object
     Private edited_ID As Integer
@@ -74,25 +75,32 @@ Public Class MainForm
         dgvRecords.Columns("User").SortMode = DataGridViewColumnSortMode.Automatic
     End Sub
     Private Sub PopulateDataGridView()
+        dgvRecords.Rows.Clear()
         Debug.WriteLine("PopulateDataGridView() was called")
         Dim Month As Integer = dtp.Value.Month
         Dim Year As Integer = dtp.Value.Year
-        dgvRecords.Rows.Clear()
+
 
         Dim firstDayOfMonth As New DateTime(Year, Month, 1)
         Dim lastDayOfMonth As New DateTime(Year, Month, DateTime.DaysInMonth(Year, Month))
         Dim currentDate As DateTime = firstDayOfMonth
 
         While currentDate <= lastDayOfMonth
-            dgvRecords.Rows.Add(0, currentDate, currentDate.DayOfWeek.ToString)
-            Dim DayofWeek As String = dgvRecords.Rows(0).Cells("DayofWeek").Value.ToString()
-            MsgBox(currentDate.DayOfWeekDayofWeek)
-            If DayofWeek = "Sunday" Then
-                MsgBox("test")
+            dgvRecords.Rows.Add(0, currentDate.ToString("dd.MM.yyyy"), currentDate.DayOfWeek.ToString)
+            Dim DayofWeek As String = currentDate.DayOfWeek.ToString
+            If DayofWeek = Day.Saturday.ToString Or DayofWeek = Day.Sunday.ToString Then
+                Dim lastRow As Integer = dgvRecords.Rows.Count - 1
+                dgvRecords.Rows(lastRow).DefaultCellStyle.BackColor = Color.Red
             End If
             currentDate = currentDate.AddDays(1)
         End While
-
+        For Each row As DataGridViewRow In dgvRecords.Rows
+            Dim RowDate As DateTime = row.Cells("clnDate").Value
+            ' check if weekends
+            If RowDate.DayOfWeek = DayOfWeek.Saturday Or RowDate.DayOfWeek = DayOfWeek.Sunday Then
+                row.DefaultCellStyle.BackColor = Color.Red
+            End If
+        Next
     End Sub
 
 

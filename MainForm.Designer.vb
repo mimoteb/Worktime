@@ -29,17 +29,19 @@ Partial Class MainForm
         Me.dtp = New System.Windows.Forms.DateTimePicker()
         Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
         Me.lbl_status = New System.Windows.Forms.ToolStripStatusLabel()
-        Me.id = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.date_t = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DayofWeek = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.clnID = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.clnDate = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.clnDay = New System.Windows.Forms.DataGridViewTextBoxColumn()
         CType(Me.dgvRecords, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.StatusStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
         'dgvRecords
         '
+        Me.dgvRecords.AllowUserToAddRows = False
+        Me.dgvRecords.AllowUserToDeleteRows = False
         Me.dgvRecords.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgvRecords.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.id, Me.date_t, Me.DayofWeek})
+        Me.dgvRecords.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.clnID, Me.clnDate, Me.clnDay})
         Me.dgvRecords.Location = New System.Drawing.Point(20, 79)
         Me.dgvRecords.Margin = New System.Windows.Forms.Padding(5, 6, 5, 6)
         Me.dgvRecords.Name = "dgvRecords"
@@ -92,29 +94,29 @@ Partial Class MainForm
         Me.lbl_status.Size = New System.Drawing.Size(199, 17)
         Me.lbl_status.Text = "Database: No Datebase selected"
         '
-        'id
+        'clnID
         '
-        Me.id.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
-        Me.id.HeaderText = "id"
-        Me.id.MinimumWidth = 6
-        Me.id.Name = "id"
-        Me.id.Width = 55
+        Me.clnID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
+        Me.clnID.HeaderText = "id"
+        Me.clnID.MinimumWidth = 6
+        Me.clnID.Name = "clnID"
+        Me.clnID.Width = 55
         '
-        'date_t
+        'clnDate
         '
-        Me.date_t.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
-        Me.date_t.HeaderText = "Date"
-        Me.date_t.MinimumWidth = 6
-        Me.date_t.Name = "date_t"
-        Me.date_t.Width = 78
+        Me.clnDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
+        Me.clnDate.HeaderText = "Date"
+        Me.clnDate.MinimumWidth = 6
+        Me.clnDate.Name = "clnDate"
+        Me.clnDate.Width = 78
         '
-        'DayofWeek
+        'clnDay
         '
-        Me.DayofWeek.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
-        Me.DayofWeek.HeaderText = "Day"
-        Me.DayofWeek.MinimumWidth = 6
-        Me.DayofWeek.Name = "DayofWeek"
-        Me.DayofWeek.Width = 71
+        Me.clnDay.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
+        Me.clnDay.HeaderText = "Day"
+        Me.clnDay.MinimumWidth = 6
+        Me.clnDay.Name = "clnDay"
+        Me.clnDay.Width = 71
         '
         'MainForm
         '
@@ -145,7 +147,7 @@ Partial Class MainForm
     Friend WithEvents dtp As DateTimePicker
     Friend WithEvents StatusStrip1 As StatusStrip
     Friend WithEvents lbl_status As ToolStripStatusLabel
-    Friend WithEvents id As DataGridViewTextBoxColumn
-    Friend WithEvents date_t As DataGridViewTextBoxColumn
-    Friend WithEvents DayofWeek As DataGridViewTextBoxColumn
+    Friend WithEvents clnID As DataGridViewTextBoxColumn
+    Friend WithEvents clnDate As DataGridViewTextBoxColumn
+    Friend WithEvents clnDay As DataGridViewTextBoxColumn
 End Class
