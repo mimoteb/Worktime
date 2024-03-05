@@ -23,21 +23,23 @@ Public Class MainForm
 
     Private Sub btnOpenDatabase_Click(sender As Object, e As EventArgs) Handles btnOpenDatabase.Click
         ofd.Multiselect = False
-        ofd.InitialDirectory = "C:\Users\sas822\OneDrive - Hanebutt IT-Consult GmbH\databases"
         ofd.ShowDialog()
 
         If IO.File.Exists(ofd.FileName) Then
             DatabaseFileName = ofd.FileName
             lbl_status.Text = $"Database: {DatabaseFileName}"
             ofd.FileName = DatabaseFileName
+
             InsertRecord(Date.Now, 1, 1)
             LoadDataGridView()
+            My.Settings.db = ofd.FileName
         Else
             MsgBox("Error wrong file", MsgBoxStyle.Critical)
         End If
     End Sub
 
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ofd.FileName = My.Settings.db
         dtp.Format = DateTimePickerFormat.Custom
         dtp.CustomFormat = "MMMM yyyy"
         ' Set the DateTimePicker to today's date and time
