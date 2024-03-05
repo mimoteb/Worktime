@@ -76,13 +76,12 @@ Public Class MainForm
     End Sub
 
     Private Sub PopulateDataGridView()
-        Dim selectedMonth As Integer, selectedYear As Integer
-        selectedMonth = dtp.Value.Month
-        selectedYear = dtp.Value.Year
+        Dim Month As Integer = dtp.Value.Month
+        Dim Year As Integer = dtp.Value.Year
         dgvRecords.Rows.Clear()
 
-        Dim firstDayOfMonth As New DateTime(selectedYear, selectedMonth, 1)
-        Dim lastDayOfMonth As New DateTime(selectedYear, selectedMonth, DateTime.DaysInMonth(selectedYear, selectedMonth))
+        Dim firstDayOfMonth As New DateTime(Year, Month, 1)
+        Dim lastDayOfMonth As New DateTime(Year, Month, DateTime.DaysInMonth(Year, Month))
         Dim currentDate As DateTime = firstDayOfMonth
 
         While currentDate <= lastDayOfMonth
