@@ -22,20 +22,21 @@ Public Class MainForm
     End Sub
 
     Private Sub btnOpenDatabase_Click(sender As Object, e As EventArgs) Handles btnOpenDatabase.Click
-        ofd.Multiselect = False
-        ofd.ShowDialog()
+        PopulateDataGridView()
+        'ofd.Multiselect = False
+        'ofd.ShowDialog()
 
-        If IO.File.Exists(ofd.FileName) Then
-            DatabaseFileName = ofd.FileName
-            lbl_status.Text = $"Database: {DatabaseFileName}"
-            ofd.FileName = DatabaseFileName
+        'If IO.File.Exists(ofd.FileName) Then
+        '    DatabaseFileName = ofd.FileName
+        '    lbl_status.Text = $"Database: {DatabaseFileName}"
+        '    ofd.FileName = DatabaseFileName
 
-            InsertRecord(Date.Now, 1, 1)
-            LoadDataGridView()
-            My.Settings.db = ofd.FileName
-        Else
-            MsgBox("Error wrong file", MsgBoxStyle.Critical)
-        End If
+        '    InsertRecord(Date.Now, 1, 1)
+        '    LoadDataGridView()
+        '    My.Settings.db = ofd.FileName
+        'Else
+        '    MsgBox("Error wrong file", MsgBoxStyle.Critical)
+        'End If
     End Sub
 
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -44,14 +45,12 @@ Public Class MainForm
         dtp.CustomFormat = "MMMM yyyy"
         ' Set the DateTimePicker to today's date and time
         dtp.Value = DateTime.Now
-        PopulateDataGridView()
+
         lbl_status.Text = $"Database: {My.Settings.db}"
     End Sub
 
 
-    Private Sub dtp_ValueChanged(sender As Object, e As EventArgs) Handles dtp.ValueChanged
-        Dim selectedMonth As Integer = dtp.Value.Month
-        Dim selectedYear As Integer = dtp.Value.Year
+    Private Sub dtp_ValueChanged(sender As Object, e As EventArgs) Handles dtp.Click
         PopulateDataGridView()
     End Sub
 
@@ -75,6 +74,7 @@ Public Class MainForm
         dgvRecords.Columns("User").SortMode = DataGridViewColumnSortMode.Automatic
     End Sub
     Private Sub PopulateDataGridView()
+        Debug.WriteLine("PopulateDataGridView() was called")
         Dim Month As Integer = dtp.Value.Month
         Dim Year As Integer = dtp.Value.Year
         dgvRecords.Rows.Clear()
@@ -84,13 +84,12 @@ Public Class MainForm
         Dim currentDate As DateTime = firstDayOfMonth
 
         While currentDate <= lastDayOfMonth
-            dgvRecords.Rows.Add(0, currentDate, currentDate.DayOfWeek)
-
-            If dgvRecords.Rows(dgvRecords.Rows.Count - 1).Cells("Day").Value = "Sunday" Then
-                dgvRecords.Rows(dgvRecords.Rows.Count - 1).DefaultCellStyle.BackColor = Color.Red
+            dgvRecords.Rows.Add(0, currentDate, currentDate.DayOfWeek.ToString)
+            Dim DayofWeek As String = dgvRecords.Rows(0).Cells("DayofWeek").Value.ToString()
+            MsgBox(currentDate.DayOfWeekDayofWeek)
+            If DayofWeek = "Sunday" Then
+                MsgBox("test")
             End If
-            Dim lastRow As DataGridViewRow = dgvRecords.Rows(dgvRecords.Rows.Count - 1)
-
             currentDate = currentDate.AddDays(1)
         End While
 
