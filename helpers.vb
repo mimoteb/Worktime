@@ -1,0 +1,127 @@
+﻿Imports System.Data.SQLite
+Imports System.IO
+Imports System.Globalization
+
+Module helpers
+    Public DatabaseFileName As String = "C:\Users\sas822\OneDrive - Hanebutt IT-Consult GmbH\databases\worktime.db"
+    Dim connectionString As String = $"Data Source={DatabaseFileName};Version=3;"
+
+    Dim connection As New SQLiteConnection(connectionString)
+
+    Sub OpenConnection()
+        If connection.State = ConnectionState.Closed Then
+            connection.Open()
+        End If
+    End Sub
+
+    Sub CloseConnection()
+        If connection.State = ConnectionState.Open Then
+            connection.Close()
+        End If
+    End Sub
+
+    ' Insert a new record
+    Sub InsertRecord(startdatetime As Date, duration As Integer, user As Integer)
+        Try
+            OpenConnection()
+
+            Dim query As String = "INSERT INTO record (startdatetime, duration, user) VALUES (@startdatetime, @Duration, @User)"
+            Dim command As New SQLiteCommand(query, connection)
+
+
+
+            ' Use parameters to avoid SQL injection
+            command.Parameters.AddWithValue("@startdatetime", startdatetime.ToString("yyyy-MM-dd HH:mm:ss")) ' Format the DateTime parameter to match SQLite DATETIME format
+            command.Parameters.AddWithValue("@Duration", duration)
+            command.Parameters.AddWithValue("@User", user)
+
+            command.ExecuteNonQuery()
+
+        Catch ex As Exception
+            MessageBox.Show("Error: " & ex.Message)
+        Finally
+            CloseConnection()
+        End Try
+    End Sub
+
+    ' Update the record in the database
+    Sub UpdateRecord(record As Record)
+
+        ' ID As Integer, startdatetime As String, duration As Integer, user As Integer
+        Try
+            OpenConnection()
+
+            Dim query As String = "UPDATE record SET startdatetime = @startdatetime, duration = @Duration, user = @User WHERE id = @ID"
+            Dim command As New SQLiteCommand(query, connection)
+
+            ' Use parameters to avoid SQL injection
+            command.Parameters.AddWithValue("@ID", record.ID)
+            command.Parameters.AddWithValue("@startdatetime", record.startdatetime)
+            command.Parameters.AddWithValue("@Duration", record.Duration)
+            command.Parameters.AddWithValue("@User", record.User)
+
+            Debug.WriteLine(command.CommandText)
+            command.ExecuteNonQuery()
+
+        Catch ex As Exception
+            MessageBox.Show("Error: " & ex.Message)
+        Finally
+            CloseConnection()
+        End Try
+    End Sub
+
+    ' Delete a record by ID
+    Sub DeleteRecord(id As Integer)
+        Try
+            OpenConnection()
+
+            Dim query As String = "DELETE FROM record WHERE id = @ID"
+            Dim command As New SQLiteCommand(query, connection)
+
+            ' Use parameters to avoid SQL injection
+            command.Parameters.AddWithValue("@ID", id)
+
+            command.ExecuteNonQuery()
+
+        Catch ex As Exception
+            MessageBox.Show("Error: " & ex.Message)
+        Finally
+            CloseConnection()
+        End Try
+    End Sub
+
+    ' Retrieve all records
+    Function GetAllRecords() As List(Of Record)
+        Dim records As New List(Of Record)
+
+        Try
+            OpenConnection()
+
+            Dim query As String = "SELECT * FROM record"
+            Dim command As New SQLiteCommand(query, connection)
+            Dim reader As SQLiteDataReader = command.ExecuteReader()
+
+            If reader.HasRows Then
+                While reader.Read()
+                    Dim record As New Record()
+                    record.ID = reader.GetInt32(reader.GetOrdinal("id"))
+                    record.startdatetime = reader.GetString(reader.GetOrdinal("startdatetime"))
+                    record.Duration = reader.GetInt32(reader.GetOrdinal("duration"))
+                    record.User = reader.GetInt32(reader.GetOrdinal("user"))
+                    records.Add(record)
+                End While
+            End If
+
+        Catch ex As Exception
+            MessageBox.Show("Error: " & ex.Message)
+        Finally
+            CloseConnection()
+        End Try
+
+        Return records
+    End Function
+
+
+End Module
+
+
