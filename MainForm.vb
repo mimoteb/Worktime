@@ -40,8 +40,8 @@ Public Class MainForm
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         dtp.Format = DateTimePickerFormat.Custom
         dtp.CustomFormat = "MMMM yyyy"
-
-
+        ' Set the DateTimePicker to today's date and time
+        dtp.Value = DateTime.Now
         PopulateDataGridView()
     End Sub
 
