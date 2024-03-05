@@ -45,13 +45,11 @@ Public Class MainForm
         ' Set the DateTimePicker to today's date and time
         dtp.Value = DateTime.Now
         PopulateDataGridView()
+        lbl_status.Text = $"Database: {My.Settings.db}"
     End Sub
 
-    Private Sub numMonthYear_ValueChanged(sender As Object, e As EventArgs) Handles dtp.ValueChanged
-        PopulateDataGridView()
-    End Sub
 
-    Private Sub dateTimePicker1_ValueChanged(sender As Object, e As EventArgs) Handles dtp.ValueChanged
+    Private Sub dtp_ValueChanged(sender As Object, e As EventArgs) Handles dtp.ValueChanged
         Dim selectedMonth As Integer = dtp.Value.Month
         Dim selectedYear As Integer = dtp.Value.Year
         PopulateDataGridView()
