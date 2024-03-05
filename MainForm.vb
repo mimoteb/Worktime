@@ -74,7 +74,6 @@ Public Class MainForm
         dgvRecords.Columns("Duration").SortMode = DataGridViewColumnSortMode.Automatic
         dgvRecords.Columns("User").SortMode = DataGridViewColumnSortMode.Automatic
     End Sub
-
     Private Sub PopulateDataGridView()
         Dim Month As Integer = dtp.Value.Month
         Dim Year As Integer = dtp.Value.Year
@@ -85,9 +84,16 @@ Public Class MainForm
         Dim currentDate As DateTime = firstDayOfMonth
 
         While currentDate <= lastDayOfMonth
-            dgvRecords.Rows.Add(currentDate.ToShortDateString())
+            dgvRecords.Rows.Add(0, currentDate, currentDate.DayOfWeek)
+
+            If dgvRecords.Rows(dgvRecords.Rows.Count - 1).Cells("Day").Value = "Sunday" Then
+                dgvRecords.Rows(dgvRecords.Rows.Count - 1).DefaultCellStyle.BackColor = Color.Red
+            End If
+            Dim lastRow As DataGridViewRow = dgvRecords.Rows(dgvRecords.Rows.Count - 1)
+
             currentDate = currentDate.AddDays(1)
         End While
+
     End Sub
 
 
