@@ -7,17 +7,17 @@ Public Class MainForm
     Private var_month As Integer = 4
     ' Declare DateTimePicker1 with WithEvents
     ' Hello from VS
-    Private Sub dgvRecords_CellBeginEdit(sender As Object, e As DataGridViewCellCancelEventArgs) Handles dgvRecords.CellBeginEdit
-        originalValue = dgvRecords.Rows(e.RowIndex).Cells(e.ColumnIndex).Value
-        edited_ID = CInt(dgvRecords.Rows(e.RowIndex).Cells("ID").Value)
+    Private Sub dgvRecords_CellBeginEdit(sender As Object, e As DataGridViewCellCancelEventArgs) Handles dgvCalendar.CellBeginEdit
+        originalValue = dgvCalendar.Rows(e.RowIndex).Cells(e.ColumnIndex).Value
+        edited_ID = CInt(dgvCalendar.Rows(e.RowIndex).Cells("ID").Value)
         Debug.WriteLine($"[{edited_ID}] Original Cell Value: {originalValue.ToString()}")
     End Sub
 
-    Private Sub dgvRecords_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles dgvRecords.CellEndEdit
-        Dim editedValue = dgvRecords.Rows(e.RowIndex).Cells(e.ColumnIndex).Value
+    Private Sub dgvRecords_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles dgvCalendar.CellEndEdit
+        Dim editedValue = dgvCalendar.Rows(e.RowIndex).Cells(e.ColumnIndex).Value
 
         If Not Object.Equals(originalValue, editedValue) Then
-            Dim record As Record = dgvRecords.Rows(e.RowIndex).DataBoundItem
+            Dim record As Record = dgvCalendar.Rows(e.RowIndex).DataBoundItem
             UpdateRecord(record)
         End If
     End Sub
@@ -58,24 +58,24 @@ Public Class MainForm
     Private Sub LoadDataGridView()
         Dim records As List(Of Record) = GetAllRecords()
 
-        dgvRecords.Rows.Clear()
-        dgvRecords.DataSource = records
+        dgvCalendar.Rows.Clear()
+        dgvCalendar.DataSource = records
 
-        dgvRecords.Columns("startdatetime").HeaderText = "Start Time"
-        dgvRecords.Columns("Duration").HeaderText = "Duration (minutes)"
-        dgvRecords.Columns("User").HeaderText = "User ID"
+        dgvCalendar.Columns("startdatetime").HeaderText = "Start Time"
+        dgvCalendar.Columns("Duration").HeaderText = "Duration (minutes)"
+        dgvCalendar.Columns("User").HeaderText = "User ID"
 
-        dgvRecords.Columns("startdatetime").DefaultCellStyle.Format = "yyyy-MM-dd HH:mm:ss"
-        dgvRecords.Columns("startdatetime").Width = 150
-        dgvRecords.Columns("Duration").Width = 100
-        dgvRecords.Columns("User").Width = 80
+        dgvCalendar.Columns("startdatetime").DefaultCellStyle.Format = "yyyy-MM-dd HH:mm:ss"
+        dgvCalendar.Columns("startdatetime").Width = 150
+        dgvCalendar.Columns("Duration").Width = 100
+        dgvCalendar.Columns("User").Width = 80
 
-        dgvRecords.Columns("startdatetime").SortMode = DataGridViewColumnSortMode.Automatic
-        dgvRecords.Columns("Duration").SortMode = DataGridViewColumnSortMode.Automatic
-        dgvRecords.Columns("User").SortMode = DataGridViewColumnSortMode.Automatic
+        dgvCalendar.Columns("startdatetime").SortMode = DataGridViewColumnSortMode.Automatic
+        dgvCalendar.Columns("Duration").SortMode = DataGridViewColumnSortMode.Automatic
+        dgvCalendar.Columns("User").SortMode = DataGridViewColumnSortMode.Automatic
     End Sub
     Private Sub PopulateDataGridView()
-        dgvRecords.Rows.Clear()
+        dgvCalendar.Rows.Clear()
         Debug.WriteLine("PopulateDataGridView() was called")
         Dim Month As Integer = dtp.Value.Month
         Dim Year As Integer = dtp.Value.Year
@@ -86,15 +86,15 @@ Public Class MainForm
         Dim currentDate As DateTime = firstDayOfMonth
 
         While currentDate <= lastDayOfMonth
-            dgvRecords.Rows.Add(0, currentDate.ToString("dd.MM.yyyy"), currentDate.DayOfWeek.ToString)
+            dgvCalendar.Rows.Add(currentDate.ToString("dd.MM.yyyy"), currentDate.DayOfWeek.ToString)
             Dim DayofWeek As String = currentDate.DayOfWeek.ToString
             If DayofWeek = Day.Saturday.ToString Or DayofWeek = Day.Sunday.ToString Then
-                Dim lastRow As Integer = dgvRecords.Rows.Count - 1
-                dgvRecords.Rows(lastRow).DefaultCellStyle.BackColor = Color.Red
+                Dim lastRow As Integer = dgvCalendar.Rows.Count - 1
+                dgvCalendar.Rows(lastRow).DefaultCellStyle.BackColor = Color.Red
             End If
             currentDate = currentDate.AddDays(1)
         End While
-        For Each row As DataGridViewRow In dgvRecords.Rows
+        For Each row As DataGridViewRow In dgvCalendar.Rows
             Dim RowDate As DateTime = row.Cells("clnDate").Value
             ' check if weekends
             If RowDate.DayOfWeek = DayOfWeek.Saturday Or RowDate.DayOfWeek = DayOfWeek.Sunday Then
