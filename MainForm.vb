@@ -84,10 +84,10 @@
             End If
         End If
         If dgvCalendar.SelectedRows.Count = 1 Then
-            Dim records As List(Of Record) = GetDayRecords(dtp.Value)
+            'Dim records As List(Of Record) = getmo(dtp.Value)
 
             'dgvRecords.Rows.Clear()
-            dgvRecords.DataSource = records
+            'dgvRecords.DataSource = records
 
             'dgvRecords.Columns("startdatetime").HeaderText = "Start Time"
             'dgvRecords.Columns("Duration").HeaderText = "Duration (minutes)"
@@ -118,24 +118,8 @@
 
     Private Sub dtp_ValueChanged(sender As Object, e As EventArgs) Handles dtp.ValueChanged
         PopulateData(dtp)
-        Dim records As List(Of Record) = GetMonthRecords(dtp.Value)
-        dgvRecords.DataSource = records
     End Sub
 
-    Private Function GenerateRecord() As Record
-        Dim record As New Record
-        With record
-            .User = 2
-            .Timestamp = New DateTime().Now.ToString(DatabaseFormat)
-
-            ' "yyyy-MM-dd HH:MM:00"
-            .Timestamp = .Timestamp.ToString(DatabaseFormat)
-            .Duration = 15
-        End With
-        record.User = 2
-
-        Return record
-    End Function
     Private Sub Insert_Controls(sender As NumericUpDown, e As EventArgs) Handles HourStart.ValueChanged,
         HourEnd.ValueChanged, MinuteStart.ValueChanged, MinuteEnd.ValueChanged,
         HourStart.KeyUp, HourEnd.KeyUp, MinuteStart.KeyUp, MinuteEnd.KeyUp
@@ -168,15 +152,12 @@
         End With
     End Sub
 
-    Private Sub dgvCalendar_CellContentClick(sender As Object, e As EventArgs) Handles dgvCalendar.SelectionChanged, dgvCalendar.CellContentClick ', dgvCalendar.CellContentClick
-        If dgvCalendar.Rows.Count > 0 Then
-            If dgvCalendar.SelectedRows.Count > 0 Then
-                Dim records As List(Of Record) = GetDayRecords(dtp.Value)
-                dgvRecords.DataSource = records
-                dgvRecords.Columns("ID").Visible = False
-                dgvRecords.Columns("User").Visible = False
-                dgvRecords.Columns("Timestamp").Visible = False
-            End If
+    Private Sub dgvCalendar_CellContentClick(sender As Object, e As EventArgs) Handles dgvCalendar.SelectionChanged, dgvCalendar.KeyUp
+        If dgvCalendar.SelectedRows.Count > 0 Then
+            Dim records As List(Of Record) = GetDayRecord(dtp.Value.ToString(DateFormat))
+            dgvRecords.DataSource = records
+            dgvRecords.Columns("ID").Visible = False
+            dgvRecords.Columns("User").Visible = False
         End If
     End Sub
 
