@@ -43,13 +43,13 @@ Partial Class MainForm
         Me.MinuteEnd = New System.Windows.Forms.NumericUpDown()
         Me.HourEnd = New System.Windows.Forms.NumericUpDown()
         Me.MinuteStart = New System.Windows.Forms.NumericUpDown()
-        Me.HourStart = New System.Windows.Forms.NumericUpDown()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.InsertConfirmLabel = New System.Windows.Forms.Label()
+        Me.HourStart = New System.Windows.Forms.NumericUpDown()
         CType(Me.dgvCalendar, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.StatusStrip1.SuspendLayout()
         CType(Me.dgvRecords, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -251,15 +251,6 @@ Partial Class MainForm
         Me.MinuteStart.Size = New System.Drawing.Size(67, 31)
         Me.MinuteStart.TabIndex = 16
         '
-        'HourStart
-        '
-        Me.HourStart.Location = New System.Drawing.Point(25, 97)
-        Me.HourStart.Maximum = New Decimal(New Integer() {23, 0, 0, 0})
-        Me.HourStart.Name = "HourStart"
-        Me.HourStart.Size = New System.Drawing.Size(67, 31)
-        Me.HourStart.TabIndex = 16
-        Me.HourStart.Value = New Decimal(New Integer() {8, 0, 0, 0})
-        '
         'Label6
         '
         Me.Label6.AutoSize = True
@@ -313,6 +304,15 @@ Partial Class MainForm
         Me.InsertConfirmLabel.Size = New System.Drawing.Size(430, 25)
         Me.InsertConfirmLabel.TabIndex = 12
         Me.InsertConfirmLabel.Text = "Start: 08:00 End: 09:30 duration 1 Hour 30 Minutes"
+        '
+        'HourStart
+        '
+        Me.HourStart.Location = New System.Drawing.Point(25, 97)
+        Me.HourStart.Maximum = New Decimal(New Integer() {23, 0, 0, 0})
+        Me.HourStart.Name = "HourStart"
+        Me.HourStart.Size = New System.Drawing.Size(67, 31)
+        Me.HourStart.TabIndex = 16
+        Me.HourStart.Value = Global.Worktime.My.MySettings.Default.HourStart
         '
         'MainForm
         '

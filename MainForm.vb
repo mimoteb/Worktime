@@ -22,7 +22,7 @@
     End Sub
 
     Private Sub btnOpenDatabase_Click(sender As Object, e As EventArgs) Handles btnOpenDatabase.Click
-        PopulateData()
+        PopulateData(btnOpenDatabase)
         ofd.Multiselect = False
         ofd.ShowDialog()
 
@@ -38,6 +38,9 @@
     End Sub
 
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ' Data Bindings (Settings)
+        HourStart.DataBindings.Add("Value", My.Settings, "HourStart", False, DataSourceUpdateMode.OnPropertyChanged)
+
         ofd.FileName = My.Settings.db
         dtp.Format = DateTimePickerFormat.Custom
         dtp.CustomFormat = DateFormat
@@ -45,9 +48,8 @@
         dtp.Value = DateTime.Now
 
         lbl_status.Text = $"Database: {My.Settings.db}"
-        PopulateData()
     End Sub
-    Private Sub PopulateData()
+    Private Sub PopulateData(sender As Control)
 
         dgvCalendar.Rows.Clear()
         Dim Month As Integer = dtp.Value.Month
@@ -112,9 +114,8 @@
     End Sub
 
     Private Sub dtp_ValueChanged(sender As Object, e As EventArgs) Handles dtp.ValueChanged
-        PopulateData()
+        'PopulateData(dtp)
         Dim records As List(Of Record) = GetMonthRecords(dtp.Value)
-
         dgvRecords.DataSource = records
     End Sub
 
@@ -153,25 +154,7 @@
 
         Return TotalMinutes
     End Function
-    Private Function FormatTimeDifference(totalMinutes As Integer) As String
-        Dim formattedDifference As String = ""
 
-        If totalMinutes >= 60 Then
-            Dim hours As Integer = totalMinutes \ 60
-            formattedDifference += $"{hours} Hour "
-            totalMinutes -= hours * 60
-        End If
-
-        If totalMinutes > 0 Then
-            formattedDifference += $"{totalMinutes} Minute"
-        End If
-
-        If formattedDifference = "" Then
-            formattedDifference = "0 Minutes"
-        End If
-
-        Return formattedDifference
-    End Function
 
     Private Sub AddRecordbtn_Click(sender As Object, e As EventArgs) Handles AddRecordbtn.Click
         Dim r As New Record()
@@ -182,16 +165,21 @@
         End With
     End Sub
 
-    Private Sub dgvCalendar_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvCalendar.SelectionChanged
+    Private Sub dgvCalendar_CellContentClick(sender As Object, e As EventArgs) Handles dgvCalendar.SelectionChanged
         If dgvCalendar.Rows.Count > 0 Then
             If dgvCalendar.SelectedRows.Count > 0 Then
-                PopulateData()
+                PopulateData(dgvCalendar)
                 Dim records As List(Of Record) = GetDayRecords(dtp.Value)
-
                 dgvRecords.DataSource = records
             End If
         End If
     End Sub
 
+    Private Sub Insert_Controls(sender As Object, e As EventArgs) Handles MinuteStart.ValueChanged, MinuteStart.KeyUp, MinuteEnd.ValueChanged, MinuteEnd.KeyUp, HourStart.ValueChanged, HourStart.KeyUp, HourEnd.ValueChanged, HourEnd.KeyUp
 
+    End Sub
+
+    Private Sub Insert_Controls(sender As Object, e As KeyEventArgs)
+
+    End Sub
 End Class

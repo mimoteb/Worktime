@@ -200,7 +200,25 @@ Module helpers
 
         Return records
     End Function
+    Public Function FormatTimeDifference(totalMinutes As Integer) As String
+        Dim formattedDifference As String = ""
 
+        If totalMinutes >= 60 Then
+            Dim hours As Integer = totalMinutes \ 60
+            formattedDifference += $"{hours} Hour "
+            totalMinutes -= hours * 60
+        End If
+
+        If totalMinutes > 0 Then
+            formattedDifference += $"{totalMinutes} Minute"
+        End If
+
+        If formattedDifference = "" Then
+            formattedDifference = "0 Minutes"
+        End If
+
+        Return formattedDifference
+    End Function
 End Module
 
 
