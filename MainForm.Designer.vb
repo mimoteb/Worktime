@@ -31,6 +31,7 @@ Partial Class MainForm
         Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
         Me.Infolbl = New System.Windows.Forms.ToolStripStatusLabel()
         Me.lbl_status = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.ToolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.dgvRecords = New System.Windows.Forms.DataGridView()
         Me.lblSelectedDay = New System.Windows.Forms.Label()
         Me.dtp = New System.Windows.Forms.DateTimePicker()
@@ -46,6 +47,21 @@ Partial Class MainForm
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.InsertConfirmLabel = New System.Windows.Forms.Label()
+        Me.test = New System.Windows.Forms.Button()
+        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.Label8 = New System.Windows.Forms.Label()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.GroupBox3 = New System.Windows.Forms.GroupBox()
+        Me.calcIncome = New System.Windows.Forms.Label()
+        Me.Label11 = New System.Windows.Forms.Label()
+        Me.Label12 = New System.Windows.Forms.Label()
+        Me.calcMinute = New System.Windows.Forms.NumericUpDown()
+        Me.calcHour = New System.Windows.Forms.NumericUpDown()
+        Me.Label10 = New System.Windows.Forms.Label()
+        Me.Label13 = New System.Windows.Forms.Label()
+        Me.Label15 = New System.Windows.Forms.Label()
+        Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
         CType(Me.dgvCalendar, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.StatusStrip1.SuspendLayout()
         CType(Me.dgvRecords, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -54,6 +70,10 @@ Partial Class MainForm
         CType(Me.HourEnd, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.MinuteStart, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.HourStart, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.GroupBox2.SuspendLayout()
+        Me.GroupBox3.SuspendLayout()
+        CType(Me.calcMinute, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.calcHour, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'dgvCalendar
@@ -79,6 +99,7 @@ Partial Class MainForm
         Me.clnDate.HeaderText = "Date"
         Me.clnDate.MinimumWidth = 6
         Me.clnDate.Name = "clnDate"
+        Me.clnDate.ReadOnly = True
         Me.clnDate.Width = 78
         '
         'clnDay
@@ -87,6 +108,7 @@ Partial Class MainForm
         Me.clnDay.HeaderText = "Day"
         Me.clnDay.MinimumWidth = 6
         Me.clnDay.Name = "clnDay"
+        Me.clnDay.ReadOnly = True
         Me.clnDay.Width = 71
         '
         'btnOpenDatabase
@@ -112,10 +134,10 @@ Partial Class MainForm
         'StatusStrip1
         '
         Me.StatusStrip1.ImageScalingSize = New System.Drawing.Size(18, 18)
-        Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.Infolbl, Me.lbl_status})
+        Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.Infolbl, Me.lbl_status, Me.ToolStripStatusLabel1})
         Me.StatusStrip1.Location = New System.Drawing.Point(0, 815)
         Me.StatusStrip1.Name = "StatusStrip1"
-        Me.StatusStrip1.Size = New System.Drawing.Size(1176, 22)
+        Me.StatusStrip1.Size = New System.Drawing.Size(1290, 22)
         Me.StatusStrip1.TabIndex = 6
         Me.StatusStrip1.Text = "StatusStrip1"
         '
@@ -131,6 +153,12 @@ Partial Class MainForm
         Me.lbl_status.Size = New System.Drawing.Size(199, 17)
         Me.lbl_status.Text = "Database: No Datebase selected"
         '
+        'ToolStripStatusLabel1
+        '
+        Me.ToolStripStatusLabel1.Name = "ToolStripStatusLabel1"
+        Me.ToolStripStatusLabel1.Size = New System.Drawing.Size(133, 17)
+        Me.ToolStripStatusLabel1.Text = "ToolStripStatusLabel1"
+        '
         'dgvRecords
         '
         Me.dgvRecords.AllowUserToAddRows = False
@@ -142,7 +170,7 @@ Partial Class MainForm
         Me.dgvRecords.Name = "dgvRecords"
         Me.dgvRecords.RowHeadersWidth = 45
         Me.dgvRecords.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgvRecords.Size = New System.Drawing.Size(533, 506)
+        Me.dgvRecords.Size = New System.Drawing.Size(533, 231)
         Me.dgvRecords.TabIndex = 7
         '
         'lblSelectedDay
@@ -280,19 +308,169 @@ Partial Class MainForm
         Me.InsertConfirmLabel.TabIndex = 12
         Me.InsertConfirmLabel.Text = "Start: 08:00 End: 09:30 duration 1 Hour 30 Minutes"
         '
+        'test
+        '
+        Me.test.Location = New System.Drawing.Point(822, 395)
+        Me.test.Name = "test"
+        Me.test.Size = New System.Drawing.Size(149, 41)
+        Me.test.TabIndex = 13
+        Me.test.Text = "TEST"
+        Me.test.UseVisualStyleBackColor = True
+        '
+        'GroupBox2
+        '
+        Me.GroupBox2.Controls.Add(Me.Label8)
+        Me.GroupBox2.Controls.Add(Me.Label7)
+        Me.GroupBox2.Controls.Add(Me.Label1)
+        Me.GroupBox2.Location = New System.Drawing.Point(281, 515)
+        Me.GroupBox2.Name = "GroupBox2"
+        Me.GroupBox2.Size = New System.Drawing.Size(533, 266)
+        Me.GroupBox2.TabIndex = 14
+        Me.GroupBox2.TabStop = False
+        Me.GroupBox2.Text = "Statistics"
+        '
+        'Label8
+        '
+        Me.Label8.AutoSize = True
+        Me.Label8.Location = New System.Drawing.Point(6, 127)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(78, 25)
+        Me.Label8.TabIndex = 0
+        Me.Label8.Text = "Income:"
+        '
+        'Label7
+        '
+        Me.Label7.AutoSize = True
+        Me.Label7.Location = New System.Drawing.Point(6, 82)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(182, 25)
+        Me.Label7.TabIndex = 0
+        Me.Label7.Text = "Total working hours:"
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(6, 39)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(200, 25)
+        Me.Label1.TabIndex = 0
+        Me.Label1.Text = "Hours spent in School:"
+        '
+        'GroupBox3
+        '
+        Me.GroupBox3.Controls.Add(Me.calcIncome)
+        Me.GroupBox3.Controls.Add(Me.Label11)
+        Me.GroupBox3.Controls.Add(Me.Label12)
+        Me.GroupBox3.Controls.Add(Me.calcMinute)
+        Me.GroupBox3.Controls.Add(Me.calcHour)
+        Me.GroupBox3.Controls.Add(Me.Label10)
+        Me.GroupBox3.Controls.Add(Me.Label13)
+        Me.GroupBox3.Controls.Add(Me.Label15)
+        Me.GroupBox3.Location = New System.Drawing.Point(820, 52)
+        Me.GroupBox3.Name = "GroupBox3"
+        Me.GroupBox3.Size = New System.Drawing.Size(460, 337)
+        Me.GroupBox3.TabIndex = 12
+        Me.GroupBox3.TabStop = False
+        Me.GroupBox3.Text = "Calculator"
+        '
+        'calcIncome
+        '
+        Me.calcIncome.AutoSize = True
+        Me.calcIncome.Location = New System.Drawing.Point(20, 238)
+        Me.calcIncome.Name = "calcIncome"
+        Me.calcIncome.Size = New System.Drawing.Size(78, 25)
+        Me.calcIncome.TabIndex = 17
+        Me.calcIncome.Text = "Income:"
+        '
+        'Label11
+        '
+        Me.Label11.AutoSize = True
+        Me.Label11.Location = New System.Drawing.Point(20, 193)
+        Me.Label11.Name = "Label11"
+        Me.Label11.Size = New System.Drawing.Size(182, 25)
+        Me.Label11.TabIndex = 18
+        Me.Label11.Text = "Total working hours:"
+        '
+        'Label12
+        '
+        Me.Label12.AutoSize = True
+        Me.Label12.Location = New System.Drawing.Point(20, 150)
+        Me.Label12.Name = "Label12"
+        Me.Label12.Size = New System.Drawing.Size(200, 25)
+        Me.Label12.TabIndex = 19
+        Me.Label12.Text = "Hours spent in School:"
+        '
+        'calcMinute
+        '
+        Me.calcMinute.Location = New System.Drawing.Point(98, 97)
+        Me.calcMinute.Maximum = New Decimal(New Integer() {59, 0, 0, 0})
+        Me.calcMinute.Name = "calcMinute"
+        Me.calcMinute.Size = New System.Drawing.Size(67, 31)
+        Me.calcMinute.TabIndex = 16
+        '
+        'calcHour
+        '
+        Me.calcHour.Location = New System.Drawing.Point(25, 97)
+        Me.calcHour.Maximum = New Decimal(New Integer() {999999, 0, 0, 0})
+        Me.calcHour.Name = "calcHour"
+        Me.calcHour.Size = New System.Drawing.Size(67, 31)
+        Me.calcHour.TabIndex = 16
+        Me.calcHour.Value = Global.Worktime.My.MySettings.Default.HourStart
+        '
+        'Label10
+        '
+        Me.Label10.AutoSize = True
+        Me.Label10.Location = New System.Drawing.Point(93, 66)
+        Me.Label10.Name = "Label10"
+        Me.Label10.Size = New System.Drawing.Size(72, 25)
+        Me.Label10.TabIndex = 15
+        Me.Label10.Text = "Minute"
+        '
+        'Label13
+        '
+        Me.Label13.AutoSize = True
+        Me.Label13.Location = New System.Drawing.Point(20, 66)
+        Me.Label13.Name = "Label13"
+        Me.Label13.Size = New System.Drawing.Size(54, 25)
+        Me.Label13.TabIndex = 15
+        Me.Label13.Text = "Hour"
+        '
+        'Label15
+        '
+        Me.Label15.AutoSize = True
+        Me.Label15.Location = New System.Drawing.Point(20, 27)
+        Me.Label15.Name = "Label15"
+        Me.Label15.Size = New System.Drawing.Size(214, 25)
+        Me.Label15.TabIndex = 8
+        Me.Label15.Text = "Hours worked at school:"
+        '
+        'MenuStrip1
+        '
+        Me.MenuStrip1.ImageScalingSize = New System.Drawing.Size(18, 18)
+        Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
+        Me.MenuStrip1.Name = "MenuStrip1"
+        Me.MenuStrip1.Size = New System.Drawing.Size(1290, 24)
+        Me.MenuStrip1.TabIndex = 15
+        Me.MenuStrip1.Text = "MenuStrip1"
+        '
         'MainForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(10.0!, 25.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1176, 837)
+        Me.ClientSize = New System.Drawing.Size(1290, 837)
+        Me.Controls.Add(Me.GroupBox2)
+        Me.Controls.Add(Me.test)
+        Me.Controls.Add(Me.GroupBox3)
         Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.dtp)
         Me.Controls.Add(Me.dgvRecords)
         Me.Controls.Add(Me.StatusStrip1)
+        Me.Controls.Add(Me.MenuStrip1)
         Me.Controls.Add(Me.Button2)
         Me.Controls.Add(Me.btnOpenDatabase)
         Me.Controls.Add(Me.dgvCalendar)
         Me.Font = New System.Drawing.Font("Segoe UI", 12.22642!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.MainMenuStrip = Me.MenuStrip1
         Me.Margin = New System.Windows.Forms.Padding(5, 6, 5, 6)
         Me.Name = "MainForm"
         Me.Text = "Worktime"
@@ -306,6 +484,12 @@ Partial Class MainForm
         CType(Me.HourEnd, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.MinuteStart, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.HourStart, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.GroupBox2.ResumeLayout(False)
+        Me.GroupBox2.PerformLayout()
+        Me.GroupBox3.ResumeLayout(False)
+        Me.GroupBox3.PerformLayout()
+        CType(Me.calcMinute, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.calcHour, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -335,4 +519,20 @@ Partial Class MainForm
     Friend WithEvents HourStart As NumericUpDown
     Friend WithEvents AddRecordbtn As Button
     Friend WithEvents Infolbl As ToolStripStatusLabel
+    Friend WithEvents test As Button
+    Friend WithEvents GroupBox2 As GroupBox
+    Friend WithEvents Label8 As Label
+    Friend WithEvents Label7 As Label
+    Friend WithEvents Label1 As Label
+    Friend WithEvents GroupBox3 As GroupBox
+    Friend WithEvents calcMinute As NumericUpDown
+    Friend WithEvents calcHour As NumericUpDown
+    Friend WithEvents Label10 As Label
+    Friend WithEvents Label13 As Label
+    Friend WithEvents Label15 As Label
+    Friend WithEvents ToolStripStatusLabel1 As ToolStripStatusLabel
+    Friend WithEvents MenuStrip1 As MenuStrip
+    Friend WithEvents calcIncome As Label
+    Friend WithEvents Label11 As Label
+    Friend WithEvents Label12 As Label
 End Class

@@ -7,9 +7,9 @@ Module helpers
     Public TimeFormat As String = "HH:MM"
     'Dim DatabaseFileName As String = "C:\Users\sas822\OneDrive - Hanebutt IT-Consult GmbH\databases\worktime.db"
 
-    Dim connectionString As String = $"Data Source={My.Settings.db};Version=3;"
+    Public connectionString As String = $"Data Source={My.Settings.db};Version=3;"
 
-    Dim connection As New SQLiteConnection(connectionString)
+    Public connection As New SQLiteConnection(connectionString)
 #End Region
 
 
@@ -122,15 +122,16 @@ Module helpers
     Function GetDayRecord(TargetDate As String) As List(Of Record)
         Dim Rows As New List(Of Record)
         TargetDate = DateTime.ParseExact(TargetDate, "yyyy.MM.dd", CultureInfo.InvariantCulture).ToString("yyyy.MM.dd")
-
+        Debug.WriteLine($"GetDayRecord - TargetDate: {TargetDate}")
         Try
             OpenConnection()
 
-            Dim query As String = "SELECT * FROM record WHERE strftime('%Y.%m.%d', DayDate) like '%TargetDate%'"
+            Dim query As String = "SELECT * FROM record WHERE DayDate LIKE @TargetDate"
+
             Dim command As New SQLiteCommand(query, connection)
             command.Parameters.AddWithValue("@TargetDate", TargetDate)
             Dim r As SQLiteDataReader = command.ExecuteReader()
-            ' User,DayDate,StartTime,EndTime,Duration
+            Debug.WriteLine($"GetDayRecord - Query: {query}")
             If r.HasRows Then
                 While r.Read()
                     Dim rec As New Record()
@@ -138,12 +139,13 @@ Module helpers
                         .ID = r.GetInt32(r.GetOrdinal("id"))
                         .User = r.GetInt32(r.GetOrdinal("User"))
                         .DayDate = r.GetString(r.GetOrdinal("DayDate"))
-                        .StartTime = r.GetString(r.GetOrdinal("StartHour"))
+                        .StartTime = r.GetString(r.GetOrdinal("StartTime"))
                         .EndTime = r.GetString(r.GetOrdinal("EndTime"))
                         .Duration = r.GetInt32(r.GetOrdinal("Duration"))
                     End With
                     Rows.Add(rec)
                 End While
+                Debug.WriteLine($"GetDayRecord: r.HasRows: {r.HasRows}")
             End If
 
         Catch ex As Exception

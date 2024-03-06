@@ -1,4 +1,7 @@
-﻿Public Class MainForm
+﻿Imports System.Data.SQLite
+Imports System.Globalization
+
+Public Class MainForm
     Public c As New C
     Private originalValue As Object
     Private edited_ID As Integer
@@ -63,7 +66,7 @@
         Dim currentDate As DateTime = firstDayOfMonth
 
         While currentDate <= lastDayOfMonth
-            dgvCalendar.Rows.Add(currentDate.ToString("dd.MM.yyyy"), currentDate.DayOfWeek.ToString)
+            dgvCalendar.Rows.Add(currentDate.ToString(DateFormat), currentDate.DayOfWeek.ToString)
             Dim DayofWeek As String = currentDate.DayOfWeek.ToString
             If DayofWeek = Day.Saturday.ToString Or DayofWeek = Day.Sunday.ToString Then
                 Dim lastRow As Integer = dgvCalendar.Rows.Count - 1
@@ -83,26 +86,6 @@
                 dgvCalendar.Rows(0).Selected = True
             End If
         End If
-        If dgvCalendar.SelectedRows.Count = 1 Then
-            'Dim records As List(Of Record) = getmo(dtp.Value)
-
-            'dgvRecords.Rows.Clear()
-            'dgvRecords.DataSource = records
-
-            'dgvRecords.Columns("startdatetime").HeaderText = "Start Time"
-            'dgvRecords.Columns("Duration").HeaderText = "Duration (minutes)"
-            'dgvRecords.Columns("User").HeaderText = "User ID"
-
-            'dgvRecords.Columns("startdatetime").DefaultCellStyle.Format = "yyyy-MM-dd HH:mm:ss"
-            'dgvRecords.Columns("startdatetime").Width = 150
-            'dgvRecords.Columns("Duration").Width = 100
-            'dgvRecords.Columns("User").Width = 80
-
-            'dgvRecords.Columns("startdatetime").SortMode = DataGridViewColumnSortMode.Automatic
-            'dgvRecords.Columns("Duration").SortMode = DataGridViewColumnSortMode.Automatic
-            'dgvRecords.Columns("User").SortMode = DataGridViewColumnSortMode.Automatic
-        End If
-
     End Sub
 
     Private Sub dgvCalendar_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvCalendar.CellClick
@@ -154,12 +137,59 @@
 
     Private Sub dgvCalendar_CellContentClick(sender As Object, e As EventArgs) Handles dgvCalendar.SelectionChanged, dgvCalendar.KeyUp
         If dgvCalendar.SelectedRows.Count > 0 Then
-            Dim records As List(Of Record) = GetDayRecord(dtp.Value.ToString(DateFormat))
-            dgvRecords.DataSource = records
+            Dim Rows As List(Of Record) = GetDayRecord(dgvCalendar.SelectedRows(0).Cells("clnDate").Value)
+            dgvRecords.DataSource = Rows
             dgvRecords.Columns("ID").Visible = False
             dgvRecords.Columns("User").Visible = False
+            Debug.WriteLine($"dgvCalendar_CellContentClick: {dgvCalendar.SelectedRows.Count} - Rows returned from GetDayRecord: {Rows.Count}")
+
         End If
     End Sub
 
+    Private Sub test_Click(sender As Object, e As EventArgs) Handles test.Click
+        Dim TargetDate As String = "2024.03.10"
+        Dim Rows As New List(Of Record)
+        TargetDate = DateTime.ParseExact(TargetDate, "yyyy.MM.dd", CultureInfo.InvariantCulture).ToString("yyyy.MM.dd")
+        Debug.WriteLine($"GetDayRecord - TargetDate: {TargetDate}")
+        Try
+            OpenConnection()
 
+            Dim query As String = "SELECT * FROM record WHERE DayDate LIKE @TargetDate"
+
+            Dim command As New SQLiteCommand(query, connection)
+            command.Parameters.AddWithValue("@TargetDate", TargetDate)
+            Dim r As SQLiteDataReader = command.ExecuteReader()
+            Debug.WriteLine($"GetDayRecord - Query: {query}")
+            If r.HasRows Then
+                While r.Read()
+                    Dim rec As New Record()
+                    With rec
+                        .ID = r.GetInt32(r.GetOrdinal("id"))
+                        .User = r.GetInt32(r.GetOrdinal("User"))
+                        .DayDate = r.GetString(r.GetOrdinal("DayDate"))
+                        .StartTime = r.GetString(r.GetOrdinal("StartTime"))
+                        .EndTime = r.GetString(r.GetOrdinal("EndTime"))
+                        .Duration = r.GetInt32(r.GetOrdinal("Duration"))
+                    End With
+                    Rows.Add(rec)
+                End While
+                Debug.WriteLine($"GetDayRecord: r.HasRows: {r.HasRows}")
+            End If
+
+        Catch ex As Exception
+            MessageBox.Show("Error: " & ex.Message)
+        Finally
+            CloseConnection()
+        End Try
+
+    End Sub
+
+    Private Sub calculate(sender As Object, e As EventArgs) Handles calcHour.ValueChanged, calcMinute.ValueChanged
+        Dim H As Integer = calcHour.Value
+        Dim M As Integer = calcMinute.Value
+        Dim result As Decimal = 0
+        result = H * 60 + M
+
+        Label = result
+    End Sub
 End Class
