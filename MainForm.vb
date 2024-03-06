@@ -120,4 +120,11 @@ Public Class MainForm
     Private Sub dtp_ValueChanged(sender As Object, e As EventArgs) Handles dtp.ValueChanged
         PopulateData()
     End Sub
+
+    Private Function GenerateRecord() As Record
+        Dim record As New Record
+        record.User = 2
+        record.Timestamp =
+        Return record
+    End Function
 End Class

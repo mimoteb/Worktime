@@ -54,12 +54,12 @@ Module helpers
         Try
             OpenConnection()
 
-            Dim query As String = "UPDATE record SET startdatetime = @startdatetime, duration = @Duration, user = @User WHERE id = @ID"
+            Dim query As String = "UPDATE record SET Timestamp = @Timestamp, duration = @Duration, user = @User WHERE id = @ID"
             Dim command As New SQLiteCommand(query, connection)
 
             ' Use parameters to avoid SQL injection
             command.Parameters.AddWithValue("@ID", record.ID)
-            command.Parameters.AddWithValue("@startdatetime", record.startdatetime)
+            command.Parameters.AddWithValue("@Timestamp", record.Timestamp)
             command.Parameters.AddWithValue("@Duration", record.Duration)
             command.Parameters.AddWithValue("@User", record.User)
 
@@ -108,7 +108,7 @@ Module helpers
                 While reader.Read()
                     Dim record As New Record()
                     record.ID = reader.GetInt32(reader.GetOrdinal("id"))
-                    record.startdatetime = reader.GetString(reader.GetOrdinal("startdatetime"))
+                    record.Timestamp = reader.GetString(reader.GetOrdinal("timestamp"))
                     record.Duration = reader.GetInt32(reader.GetOrdinal("duration"))
                     record.User = reader.GetInt32(reader.GetOrdinal("user"))
                     records.Add(record)
@@ -146,7 +146,7 @@ Module helpers
                 While reader.Read()
                     Dim record As New Record()
                     record.ID = reader.GetInt32(reader.GetOrdinal("id"))
-                    record.startdatetime = reader.GetString(reader.GetOrdinal("startdatetime"))
+                    record.Timestamp = reader.GetString(reader.GetOrdinal("timestamp"))
                     record.Duration = reader.GetInt32(reader.GetOrdinal("duration"))
                     record.User = reader.GetInt32(reader.GetOrdinal("user"))
                     records.Add(record)

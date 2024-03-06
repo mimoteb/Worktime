@@ -65,6 +65,66 @@ Namespace My
                 Me("db") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
+        Public Property StartHour() As Integer
+            Get
+                Return CType(Me("StartHour"),Integer)
+            End Get
+            Set
+                Me("StartHour") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
+        Public Property StartMinute() As Integer
+            Get
+                Return CType(Me("StartMinute"),Integer)
+            End Get
+            Set
+                Me("StartMinute") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
+        Public Property EndHour() As Integer
+            Get
+                Return CType(Me("EndHour"),Integer)
+            End Get
+            Set
+                Me("EndHour") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
+        Public Property EndMinute() As Integer
+            Get
+                Return CType(Me("EndMinute"),Integer)
+            End Get
+            Set
+                Me("EndMinute") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
+        Public Property DurationBox() As Integer
+            Get
+                Return CType(Me("DurationBox"),Integer)
+            End Get
+            Set
+                Me("DurationBox") = value
+            End Set
+        End Property
     End Class
 End Namespace
 
