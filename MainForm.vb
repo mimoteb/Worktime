@@ -1,6 +1,4 @@
-﻿Imports System.Data.Entity.Infrastructure.Interception
-Imports System.Security.AccessControl
-Public Class MainForm
+﻿Public Class MainForm
     Public c As New C
     Private originalValue As Object
     Private edited_ID As Integer
@@ -81,7 +79,7 @@ Public Class MainForm
             End If
         End If
         If dgvCalendar.SelectedRows.Count = 1 Then
-            Dim records As List(Of Record) = GetRecordsByDate(dtp.Value)
+            Dim records As List(Of Record) = GetDayRecords(dtp.Value)
 
             'dgvRecords.Rows.Clear()
             dgvRecords.DataSource = records
@@ -115,6 +113,9 @@ Public Class MainForm
 
     Private Sub dtp_ValueChanged(sender As Object, e As EventArgs) Handles dtp.ValueChanged
         PopulateData()
+        Dim records As List(Of Record) = GetMonthRecords(dtp.Value)
+
+        dgvRecords.DataSource = records
     End Sub
 
     Private Function GenerateRecord() As Record
@@ -185,7 +186,12 @@ Public Class MainForm
         If dgvCalendar.Rows.Count > 0 Then
             If dgvCalendar.SelectedRows.Count > 0 Then
                 PopulateData()
+                Dim records As List(Of Record) = GetDayRecords(dtp.Value)
+
+                dgvRecords.DataSource = records
             End If
         End If
     End Sub
+
+
 End Class

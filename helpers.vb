@@ -118,11 +118,52 @@ Module helpers
         Return records
     End Function
 
-    Function GetRecordsByDate(targetDate As DateTime) As List(Of Record)
+    Function GetMonthRecords(TargetDate As DateTime) As List(Of Record)
         Dim records As New List(Of Record)
-        Dim Year As Integer = targetDate.Year
-        Dim Month As Integer = targetDate.Month
-        Dim Day As Integer = targetDate.Day
+        Dim Year As Integer = TargetDate.Year
+        Dim Month As Integer = TargetDate.Month
+        Dim Day As Integer = TargetDate.Day
+        Try
+            OpenConnection()
+
+            ' Use a parameterized query to filter records by date
+            Dim query As String = "SELECT * FROM record WHERE CAST(strftime('%m', timestamp) AS INTEGER) = @month AND CAST(strftime('%Y', timestamp) AS INTEGER) = @year"
+            Dim command As New SQLiteCommand(query, connection)
+            ' Use parameters to avoid SQL injection
+            command.Parameters.AddWithValue("@year", Year)
+            command.Parameters.AddWithValue("@month", Month)
+            'Add debug information to diagnose the sql query
+            Debug.WriteLine($"[GetRecordsByDate] targetDate:{TargetDate}")
+            Debug.WriteLine($"[GetRecordsByDate] Query: {command.CommandText}")
+            Dim reader As SQLiteDataReader = command.ExecuteReader()
+
+            If reader.HasRows Then
+                While reader.Read()
+                    Dim record As New Record()
+                    record.ID = reader.GetInt32(reader.GetOrdinal("id"))
+                    record.Timestamp = reader.GetString(reader.GetOrdinal("timestamp"))
+                    record.Duration = reader.GetInt32(reader.GetOrdinal("duration"))
+                    record.User = reader.GetInt32(reader.GetOrdinal("user"))
+                    records.Add(record)
+                End While
+            Else
+                Debug.WriteLine($"[GetRecordsByDate] reader.HasRows: {reader.HasRows}")
+            End If
+
+        Catch ex As Exception
+            MessageBox.Show("Error: " & ex.Message)
+        Finally
+            CloseConnection()
+        End Try
+
+        Return records
+    End Function
+
+    Function GetDayRecords(TargetDate As DateTime) As List(Of Record)
+        Dim records As New List(Of Record)
+        Dim Year As Integer = TargetDate.Year
+        Dim Month As Integer = TargetDate.Month
+        Dim Day As Integer = TargetDate.Day
         Try
             OpenConnection()
 
@@ -134,7 +175,7 @@ Module helpers
             command.Parameters.AddWithValue("@month", Month)
             command.Parameters.AddWithValue("@day", Day)
             'Add debug information to diagnose the sql query
-            Debug.WriteLine($"[GetRecordsByDate] targetDate:{targetDate}")
+            Debug.WriteLine($"[GetRecordsByDate] targetDate:{TargetDate}")
             Debug.WriteLine($"[GetRecordsByDate] Query: {command.CommandText}")
             Dim reader As SQLiteDataReader = command.ExecuteReader()
 
