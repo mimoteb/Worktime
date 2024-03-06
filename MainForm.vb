@@ -1,5 +1,4 @@
 ﻿Imports System.Data.Entity.Infrastructure.Interception
-Imports io
 Public Class MainForm
     Private originalValue As Object
     Private edited_ID As Integer
@@ -10,7 +9,7 @@ Public Class MainForm
     Private Sub dgvRecords_CellBeginEdit(sender As Object, e As DataGridViewCellCancelEventArgs) Handles dgvCalendar.CellBeginEdit
         originalValue = dgvCalendar.Rows(e.RowIndex).Cells(e.ColumnIndex).Value
         edited_ID = CInt(dgvCalendar.Rows(e.RowIndex).Cells("ID").Value)
-        Debug.WriteLine($"[{edited_ID}] Original Cell Value: {originalValue.ToString()}")
+        'Debug.WriteLine($"[{edited_ID}] Original Cell Value: {originalValue.ToString()}")
     End Sub
 
     Private Sub dgvRecords_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles dgvCalendar.CellEndEdit
@@ -43,7 +42,7 @@ Public Class MainForm
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ofd.FileName = My.Settings.db
         dtp.Format = DateTimePickerFormat.Custom
-        dtp.CustomFormat = "MMMM yyyy"
+        dtp.CustomFormat = DateFormat
         ' Set the DateTimePicker to today's date and time
         dtp.Value = DateTime.Now
 
@@ -56,23 +55,7 @@ Public Class MainForm
     End Sub
 
     Private Sub LoadDataGridView()
-        Dim records As List(Of Record) = GetAllRecords()
 
-        dgvCalendar.Rows.Clear()
-        dgvCalendar.DataSource = records
-
-        dgvCalendar.Columns("startdatetime").HeaderText = "Start Time"
-        dgvCalendar.Columns("Duration").HeaderText = "Duration (minutes)"
-        dgvCalendar.Columns("User").HeaderText = "User ID"
-
-        dgvCalendar.Columns("startdatetime").DefaultCellStyle.Format = "yyyy-MM-dd HH:mm:ss"
-        dgvCalendar.Columns("startdatetime").Width = 150
-        dgvCalendar.Columns("Duration").Width = 100
-        dgvCalendar.Columns("User").Width = 80
-
-        dgvCalendar.Columns("startdatetime").SortMode = DataGridViewColumnSortMode.Automatic
-        dgvCalendar.Columns("Duration").SortMode = DataGridViewColumnSortMode.Automatic
-        dgvCalendar.Columns("User").SortMode = DataGridViewColumnSortMode.Automatic
     End Sub
     Private Sub PopulateDataGridView()
         dgvCalendar.Rows.Clear()
@@ -101,7 +84,36 @@ Public Class MainForm
                 row.DefaultCellStyle.BackColor = Color.Red
             End If
         Next
+        dgvRecords.Rows.Clear()
+        If dgvCalendar.SelectedRows.Count = 1 Then
+            Dim targetDate As DateTime = dgvCalendar.SelectedRows.Item(0).Cells("clnDate").Value
+            Dim records As List(Of Record) = GetRecordsByDate(targetDate)
+
+            dgvRecords.Rows.Clear()
+            dgvRecords.DataSource = records
+
+            dgvRecords.Columns("startdatetime").HeaderText = "Start Time"
+            dgvRecords.Columns("Duration").HeaderText = "Duration (minutes)"
+            dgvRecords.Columns("User").HeaderText = "User ID"
+
+            dgvRecords.Columns("startdatetime").DefaultCellStyle.Format = "yyyy-MM-dd HH:mm:ss"
+            dgvRecords.Columns("startdatetime").Width = 150
+            dgvRecords.Columns("Duration").Width = 100
+            dgvRecords.Columns("User").Width = 80
+
+            dgvRecords.Columns("startdatetime").SortMode = DataGridViewColumnSortMode.Automatic
+            dgvRecords.Columns("Duration").SortMode = DataGridViewColumnSortMode.Automatic
+            dgvRecords.Columns("User").SortMode = DataGridViewColumnSortMode.Automatic
+        End If
+
     End Sub
 
+    Private Sub dgvCalendar_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvCalendar.CellClick
+        If dgvCalendar.Rows.Count > 0 Then
+            Dim strDate = Convert.ToDateTime(dgvCalendar.SelectedRows.Item(0).Cells("clnDate").Value).ToString("dddd, dd MMMM yyyy")
 
+            lblSelectedDay.Text = $"Currently Viewing Date: {strDate}"
+        End If
+
+    End Sub
 End Class

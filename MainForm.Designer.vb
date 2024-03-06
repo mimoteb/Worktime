@@ -23,16 +23,23 @@ Partial Class MainForm
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.dgvCalendar = New System.Windows.Forms.DataGridView()
+        Me.clnDate = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.clnDay = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.btnOpenDatabase = New System.Windows.Forms.Button()
         Me.Button2 = New System.Windows.Forms.Button()
         Me.ofd = New System.Windows.Forms.OpenFileDialog()
         Me.dtp = New System.Windows.Forms.DateTimePicker()
         Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
         Me.lbl_status = New System.Windows.Forms.ToolStripStatusLabel()
-        Me.clnDate = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.clnDay = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dgvRecords = New System.Windows.Forms.DataGridView()
+        Me.clnID = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.clnDuration = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.lblSelectedDay = New System.Windows.Forms.Label()
         CType(Me.dgvCalendar, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.StatusStrip1.SuspendLayout()
+        CType(Me.dgvRecords, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'dgvCalendar
@@ -49,6 +56,22 @@ Partial Class MainForm
         Me.dgvCalendar.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.dgvCalendar.Size = New System.Drawing.Size(259, 729)
         Me.dgvCalendar.TabIndex = 0
+        '
+        'clnDate
+        '
+        Me.clnDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
+        Me.clnDate.HeaderText = "Date"
+        Me.clnDate.MinimumWidth = 6
+        Me.clnDate.Name = "clnDate"
+        Me.clnDate.Width = 78
+        '
+        'clnDay
+        '
+        Me.clnDay.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
+        Me.clnDay.HeaderText = "Day"
+        Me.clnDay.MinimumWidth = 6
+        Me.clnDay.Name = "clnDay"
+        Me.clnDay.Width = 71
         '
         'btnOpenDatabase
         '
@@ -73,7 +96,7 @@ Partial Class MainForm
         'dtp
         '
         Me.dtp.Format = System.Windows.Forms.DateTimePickerFormat.Custom
-        Me.dtp.Location = New System.Drawing.Point(12, 12)
+        Me.dtp.Location = New System.Drawing.Point(822, 63)
         Me.dtp.Name = "dtp"
         Me.dtp.Size = New System.Drawing.Size(174, 31)
         Me.dtp.TabIndex = 5
@@ -95,27 +118,67 @@ Partial Class MainForm
         Me.lbl_status.Size = New System.Drawing.Size(199, 17)
         Me.lbl_status.Text = "Database: No Datebase selected"
         '
-        'clnDate
+        'dgvRecords
         '
-        Me.clnDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
-        Me.clnDate.HeaderText = "Date"
-        Me.clnDate.MinimumWidth = 6
-        Me.clnDate.Name = "clnDate"
-        Me.clnDate.Width = 78
+        Me.dgvRecords.AllowUserToAddRows = False
+        Me.dgvRecords.AllowUserToDeleteRows = False
+        Me.dgvRecords.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgvRecords.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.clnID, Me.DataGridViewTextBoxColumn1, Me.DataGridViewTextBoxColumn2, Me.clnDuration})
+        Me.dgvRecords.Location = New System.Drawing.Point(281, 52)
+        Me.dgvRecords.Margin = New System.Windows.Forms.Padding(5, 6, 5, 6)
+        Me.dgvRecords.MultiSelect = False
+        Me.dgvRecords.Name = "dgvRecords"
+        Me.dgvRecords.RowHeadersWidth = 45
+        Me.dgvRecords.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.dgvRecords.Size = New System.Drawing.Size(533, 729)
+        Me.dgvRecords.TabIndex = 7
         '
-        'clnDay
+        'clnID
         '
-        Me.clnDay.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
-        Me.clnDay.HeaderText = "Day"
-        Me.clnDay.MinimumWidth = 6
-        Me.clnDay.Name = "clnDay"
-        Me.clnDay.Width = 71
+        Me.clnID.HeaderText = "ID"
+        Me.clnID.MinimumWidth = 6
+        Me.clnID.Name = "clnID"
+        Me.clnID.Width = 110
+        '
+        'DataGridViewTextBoxColumn1
+        '
+        Me.DataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
+        Me.DataGridViewTextBoxColumn1.HeaderText = "Start"
+        Me.DataGridViewTextBoxColumn1.MinimumWidth = 6
+        Me.DataGridViewTextBoxColumn1.Name = "DataGridViewTextBoxColumn1"
+        Me.DataGridViewTextBoxColumn1.Width = 77
+        '
+        'DataGridViewTextBoxColumn2
+        '
+        Me.DataGridViewTextBoxColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
+        Me.DataGridViewTextBoxColumn2.HeaderText = "End"
+        Me.DataGridViewTextBoxColumn2.MinimumWidth = 6
+        Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
+        Me.DataGridViewTextBoxColumn2.Width = 71
+        '
+        'clnDuration
+        '
+        Me.clnDuration.HeaderText = "Duration"
+        Me.clnDuration.MinimumWidth = 6
+        Me.clnDuration.Name = "clnDuration"
+        Me.clnDuration.Width = 110
+        '
+        'lblSelectedDay
+        '
+        Me.lblSelectedDay.AutoSize = True
+        Me.lblSelectedDay.Location = New System.Drawing.Point(288, 17)
+        Me.lblSelectedDay.Name = "lblSelectedDay"
+        Me.lblSelectedDay.Size = New System.Drawing.Size(44, 25)
+        Me.lblSelectedDay.TabIndex = 8
+        Me.lblSelectedDay.Text = "Day"
         '
         'MainForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(10.0!, 25.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1176, 837)
+        Me.Controls.Add(Me.lblSelectedDay)
+        Me.Controls.Add(Me.dgvRecords)
         Me.Controls.Add(Me.StatusStrip1)
         Me.Controls.Add(Me.dtp)
         Me.Controls.Add(Me.Button2)
@@ -128,6 +191,7 @@ Partial Class MainForm
         CType(Me.dgvCalendar, System.ComponentModel.ISupportInitialize).EndInit()
         Me.StatusStrip1.ResumeLayout(False)
         Me.StatusStrip1.PerformLayout()
+        CType(Me.dgvRecords, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -142,4 +206,10 @@ Partial Class MainForm
     Friend WithEvents lbl_status As ToolStripStatusLabel
     Friend WithEvents clnDate As DataGridViewTextBoxColumn
     Friend WithEvents clnDay As DataGridViewTextBoxColumn
+    Friend WithEvents dgvRecords As DataGridView
+    Friend WithEvents clnID As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn1 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn2 As DataGridViewTextBoxColumn
+    Friend WithEvents clnDuration As DataGridViewTextBoxColumn
+    Friend WithEvents lblSelectedDay As Label
 End Class

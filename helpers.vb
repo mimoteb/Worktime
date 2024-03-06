@@ -3,7 +3,10 @@ Imports System.IO
 Imports System.Globalization
 
 Module helpers
-    Public DatabaseFileName As String = "C:\Users\sas822\OneDrive - Hanebutt IT-Consult GmbH\databases\worktime.db"
+    Public DateFormat As String = "yyyy.MM.dd"
+    Public TimeFormat As String = "HH:MM:00"
+    Dim DatabaseFileName As String = "C:\Users\sas822\OneDrive - Hanebutt IT-Consult GmbH\databases\worktime.db"
+
     Dim connectionString As String = $"Data Source={DatabaseFileName};Version=3;"
 
     Dim connection As New SQLiteConnection(connectionString)
@@ -99,6 +102,44 @@ Module helpers
 
             Dim query As String = "SELECT * FROM record"
             Dim command As New SQLiteCommand(query, connection)
+            Dim reader As SQLiteDataReader = command.ExecuteReader()
+
+            If reader.HasRows Then
+                While reader.Read()
+                    Dim record As New Record()
+                    record.ID = reader.GetInt32(reader.GetOrdinal("id"))
+                    record.startdatetime = reader.GetString(reader.GetOrdinal("startdatetime"))
+                    record.Duration = reader.GetInt32(reader.GetOrdinal("duration"))
+                    record.User = reader.GetInt32(reader.GetOrdinal("user"))
+                    records.Add(record)
+                End While
+            End If
+
+        Catch ex As Exception
+            MessageBox.Show("Error: " & ex.Message)
+        Finally
+            CloseConnection()
+        End Try
+
+        Return records
+    End Function
+
+    Function GetRecordsByDate(targetDate As DateTime) As List(Of Record)
+        Dim records As New List(Of Record)
+        Debug.WriteLine(targetDate)
+        Try
+            OpenConnection()
+
+            ' Convert targetDate to SQLite3 date format
+            Dim sqliteDateFormat As String = targetDate.ToString("yyyy-MM-dd HH:mm:ss")
+
+            ' Use a parameterized query to filter records by date
+            Dim query As String = "SELECT * FROM record WHERE CAST(startdatetime AS DATE) = @TargetDate"
+            Dim command As New SQLiteCommand(query, connection)
+
+            ' Use parameters to avoid SQL injection
+            command.Parameters.AddWithValue("@TargetDate", sqliteDateFormat)
+
             Dim reader As SQLiteDataReader = command.ExecuteReader()
 
             If reader.HasRows Then
