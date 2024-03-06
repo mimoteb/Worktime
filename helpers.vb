@@ -9,18 +9,8 @@ Module helpers
 
     Dim connection As New SQLiteConnection(connectionString)
 
-    Sub OpenConnection()
-        If connection.State = ConnectionState.Closed Then
-            connection.Open()
-        End If
-    End Sub
 
-    Sub CloseConnection()
-        If connection.State = ConnectionState.Open Then
-            connection.Close()
-        End If
-    End Sub
-
+#Region "SQL Functions"
     ' Insert a new record
     Sub InsertRecord(r As Record)
         '        -- Insert a timestamp in the "yyyy.dd.MM" format
@@ -214,6 +204,8 @@ Module helpers
 
         Return r
     End Function
+#End Region
+
     Public Function FormatTimeDifference(totalMinutes As Integer) As String
         Dim formattedDifference As String = ""
 
@@ -233,6 +225,21 @@ Module helpers
 
         Return formattedDifference
     End Function
+
+#Region "general Functions"
+    Sub OpenConnection()
+        If connection.State = ConnectionState.Closed Then
+            connection.Open()
+        End If
+    End Sub
+
+    Sub CloseConnection()
+        If connection.State = ConnectionState.Open Then
+            connection.Close()
+        End If
+    End Sub
+#End Region
+
 End Module
 
 
