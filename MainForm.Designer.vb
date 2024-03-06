@@ -39,6 +39,17 @@ Partial Class MainForm
         Me.dtp = New System.Windows.Forms.DateTimePicker()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.Label1 = New System.Windows.Forms.Label()
+        Me.HourStart = New System.Windows.Forms.TextBox()
+        Me.MinuteStart = New System.Windows.Forms.TextBox()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.HourEnd = New System.Windows.Forms.TextBox()
+        Me.MinuteEnd = New System.Windows.Forms.TextBox()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.DurationBox = New System.Windows.Forms.ComboBox()
         CType(Me.dgvCalendar, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.StatusStrip1.SuspendLayout()
         CType(Me.dgvRecords, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -176,6 +187,17 @@ Partial Class MainForm
         '
         'GroupBox1
         '
+        Me.GroupBox1.Controls.Add(Me.DurationBox)
+        Me.GroupBox1.Controls.Add(Me.Label6)
+        Me.GroupBox1.Controls.Add(Me.Label4)
+        Me.GroupBox1.Controls.Add(Me.Label7)
+        Me.GroupBox1.Controls.Add(Me.Label5)
+        Me.GroupBox1.Controls.Add(Me.Label3)
+        Me.GroupBox1.Controls.Add(Me.Label2)
+        Me.GroupBox1.Controls.Add(Me.MinuteEnd)
+        Me.GroupBox1.Controls.Add(Me.MinuteStart)
+        Me.GroupBox1.Controls.Add(Me.HourEnd)
+        Me.GroupBox1.Controls.Add(Me.HourStart)
         Me.GroupBox1.Controls.Add(Me.Label1)
         Me.GroupBox1.Controls.Add(Me.lblSelectedDay)
         Me.GroupBox1.Location = New System.Drawing.Point(281, 52)
@@ -188,11 +210,102 @@ Partial Class MainForm
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(20, 169)
+        Me.Label1.Location = New System.Drawing.Point(20, 172)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(67, 25)
+        Me.Label1.Size = New System.Drawing.Size(430, 25)
         Me.Label1.TabIndex = 12
-        Me.Label1.Text = "Label1"
+        Me.Label1.Text = "Start: 08:00 End: 09:30 duration 1 Hour 30 Minutes"
+        '
+        'HourStart
+        '
+        Me.HourStart.Location = New System.Drawing.Point(25, 94)
+        Me.HourStart.Name = "HourStart"
+        Me.HourStart.Size = New System.Drawing.Size(59, 31)
+        Me.HourStart.TabIndex = 13
+        '
+        'MinuteStart
+        '
+        Me.MinuteStart.Location = New System.Drawing.Point(90, 94)
+        Me.MinuteStart.Name = "MinuteStart"
+        Me.MinuteStart.Size = New System.Drawing.Size(67, 31)
+        Me.MinuteStart.TabIndex = 13
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(163, 97)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(31, 25)
+        Me.Label2.TabIndex = 14
+        Me.Label2.Text = "To"
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(30, 66)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(54, 25)
+        Me.Label3.TabIndex = 15
+        Me.Label3.Text = "Hour"
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(85, 66)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(72, 25)
+        Me.Label4.TabIndex = 15
+        Me.Label4.Text = "Minute"
+        '
+        'HourEnd
+        '
+        Me.HourEnd.Location = New System.Drawing.Point(200, 94)
+        Me.HourEnd.Name = "HourEnd"
+        Me.HourEnd.Size = New System.Drawing.Size(59, 31)
+        Me.HourEnd.TabIndex = 13
+        '
+        'MinuteEnd
+        '
+        Me.MinuteEnd.Location = New System.Drawing.Point(265, 94)
+        Me.MinuteEnd.Name = "MinuteEnd"
+        Me.MinuteEnd.Size = New System.Drawing.Size(67, 31)
+        Me.MinuteEnd.TabIndex = 13
+        '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Location = New System.Drawing.Point(205, 66)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(54, 25)
+        Me.Label5.TabIndex = 15
+        Me.Label5.Text = "Hour"
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Location = New System.Drawing.Point(260, 66)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(72, 25)
+        Me.Label6.TabIndex = 15
+        Me.Label6.Text = "Minute"
+        '
+        'Label7
+        '
+        Me.Label7.AutoSize = True
+        Me.Label7.Location = New System.Drawing.Point(347, 66)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(86, 25)
+        Me.Label7.TabIndex = 15
+        Me.Label7.Text = "Duration"
+        '
+        'DurationBox
+        '
+        Me.DurationBox.FormattingEnabled = True
+        Me.DurationBox.Items.AddRange(New Object() {"15 Minutes", "30 Minutes", "45 Minutes", "1 Hour", "1 Hour 15 Minutes", "1 Hour 30 Minutes", "1 Hour 45 Minutes", "2 Hours"})
+        Me.DurationBox.Location = New System.Drawing.Point(352, 97)
+        Me.DurationBox.Name = "DurationBox"
+        Me.DurationBox.Size = New System.Drawing.Size(121, 33)
+        Me.DurationBox.TabIndex = 16
         '
         'MainForm
         '
@@ -238,4 +351,15 @@ Partial Class MainForm
     Friend WithEvents dtp As DateTimePicker
     Friend WithEvents GroupBox1 As GroupBox
     Friend WithEvents Label1 As Label
+    Friend WithEvents Label2 As Label
+    Friend WithEvents MinuteStart As TextBox
+    Friend WithEvents HourStart As TextBox
+    Friend WithEvents DurationBox As ComboBox
+    Friend WithEvents Label6 As Label
+    Friend WithEvents Label4 As Label
+    Friend WithEvents Label7 As Label
+    Friend WithEvents Label5 As Label
+    Friend WithEvents Label3 As Label
+    Friend WithEvents MinuteEnd As TextBox
+    Friend WithEvents HourEnd As TextBox
 End Class

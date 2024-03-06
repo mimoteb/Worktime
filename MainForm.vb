@@ -108,7 +108,6 @@ Public Class MainForm
     Private Sub dgvCalendar_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvCalendar.CellClick
         If dgvCalendar.Rows.Count > 0 Then
             Dim row As DataGridViewRow = dgvCalendar.SelectedRows(0)
-
             Dim strDate = Convert.ToDateTime(row.Cells("clnDate").Value).ToString("dddd, dd MMMM yyyy")
 
             lblSelectedDay.Text = $"Add Records to: {strDate}"
