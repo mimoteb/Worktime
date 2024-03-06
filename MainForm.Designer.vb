@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class MainForm
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,9 +20,8 @@ Partial Class MainForm
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.dgvCalendar = New System.Windows.Forms.DataGridView()
         Me.clnDate = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.clnDay = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -51,14 +50,6 @@ Partial Class MainForm
         Me.dgvCalendar.AllowUserToAddRows = False
         Me.dgvCalendar.AllowUserToDeleteRows = False
         Me.dgvCalendar.BorderStyle = System.Windows.Forms.BorderStyle.None
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 10.86792!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.dgvCalendar.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle2
         Me.dgvCalendar.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgvCalendar.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.clnDate, Me.clnDay})
         Me.dgvCalendar.Location = New System.Drawing.Point(12, 52)
@@ -76,7 +67,7 @@ Partial Class MainForm
         Me.clnDate.HeaderText = "Date"
         Me.clnDate.MinimumWidth = 6
         Me.clnDate.Name = "clnDate"
-        Me.clnDate.Width = 69
+        Me.clnDate.Width = 78
         '
         'clnDay
         '
@@ -84,7 +75,7 @@ Partial Class MainForm
         Me.clnDay.HeaderText = "Day"
         Me.clnDay.MinimumWidth = 6
         Me.clnDay.Name = "clnDay"
-        Me.clnDay.Width = 64
+        Me.clnDay.Width = 71
         '
         'btnOpenDatabase
         '
@@ -178,9 +169,9 @@ Partial Class MainForm
         '
         'dtp
         '
-        Me.dtp.Location = New System.Drawing.Point(923, 366)
+        Me.dtp.Location = New System.Drawing.Point(12, 12)
         Me.dtp.Name = "dtp"
-        Me.dtp.Size = New System.Drawing.Size(200, 31)
+        Me.dtp.Size = New System.Drawing.Size(259, 31)
         Me.dtp.TabIndex = 10
         '
         'GroupBox1

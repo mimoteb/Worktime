@@ -5,9 +5,9 @@ Imports System.Globalization
 Module helpers
     Public DateFormat As String = "yyyy.MM.dd"
     Public TimeFormat As String = "HH:MM:00"
-    Dim DatabaseFileName As String = "C:\Users\sas822\OneDrive - Hanebutt IT-Consult GmbH\databases\worktime.db"
+    'Dim DatabaseFileName As String = "C:\Users\sas822\OneDrive - Hanebutt IT-Consult GmbH\databases\worktime.db"
 
-    Dim connectionString As String = $"Data Source={DatabaseFileName};Version=3;"
+    Dim connectionString As String = $"Data Source={My.Settings.db};Version=3;"
 
     Dim connection As New SQLiteConnection(connectionString)
 

@@ -9,7 +9,7 @@ Public Class MainForm
     Private Sub dgvRecords_CellBeginEdit(sender As Object, e As DataGridViewCellCancelEventArgs) Handles dgvCalendar.CellBeginEdit
         originalValue = dgvCalendar.Rows(e.RowIndex).Cells(e.ColumnIndex).Value
         edited_ID = CInt(dgvCalendar.Rows(e.RowIndex).Cells("ID").Value)
-        'Debug.WriteLine($"[{edited_ID}] Original Cell Value: {originalValue.ToString()}")
+        Debug.WriteLine($"[{edited_ID}] Original Cell Value: {originalValue.ToString()}")
     End Sub
 
     Private Sub dgvRecords_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles dgvCalendar.CellEndEdit
@@ -22,21 +22,19 @@ Public Class MainForm
     End Sub
 
     Private Sub btnOpenDatabase_Click(sender As Object, e As EventArgs) Handles btnOpenDatabase.Click
-        PopulateDataGridView()
-        'ofd.Multiselect = False
-        'ofd.ShowDialog()
+        PopulateData()
+        ofd.Multiselect = False
+        ofd.ShowDialog()
 
-        'If IO.File.Exists(ofd.FileName) Then
-        '    DatabaseFileName = ofd.FileName
-        '    lbl_status.Text = $"Database: {DatabaseFileName}"
-        '    ofd.FileName = DatabaseFileName
+        If IO.File.Exists(ofd.FileName) Then
+            My.Settings.db = ofd.FileName
+            lbl_status.Text = $"Database: {My.Settings.db}"
+            ofd.FileName = My.Settings.db
 
-        '    InsertRecord(Date.Now, 1, 1)
-        '    LoadDataGridView()
-        '    My.Settings.db = ofd.FileName
-        'Else
-        '    MsgBox("Error wrong file", MsgBoxStyle.Critical)
-        'End If
+            My.Settings.db = ofd.FileName
+        Else
+            MsgBox("Error wrong file", MsgBoxStyle.Critical)
+        End If
     End Sub
 
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -47,23 +45,16 @@ Public Class MainForm
         dtp.Value = DateTime.Now
 
         lbl_status.Text = $"Database: {My.Settings.db}"
-        PopulateDataGridView()
+        PopulateData()
     End Sub
 
 
-    Private Sub cal_ValueChanged(sender As Object, e As EventArgs)
-        PopulateDataGridView()
-    End Sub
+    Private Sub PopulateData()
 
-    Private Sub LoadDataGridView()
-
-    End Sub
-    Private Sub PopulateDataGridView()
         dgvCalendar.Rows.Clear()
-        Debug.WriteLine("PopulateDataGridView() was called")
         Dim Month As Integer = dtp.Value.Month
         Dim Year As Integer = dtp.Value.Year
-
+        Debug.WriteLine($"[PopulateData] - Year: {Year} Month: {Month} Selected dgvCalendar rows count: {dgvCalendar.SelectedRows.Count}")
         Dim firstDayOfMonth As New DateTime(Year, Month, 1)
         Dim lastDayOfMonth As New DateTime(Year, Month, DateTime.DaysInMonth(Year, Month))
         Dim currentDate As DateTime = firstDayOfMonth
@@ -84,26 +75,32 @@ Public Class MainForm
                 row.DefaultCellStyle.BackColor = Color.Red
             End If
         Next
-        dgvRecords.Rows.Clear()
+        If dgvCalendar.Rows.Count > 0 Then
+            If dgvCalendar.SelectedRows.Count = 0 Then
+                dgvCalendar.Rows(0).Selected = True
+            End If
+        End If
         If dgvCalendar.SelectedRows.Count = 1 Then
-            Dim targetDate As DateTime = dgvCalendar.SelectedRows.Item(0).Cells("clnDate").Value
+            Dim targetDate As DateTime
+            targetDate = dgvCalendar.SelectedRows.Item(0).Cells("clnDate").Value
+            'Debug.WriteLine($"Target Date: {targetDate}")
             Dim records As List(Of Record) = GetRecordsByDate(targetDate)
 
-            dgvRecords.Rows.Clear()
+            'dgvRecords.Rows.Clear()
             dgvRecords.DataSource = records
 
-            dgvRecords.Columns("startdatetime").HeaderText = "Start Time"
-            dgvRecords.Columns("Duration").HeaderText = "Duration (minutes)"
-            dgvRecords.Columns("User").HeaderText = "User ID"
+            'dgvRecords.Columns("startdatetime").HeaderText = "Start Time"
+            'dgvRecords.Columns("Duration").HeaderText = "Duration (minutes)"
+            'dgvRecords.Columns("User").HeaderText = "User ID"
 
-            dgvRecords.Columns("startdatetime").DefaultCellStyle.Format = "yyyy-MM-dd HH:mm:ss"
-            dgvRecords.Columns("startdatetime").Width = 150
-            dgvRecords.Columns("Duration").Width = 100
-            dgvRecords.Columns("User").Width = 80
+            'dgvRecords.Columns("startdatetime").DefaultCellStyle.Format = "yyyy-MM-dd HH:mm:ss"
+            'dgvRecords.Columns("startdatetime").Width = 150
+            'dgvRecords.Columns("Duration").Width = 100
+            'dgvRecords.Columns("User").Width = 80
 
-            dgvRecords.Columns("startdatetime").SortMode = DataGridViewColumnSortMode.Automatic
-            dgvRecords.Columns("Duration").SortMode = DataGridViewColumnSortMode.Automatic
-            dgvRecords.Columns("User").SortMode = DataGridViewColumnSortMode.Automatic
+            'dgvRecords.Columns("startdatetime").SortMode = DataGridViewColumnSortMode.Automatic
+            'dgvRecords.Columns("Duration").SortMode = DataGridViewColumnSortMode.Automatic
+            'dgvRecords.Columns("User").SortMode = DataGridViewColumnSortMode.Automatic
         End If
 
     End Sub
@@ -120,4 +117,7 @@ Public Class MainForm
 
     End Sub
 
+    Private Sub dtp_ValueChanged(sender As Object, e As EventArgs) Handles dtp.ValueChanged
+        PopulateData()
+    End Sub
 End Class
