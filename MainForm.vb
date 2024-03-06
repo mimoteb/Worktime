@@ -1,6 +1,7 @@
 ﻿Imports System.Data.Entity.Infrastructure.Interception
 Imports System.Security.AccessControl
 Public Class MainForm
+    Public c As New C
     Private originalValue As Object
     Private edited_ID As Integer
     Private var_year As Integer = 2024
@@ -176,4 +177,12 @@ Public Class MainForm
         Return formattedDifference
     End Function
 
+    Private Sub AddRecordbtn_Click(sender As Object, e As EventArgs) Handles AddRecordbtn.Click
+        Dim r As New Record()
+        With r
+            .User = 2
+            .Duration = CalculateDuration()
+            .Timestamp = dgv
+        End With
+    End Sub
 End Class

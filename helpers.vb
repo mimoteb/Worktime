@@ -25,7 +25,8 @@ Module helpers
     End Sub
 
     ' Insert a new record
-    Sub InsertRecord(timestamp As Date, duration As Integer, user As Integer)
+    Sub InsertRecord(r As Record)
+        Dim timestamp As Date, duration As Integer, user As Integer
         Try
             OpenConnection()
 

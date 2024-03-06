@@ -30,6 +30,7 @@ Partial Class MainForm
         Me.ofd = New System.Windows.Forms.OpenFileDialog()
         Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
         Me.lbl_status = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.Infolbl = New System.Windows.Forms.ToolStripStatusLabel()
         Me.dgvRecords = New System.Windows.Forms.DataGridView()
         Me.clnID = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -38,6 +39,7 @@ Partial Class MainForm
         Me.lblSelectedDay = New System.Windows.Forms.Label()
         Me.dtp = New System.Windows.Forms.DateTimePicker()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.AddRecordbtn = New System.Windows.Forms.Button()
         Me.MinuteEnd = New System.Windows.Forms.NumericUpDown()
         Me.HourEnd = New System.Windows.Forms.NumericUpDown()
         Me.MinuteStart = New System.Windows.Forms.NumericUpDown()
@@ -48,7 +50,6 @@ Partial Class MainForm
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.InsertConfirmLabel = New System.Windows.Forms.Label()
-        Me.Button1 = New System.Windows.Forms.Button()
         CType(Me.dgvCalendar, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.StatusStrip1.SuspendLayout()
         CType(Me.dgvRecords, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -114,7 +115,7 @@ Partial Class MainForm
         'StatusStrip1
         '
         Me.StatusStrip1.ImageScalingSize = New System.Drawing.Size(18, 18)
-        Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.lbl_status})
+        Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.Infolbl, Me.lbl_status})
         Me.StatusStrip1.Location = New System.Drawing.Point(0, 815)
         Me.StatusStrip1.Name = "StatusStrip1"
         Me.StatusStrip1.Size = New System.Drawing.Size(1176, 22)
@@ -126,6 +127,12 @@ Partial Class MainForm
         Me.lbl_status.Name = "lbl_status"
         Me.lbl_status.Size = New System.Drawing.Size(199, 17)
         Me.lbl_status.Text = "Database: No Datebase selected"
+        '
+        'Infolbl
+        '
+        Me.Infolbl.Name = "Infolbl"
+        Me.Infolbl.Size = New System.Drawing.Size(37, 17)
+        Me.Infolbl.Text = "INFO"
         '
         'dgvRecords
         '
@@ -190,7 +197,7 @@ Partial Class MainForm
         '
         'GroupBox1
         '
-        Me.GroupBox1.Controls.Add(Me.Button1)
+        Me.GroupBox1.Controls.Add(Me.AddRecordbtn)
         Me.GroupBox1.Controls.Add(Me.MinuteEnd)
         Me.GroupBox1.Controls.Add(Me.HourEnd)
         Me.GroupBox1.Controls.Add(Me.MinuteStart)
@@ -208,6 +215,15 @@ Partial Class MainForm
         Me.GroupBox1.TabIndex = 12
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Add Worktime"
+        '
+        'AddRecordbtn
+        '
+        Me.AddRecordbtn.Location = New System.Drawing.Point(6, 168)
+        Me.AddRecordbtn.Name = "AddRecordbtn"
+        Me.AddRecordbtn.Size = New System.Drawing.Size(342, 40)
+        Me.AddRecordbtn.TabIndex = 17
+        Me.AddRecordbtn.Text = "Add"
+        Me.AddRecordbtn.UseVisualStyleBackColor = True
         '
         'MinuteEnd
         '
@@ -298,15 +314,6 @@ Partial Class MainForm
         Me.InsertConfirmLabel.TabIndex = 12
         Me.InsertConfirmLabel.Text = "Start: 08:00 End: 09:30 duration 1 Hour 30 Minutes"
         '
-        'Button1
-        '
-        Me.Button1.Location = New System.Drawing.Point(443, 146)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(75, 51)
-        Me.Button1.TabIndex = 17
-        Me.Button1.Text = "Add"
-        Me.Button1.UseVisualStyleBackColor = True
-        '
         'MainForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(10.0!, 25.0!)
@@ -364,5 +371,6 @@ Partial Class MainForm
     Friend WithEvents HourEnd As NumericUpDown
     Friend WithEvents MinuteStart As NumericUpDown
     Friend WithEvents HourStart As NumericUpDown
-    Friend WithEvents Button1 As Button
+    Friend WithEvents AddRecordbtn As Button
+    Friend WithEvents Infolbl As ToolStripStatusLabel
 End Class
