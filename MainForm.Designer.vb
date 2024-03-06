@@ -22,6 +22,7 @@ Partial Class MainForm
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.dgvCalendar = New System.Windows.Forms.DataGridView()
         Me.clnDate = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.clnDay = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -36,7 +37,6 @@ Partial Class MainForm
         Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.clnDuration = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.lblSelectedDay = New System.Windows.Forms.Label()
-        Me.Cal = New System.Windows.Forms.MonthCalendar()
         Me.dtp = New System.Windows.Forms.DateTimePicker()
         CType(Me.dgvCalendar, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.StatusStrip1.SuspendLayout()
@@ -47,6 +47,15 @@ Partial Class MainForm
         '
         Me.dgvCalendar.AllowUserToAddRows = False
         Me.dgvCalendar.AllowUserToDeleteRows = False
+        Me.dgvCalendar.BorderStyle = System.Windows.Forms.BorderStyle.None
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 10.86792!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dgvCalendar.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
         Me.dgvCalendar.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgvCalendar.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.clnDate, Me.clnDay})
         Me.dgvCalendar.Location = New System.Drawing.Point(12, 52)
@@ -64,7 +73,7 @@ Partial Class MainForm
         Me.clnDate.HeaderText = "Date"
         Me.clnDate.MinimumWidth = 6
         Me.clnDate.Name = "clnDate"
-        Me.clnDate.Width = 78
+        Me.clnDate.Width = 69
         '
         'clnDay
         '
@@ -72,7 +81,7 @@ Partial Class MainForm
         Me.clnDay.HeaderText = "Day"
         Me.clnDay.MinimumWidth = 6
         Me.clnDay.Name = "clnDay"
-        Me.clnDay.Width = 71
+        Me.clnDay.Width = 64
         '
         'btnOpenDatabase
         '
@@ -164,12 +173,6 @@ Partial Class MainForm
         Me.lblSelectedDay.TabIndex = 8
         Me.lblSelectedDay.Text = "Day"
         '
-        'Cal
-        '
-        Me.Cal.Location = New System.Drawing.Point(828, 106)
-        Me.Cal.Name = "Cal"
-        Me.Cal.TabIndex = 9
-        '
         'dtp
         '
         Me.dtp.Location = New System.Drawing.Point(923, 366)
@@ -183,7 +186,6 @@ Partial Class MainForm
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1176, 837)
         Me.Controls.Add(Me.dtp)
-        Me.Controls.Add(Me.Cal)
         Me.Controls.Add(Me.lblSelectedDay)
         Me.Controls.Add(Me.dgvRecords)
         Me.Controls.Add(Me.StatusStrip1)
@@ -217,6 +219,5 @@ Partial Class MainForm
     Friend WithEvents DataGridViewTextBoxColumn2 As DataGridViewTextBoxColumn
     Friend WithEvents clnDuration As DataGridViewTextBoxColumn
     Friend WithEvents lblSelectedDay As Label
-    Friend WithEvents Cal As MonthCalendar
     Friend WithEvents dtp As DateTimePicker
 End Class

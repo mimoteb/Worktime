@@ -41,7 +41,6 @@ Public Class MainForm
 
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ofd.FileName = My.Settings.db
-        Cal.ShowTodayCircle = True
         dtp.Format = DateTimePickerFormat.Custom
         dtp.CustomFormat = DateFormat
         ' Set the DateTimePicker to today's date and time
@@ -63,7 +62,6 @@ Public Class MainForm
         Debug.WriteLine("PopulateDataGridView() was called")
         Dim Month As Integer = dtp.Value.Month
         Dim Year As Integer = dtp.Value.Year
-
 
         Dim firstDayOfMonth As New DateTime(Year, Month, 1)
         Dim lastDayOfMonth As New DateTime(Year, Month, DateTime.DaysInMonth(Year, Month))
@@ -117,4 +115,5 @@ Public Class MainForm
         End If
 
     End Sub
+
 End Class
