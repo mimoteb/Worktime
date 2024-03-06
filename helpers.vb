@@ -1,6 +1,7 @@
 ﻿Imports System.Data.SQLite
 
 Module helpers
+#Region "Variables and Place Holders"
     Public DateFormat As String = "yyyy.MM.dd"
     Public TimeFormat As String = "HH:MM"
     'Dim DatabaseFileName As String = "C:\Users\sas822\OneDrive - Hanebutt IT-Consult GmbH\databases\worktime.db"
@@ -8,6 +9,8 @@ Module helpers
     Dim connectionString As String = $"Data Source={My.Settings.db};Version=3;"
 
     Dim connection As New SQLiteConnection(connectionString)
+#End Region
+
 
 
 #Region "SQL Functions"
@@ -206,6 +209,20 @@ Module helpers
     End Function
 #End Region
 
+
+
+#Region "general Functions"
+    Sub OpenConnection()
+        If connection.State = ConnectionState.Closed Then
+            connection.Open()
+        End If
+    End Sub
+
+    Sub CloseConnection()
+        If connection.State = ConnectionState.Open Then
+            connection.Close()
+        End If
+    End Sub
     Public Function FormatTimeDifference(totalMinutes As Integer) As String
         Dim formattedDifference As String = ""
 
@@ -225,19 +242,6 @@ Module helpers
 
         Return formattedDifference
     End Function
-
-#Region "general Functions"
-    Sub OpenConnection()
-        If connection.State = ConnectionState.Closed Then
-            connection.Open()
-        End If
-    End Sub
-
-    Sub CloseConnection()
-        If connection.State = ConnectionState.Open Then
-            connection.Close()
-        End If
-    End Sub
 #End Region
 
 End Module

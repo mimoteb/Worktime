@@ -1,11 +1,29 @@
 ﻿Public Class Record
+    Private Property _endTime As String
     Public Property ID As Integer
     Public Property User As Integer
-    Public Property Timestamp As String
     Public Property DayDate As String
     Public Property StartTime As String
-    Public Property EndTime As String
     Public Property Duration As Integer
+    Public Property EndTime As String
+        Get
+            Return _endTime
+        End Get
+        Set(value As String)
+            _endTime = value
+            If value.Contains(":") Then
+                'update self duration variable's value
+                Dim HourStart As Integer = CInt(StartTime.Split(":")(0))
+                Dim MinuteStart As Integer = CInt(StartTime.Split(":")(1))
+                Dim HourEnd As Integer = CInt(value.Split(":")(0))
+                Dim MinuteEnd As Integer = CInt(value.Split(":")(1))
+                Dim tstart As New DateTime(1, 1, 1, HourStart, MinuteStart, 0)
+                Dim tend As New DateTime(1, 1, 1, HourEnd, MinuteEnd, 0)
+                Duration = (tend - tstart).TotalMinutes
+            End If
+
+        End Set
+    End Property
 End Class
 Public Class C
     Private _timeStamp As DateTime
@@ -17,6 +35,7 @@ Public Class C
     Public Property HourEnd As Integer
     Public Property MinuteStart As Integer
     Public Property MinuteEnd As Integer
+
     Public Property TimeStamp As DateTime
         Get
             Return _timeStamp
