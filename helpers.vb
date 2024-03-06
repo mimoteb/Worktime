@@ -5,6 +5,7 @@ Imports System.Globalization
 Module helpers
     Public DateFormat As String = "yyyy.MM.dd"
     Public TimeFormat As String = "HH:MM:00"
+    Public DatabaseFormat As String = "yyyy-MM-dd HH:MM:00"
     'Dim DatabaseFileName As String = "C:\Users\sas822\OneDrive - Hanebutt IT-Consult GmbH\databases\worktime.db"
 
     Dim connectionString As String = $"Data Source={My.Settings.db};Version=3;"
@@ -24,17 +25,17 @@ Module helpers
     End Sub
 
     ' Insert a new record
-    Sub InsertRecord(startdatetime As Date, duration As Integer, user As Integer)
+    Sub InsertRecord(timestamp As Date, duration As Integer, user As Integer)
         Try
             OpenConnection()
 
-            Dim query As String = "INSERT INTO record (startdatetime, duration, user) VALUES (@startdatetime, @Duration, @User)"
+            Dim query As String = "INSERT INTO record (timestamp, duration, user) VALUES (@timestamp, @Duration, @User)"
             Dim command As New SQLiteCommand(query, connection)
 
 
 
             ' Use parameters to avoid SQL injection
-            command.Parameters.AddWithValue("@startdatetime", startdatetime.ToString("yyyy-MM-dd HH:mm:ss")) ' Format the DateTime parameter to match SQLite DATETIME format
+            command.Parameters.AddWithValue("@timestamp", timestamp.ToString("yyyy-MM-dd HH:mm:ss")) ' Format the DateTime parameter to match SQLite DATETIME format
             command.Parameters.AddWithValue("@Duration", duration)
             command.Parameters.AddWithValue("@User", user)
 
@@ -50,7 +51,7 @@ Module helpers
     ' Update the record in the database
     Sub UpdateRecord(record As Record)
 
-        ' ID As Integer, startdatetime As String, duration As Integer, user As Integer
+        ' ID As Integer, timestamp As String, duration As Integer, user As Integer
         Try
             OpenConnection()
 
@@ -134,7 +135,7 @@ Module helpers
             Dim sqliteDateFormat As String = targetDate.ToString("yyyy-MM-dd HH:mm:ss")
 
             ' Use a parameterized query to filter records by date
-            Dim query As String = "SELECT * FROM record WHERE CAST(startdatetime AS DATE) = @TargetDate"
+            Dim query As String = "SELECT * FROM record WHERE CAST(timestamp AS DATE) = @TargetDate"
             Dim command As New SQLiteCommand(query, connection)
 
             ' Use parameters to avoid SQL injection
@@ -161,7 +162,6 @@ Module helpers
 
         Return records
     End Function
-
 
 End Module
 

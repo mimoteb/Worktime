@@ -38,22 +38,25 @@ Partial Class MainForm
         Me.lblSelectedDay = New System.Windows.Forms.Label()
         Me.dtp = New System.Windows.Forms.DateTimePicker()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
-        Me.DurationBox = New System.Windows.Forms.ComboBox()
+        Me.MinuteEnd = New System.Windows.Forms.NumericUpDown()
+        Me.HourEnd = New System.Windows.Forms.NumericUpDown()
+        Me.MinuteStart = New System.Windows.Forms.NumericUpDown()
+        Me.HourStart = New System.Windows.Forms.NumericUpDown()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
-        Me.Label7 = New System.Windows.Forms.Label()
         Me.Label5 = New System.Windows.Forms.Label()
-        Me.Label3 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
-        Me.MinuteEnd = New System.Windows.Forms.TextBox()
-        Me.MinuteStart = New System.Windows.Forms.TextBox()
-        Me.HourEnd = New System.Windows.Forms.TextBox()
-        Me.HourStart = New System.Windows.Forms.TextBox()
-        Me.Label1 = New System.Windows.Forms.Label()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.InsertConfirmLabel = New System.Windows.Forms.Label()
+        Me.Button1 = New System.Windows.Forms.Button()
         CType(Me.dgvCalendar, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.StatusStrip1.SuspendLayout()
         CType(Me.dgvRecords, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox1.SuspendLayout()
+        CType(Me.MinuteEnd, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.HourEnd, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.MinuteStart, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.HourStart, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'dgvCalendar
@@ -90,7 +93,7 @@ Partial Class MainForm
         '
         'btnOpenDatabase
         '
-        Me.btnOpenDatabase.Location = New System.Drawing.Point(997, 52)
+        Me.btnOpenDatabase.Location = New System.Drawing.Point(281, 12)
         Me.btnOpenDatabase.Margin = New System.Windows.Forms.Padding(5, 6, 5, 6)
         Me.btnOpenDatabase.Name = "btnOpenDatabase"
         Me.btnOpenDatabase.Size = New System.Drawing.Size(77, 31)
@@ -187,18 +190,17 @@ Partial Class MainForm
         '
         'GroupBox1
         '
-        Me.GroupBox1.Controls.Add(Me.DurationBox)
+        Me.GroupBox1.Controls.Add(Me.Button1)
+        Me.GroupBox1.Controls.Add(Me.MinuteEnd)
+        Me.GroupBox1.Controls.Add(Me.HourEnd)
+        Me.GroupBox1.Controls.Add(Me.MinuteStart)
+        Me.GroupBox1.Controls.Add(Me.HourStart)
         Me.GroupBox1.Controls.Add(Me.Label6)
         Me.GroupBox1.Controls.Add(Me.Label4)
-        Me.GroupBox1.Controls.Add(Me.Label7)
         Me.GroupBox1.Controls.Add(Me.Label5)
-        Me.GroupBox1.Controls.Add(Me.Label3)
         Me.GroupBox1.Controls.Add(Me.Label2)
-        Me.GroupBox1.Controls.Add(Me.MinuteEnd)
-        Me.GroupBox1.Controls.Add(Me.MinuteStart)
-        Me.GroupBox1.Controls.Add(Me.HourEnd)
-        Me.GroupBox1.Controls.Add(Me.HourStart)
-        Me.GroupBox1.Controls.Add(Me.Label1)
+        Me.GroupBox1.Controls.Add(Me.Label3)
+        Me.GroupBox1.Controls.Add(Me.InsertConfirmLabel)
         Me.GroupBox1.Controls.Add(Me.lblSelectedDay)
         Me.GroupBox1.Location = New System.Drawing.Point(281, 52)
         Me.GroupBox1.Name = "GroupBox1"
@@ -207,19 +209,45 @@ Partial Class MainForm
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Add Worktime"
         '
-        'DurationBox
+        'MinuteEnd
         '
-        Me.DurationBox.FormattingEnabled = True
-        Me.DurationBox.Items.AddRange(New Object() {"15 Minutes", "30 Minutes", "45 Minutes", "1 Hour", "1 Hour 15 Minutes", "1 Hour 30 Minutes", "1 Hour 45 Minutes", "2 Hours"})
-        Me.DurationBox.Location = New System.Drawing.Point(352, 97)
-        Me.DurationBox.Name = "DurationBox"
-        Me.DurationBox.Size = New System.Drawing.Size(121, 33)
-        Me.DurationBox.TabIndex = 16
+        Me.MinuteEnd.Location = New System.Drawing.Point(281, 97)
+        Me.MinuteEnd.Maximum = New Decimal(New Integer() {59, 0, 0, 0})
+        Me.MinuteEnd.Name = "MinuteEnd"
+        Me.MinuteEnd.Size = New System.Drawing.Size(67, 31)
+        Me.MinuteEnd.TabIndex = 16
+        Me.MinuteEnd.Value = New Decimal(New Integer() {30, 0, 0, 0})
+        '
+        'HourEnd
+        '
+        Me.HourEnd.Location = New System.Drawing.Point(208, 97)
+        Me.HourEnd.Maximum = New Decimal(New Integer() {23, 0, 0, 0})
+        Me.HourEnd.Name = "HourEnd"
+        Me.HourEnd.Size = New System.Drawing.Size(67, 31)
+        Me.HourEnd.TabIndex = 16
+        Me.HourEnd.Value = New Decimal(New Integer() {9, 0, 0, 0})
+        '
+        'MinuteStart
+        '
+        Me.MinuteStart.Location = New System.Drawing.Point(98, 97)
+        Me.MinuteStart.Maximum = New Decimal(New Integer() {59, 0, 0, 0})
+        Me.MinuteStart.Name = "MinuteStart"
+        Me.MinuteStart.Size = New System.Drawing.Size(67, 31)
+        Me.MinuteStart.TabIndex = 16
+        '
+        'HourStart
+        '
+        Me.HourStart.Location = New System.Drawing.Point(25, 97)
+        Me.HourStart.Maximum = New Decimal(New Integer() {23, 0, 0, 0})
+        Me.HourStart.Name = "HourStart"
+        Me.HourStart.Size = New System.Drawing.Size(67, 31)
+        Me.HourStart.TabIndex = 16
+        Me.HourStart.Value = New Decimal(New Integer() {8, 0, 0, 0})
         '
         'Label6
         '
         Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(260, 66)
+        Me.Label6.Location = New System.Drawing.Point(276, 66)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(72, 25)
         Me.Label6.TabIndex = 15
@@ -228,20 +256,11 @@ Partial Class MainForm
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(85, 66)
+        Me.Label4.Location = New System.Drawing.Point(93, 66)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(72, 25)
         Me.Label4.TabIndex = 15
         Me.Label4.Text = "Minute"
-        '
-        'Label7
-        '
-        Me.Label7.AutoSize = True
-        Me.Label7.Location = New System.Drawing.Point(347, 66)
-        Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(86, 25)
-        Me.Label7.TabIndex = 15
-        Me.Label7.Text = "Duration"
         '
         'Label5
         '
@@ -252,60 +271,41 @@ Partial Class MainForm
         Me.Label5.TabIndex = 15
         Me.Label5.Text = "Hour"
         '
-        'Label3
-        '
-        Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(30, 66)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(54, 25)
-        Me.Label3.TabIndex = 15
-        Me.Label3.Text = "Hour"
-        '
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(163, 97)
+        Me.Label2.Location = New System.Drawing.Point(171, 99)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(31, 25)
         Me.Label2.TabIndex = 14
         Me.Label2.Text = "To"
         '
-        'MinuteEnd
+        'Label3
         '
-        Me.MinuteEnd.Location = New System.Drawing.Point(265, 94)
-        Me.MinuteEnd.Name = "MinuteEnd"
-        Me.MinuteEnd.Size = New System.Drawing.Size(67, 31)
-        Me.MinuteEnd.TabIndex = 13
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(20, 66)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(54, 25)
+        Me.Label3.TabIndex = 15
+        Me.Label3.Text = "Hour"
         '
-        'MinuteStart
+        'InsertConfirmLabel
         '
-        Me.MinuteStart.Location = New System.Drawing.Point(90, 94)
-        Me.MinuteStart.Name = "MinuteStart"
-        Me.MinuteStart.Size = New System.Drawing.Size(67, 31)
-        Me.MinuteStart.TabIndex = 13
+        Me.InsertConfirmLabel.AutoSize = True
+        Me.InsertConfirmLabel.Location = New System.Drawing.Point(20, 131)
+        Me.InsertConfirmLabel.Name = "InsertConfirmLabel"
+        Me.InsertConfirmLabel.Size = New System.Drawing.Size(430, 25)
+        Me.InsertConfirmLabel.TabIndex = 12
+        Me.InsertConfirmLabel.Text = "Start: 08:00 End: 09:30 duration 1 Hour 30 Minutes"
         '
-        'HourEnd
+        'Button1
         '
-        Me.HourEnd.Location = New System.Drawing.Point(200, 94)
-        Me.HourEnd.Name = "HourEnd"
-        Me.HourEnd.Size = New System.Drawing.Size(59, 31)
-        Me.HourEnd.TabIndex = 13
-        '
-        'HourStart
-        '
-        Me.HourStart.Location = New System.Drawing.Point(25, 94)
-        Me.HourStart.Name = "HourStart"
-        Me.HourStart.Size = New System.Drawing.Size(59, 31)
-        Me.HourStart.TabIndex = 13
-        '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(20, 172)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(430, 25)
-        Me.Label1.TabIndex = 12
-        Me.Label1.Text = "Start: 08:00 End: 09:30 duration 1 Hour 30 Minutes"
+        Me.Button1.Location = New System.Drawing.Point(443, 146)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(75, 51)
+        Me.Button1.TabIndex = 17
+        Me.Button1.Text = "Add"
+        Me.Button1.UseVisualStyleBackColor = True
         '
         'MainForm
         '
@@ -329,6 +329,10 @@ Partial Class MainForm
         CType(Me.dgvRecords, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
+        CType(Me.MinuteEnd, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.HourEnd, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.MinuteStart, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.HourStart, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -350,16 +354,15 @@ Partial Class MainForm
     Friend WithEvents lblSelectedDay As Label
     Friend WithEvents dtp As DateTimePicker
     Friend WithEvents GroupBox1 As GroupBox
-    Friend WithEvents Label1 As Label
+    Friend WithEvents InsertConfirmLabel As Label
     Friend WithEvents Label2 As Label
-    Friend WithEvents MinuteStart As TextBox
-    Friend WithEvents HourStart As TextBox
-    Friend WithEvents DurationBox As ComboBox
     Friend WithEvents Label6 As Label
     Friend WithEvents Label4 As Label
-    Friend WithEvents Label7 As Label
     Friend WithEvents Label5 As Label
     Friend WithEvents Label3 As Label
-    Friend WithEvents MinuteEnd As TextBox
-    Friend WithEvents HourEnd As TextBox
+    Friend WithEvents MinuteEnd As NumericUpDown
+    Friend WithEvents HourEnd As NumericUpDown
+    Friend WithEvents MinuteStart As NumericUpDown
+    Friend WithEvents HourStart As NumericUpDown
+    Friend WithEvents Button1 As Button
 End Class

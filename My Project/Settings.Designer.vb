@@ -113,18 +113,6 @@ Namespace My
                 Me("EndMinute") = value
             End Set
         End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
-        Public Property DurationBox() As Integer
-            Get
-                Return CType(Me("DurationBox"),Integer)
-            End Get
-            Set
-                Me("DurationBox") = value
-            End Set
-        End Property
     End Class
 End Namespace
 

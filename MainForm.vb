@@ -1,4 +1,5 @@
 ﻿Imports System.Data.Entity.Infrastructure.Interception
+Imports System.Security.AccessControl
 Public Class MainForm
     Private originalValue As Object
     Private edited_ID As Integer
@@ -41,7 +42,6 @@ Public Class MainForm
         ofd.FileName = My.Settings.db
         dtp.Format = DateTimePickerFormat.Custom
         dtp.CustomFormat = DateFormat
-        DurationBox.SelectedIndex = 2
         ' Set the DateTimePicker to today's date and time
         dtp.Value = DateTime.Now
 
@@ -123,8 +123,57 @@ Public Class MainForm
 
     Private Function GenerateRecord() As Record
         Dim record As New Record
+        With record
+            .User = 2
+            .Timestamp = New DateTime().Now.ToString(DatabaseFormat)
+
+            ' "yyyy-MM-dd HH:MM:00"
+            .Timestamp = .Timestamp.ToString(DatabaseFormat)
+            .Duration = 15
+        End With
         record.User = 2
-        record.Timestamp =
+
         Return record
     End Function
+    Private Sub Insert_Controls(sender As NumericUpDown, e As EventArgs) Handles HourStart.ValueChanged,
+        HourEnd.ValueChanged, MinuteStart.ValueChanged, MinuteEnd.ValueChanged,
+        HourStart.KeyUp, HourEnd.KeyUp, MinuteStart.KeyUp, MinuteEnd.KeyUp
+        Dim duration As Integer = CalculateDuration()
+
+        'Start: 08:00 End: 09:30 duration 1 Hour 30 Minutes
+        InsertConfirmLabel.Text = $"Start: {HourStart.Value}:{MinuteStart.Value} End: {HourEnd.Value}:{MinuteEnd.Value} Duration {FormatTimeDifference(duration)}"
+    End Sub
+    Private Function CalculateDuration() As Integer
+        Dim timespan As New TimeSpan()
+        ' Create DateTime objects for start and end times
+        Dim startTime As New DateTime(1, 1, 1, HourStart.Value, MinuteStart.Value, 0)
+        Dim endTime As New DateTime(1, 1, 1, HourEnd.Value, MinuteEnd.Value, 0)
+        ' Calculate the time difference
+        Dim timeDifference As TimeSpan = endTime - startTime
+        Dim TotalMinutes As Integer = timeDifference.TotalMinutes
+        Debug.WriteLine($"[startTime]: {startTime} [endTime]: {endTime} [timeDifference]: {timeDifference}")
+        Dim strTimeDifference As String = FormatTimeDifference(TotalMinutes)
+
+        Return TotalMinutes
+    End Function
+    Private Function FormatTimeDifference(totalMinutes As Integer) As String
+        Dim formattedDifference As String = ""
+
+        If totalMinutes >= 60 Then
+            Dim hours As Integer = totalMinutes \ 60
+            formattedDifference += $"{hours} Hour "
+            totalMinutes -= hours * 60
+        End If
+
+        If totalMinutes > 0 Then
+            formattedDifference += $"{totalMinutes} Minute"
+        End If
+
+        If formattedDifference = "" Then
+            formattedDifference = "0 Minutes"
+        End If
+
+        Return formattedDifference
+    End Function
+
 End Class
