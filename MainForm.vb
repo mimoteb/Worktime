@@ -40,6 +40,9 @@
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ' Data Bindings (Settings)
         HourStart.DataBindings.Add("Value", My.Settings, "HourStart", False, DataSourceUpdateMode.OnPropertyChanged)
+        HourEnd.DataBindings.Add("Value", My.Settings, "HourEnd", False, DataSourceUpdateMode.OnPropertyChanged)
+        MinuteStart.DataBindings.Add("Value", My.Settings, "MinuteStart", DataSourceUpdateMode.OnPropertyChanged)
+        MinuteEnd.DataBindings.Add("Value", My.Settings, "MinuteEnd", DataSourceUpdateMode.OnPropertyChanged)
 
         ofd.FileName = My.Settings.db
         dtp.Format = DateTimePickerFormat.Custom
