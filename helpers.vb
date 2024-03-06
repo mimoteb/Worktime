@@ -120,20 +120,18 @@ Module helpers
 
     Function GetRecordsByDate(targetDate As DateTime) As List(Of Record)
         Dim records As New List(Of Record)
-        Debug.WriteLine(targetDate)
         Try
             OpenConnection()
 
-            ' Convert targetDate to SQLite3 date format
-            Dim sqliteDateFormat As String = targetDate.ToString("yyyy-MM-dd HH:mm:ss")
 
             ' Use a parameterized query to filter records by date
-            Dim query As String = "SELECT * FROM record WHERE CAST(timestamp AS DATE) = @TargetDate"
+            Dim query As String = "SELECT * FROM record WHERE timestamp like '%@TargetDate%'"
             Dim command As New SQLiteCommand(query, connection)
 
             ' Use parameters to avoid SQL injection
-            command.Parameters.AddWithValue("@TargetDate", sqliteDateFormat)
-
+            command.Parameters.AddWithValue("@TargetDate", DatabaseFormat)
+            Debug.WriteLine($"[GetRecordsByDate] targetDate:{targetDate}")
+            Debug.WriteLine($"[GetRecordsByDate] Query: {command.CommandText}")
             Dim reader As SQLiteDataReader = command.ExecuteReader()
 
             If reader.HasRows Then
@@ -145,6 +143,8 @@ Module helpers
                     record.User = reader.GetInt32(reader.GetOrdinal("user"))
                     records.Add(record)
                 End While
+            Else
+                Debug.WriteLine($"[GetRecordsByDate] reader.HasRows: {reader.HasRows}")
             End If
 
         Catch ex As Exception

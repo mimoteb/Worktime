@@ -83,9 +83,7 @@ Public Class MainForm
             End If
         End If
         If dgvCalendar.SelectedRows.Count = 1 Then
-            Dim targetDate As DateTime
-            targetDate = dgvCalendar.SelectedRows.Item(0).Cells("clnDate").Value
-            'Debug.WriteLine($"Target Date: {targetDate}")
+            Dim targetDate As New DateTime = dtp.
             Dim records As List(Of Record) = GetRecordsByDate(targetDate)
 
             'dgvRecords.Rows.Clear()
@@ -182,7 +180,8 @@ Public Class MainForm
         With r
             .User = 2
             .Duration = CalculateDuration()
-            .Timestamp = dgv
+            '.Timestamp = dgv
         End With
     End Sub
+
 End Class
