@@ -41,6 +41,7 @@ Public Class MainForm
         ofd.FileName = My.Settings.db
         dtp.Format = DateTimePickerFormat.Custom
         dtp.CustomFormat = DateFormat
+        DurationBox.SelectedIndex = 2
         ' Set the DateTimePicker to today's date and time
         dtp.Value = DateTime.Now
 
