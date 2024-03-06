@@ -22,7 +22,7 @@ Partial Class MainForm
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.dgvCalendar = New System.Windows.Forms.DataGridView()
         Me.clnDate = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.clnDay = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -38,9 +38,12 @@ Partial Class MainForm
         Me.clnDuration = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.lblSelectedDay = New System.Windows.Forms.Label()
         Me.dtp = New System.Windows.Forms.DateTimePicker()
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.Label1 = New System.Windows.Forms.Label()
         CType(Me.dgvCalendar, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.StatusStrip1.SuspendLayout()
         CType(Me.dgvRecords, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
         '
         'dgvCalendar
@@ -48,14 +51,14 @@ Partial Class MainForm
         Me.dgvCalendar.AllowUserToAddRows = False
         Me.dgvCalendar.AllowUserToDeleteRows = False
         Me.dgvCalendar.BorderStyle = System.Windows.Forms.BorderStyle.None
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 10.86792!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.dgvCalendar.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 10.86792!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dgvCalendar.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle2
         Me.dgvCalendar.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgvCalendar.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.clnDate, Me.clnDay})
         Me.dgvCalendar.Location = New System.Drawing.Point(12, 52)
@@ -85,7 +88,7 @@ Partial Class MainForm
         '
         'btnOpenDatabase
         '
-        Me.btnOpenDatabase.Location = New System.Drawing.Point(194, 12)
+        Me.btnOpenDatabase.Location = New System.Drawing.Point(997, 52)
         Me.btnOpenDatabase.Margin = New System.Windows.Forms.Padding(5, 6, 5, 6)
         Me.btnOpenDatabase.Name = "btnOpenDatabase"
         Me.btnOpenDatabase.Size = New System.Drawing.Size(77, 31)
@@ -125,13 +128,13 @@ Partial Class MainForm
         Me.dgvRecords.AllowUserToDeleteRows = False
         Me.dgvRecords.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgvRecords.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.clnID, Me.DataGridViewTextBoxColumn1, Me.DataGridViewTextBoxColumn2, Me.clnDuration})
-        Me.dgvRecords.Location = New System.Drawing.Point(281, 52)
+        Me.dgvRecords.Location = New System.Drawing.Point(281, 275)
         Me.dgvRecords.Margin = New System.Windows.Forms.Padding(5, 6, 5, 6)
         Me.dgvRecords.MultiSelect = False
         Me.dgvRecords.Name = "dgvRecords"
         Me.dgvRecords.RowHeadersWidth = 45
         Me.dgvRecords.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgvRecords.Size = New System.Drawing.Size(533, 729)
+        Me.dgvRecords.Size = New System.Drawing.Size(533, 506)
         Me.dgvRecords.TabIndex = 7
         '
         'clnID
@@ -167,7 +170,7 @@ Partial Class MainForm
         'lblSelectedDay
         '
         Me.lblSelectedDay.AutoSize = True
-        Me.lblSelectedDay.Location = New System.Drawing.Point(288, 17)
+        Me.lblSelectedDay.Location = New System.Drawing.Point(20, 27)
         Me.lblSelectedDay.Name = "lblSelectedDay"
         Me.lblSelectedDay.Size = New System.Drawing.Size(44, 25)
         Me.lblSelectedDay.TabIndex = 8
@@ -180,13 +183,33 @@ Partial Class MainForm
         Me.dtp.Size = New System.Drawing.Size(200, 31)
         Me.dtp.TabIndex = 10
         '
+        'GroupBox1
+        '
+        Me.GroupBox1.Controls.Add(Me.Label1)
+        Me.GroupBox1.Controls.Add(Me.lblSelectedDay)
+        Me.GroupBox1.Location = New System.Drawing.Point(281, 52)
+        Me.GroupBox1.Name = "GroupBox1"
+        Me.GroupBox1.Size = New System.Drawing.Size(533, 214)
+        Me.GroupBox1.TabIndex = 12
+        Me.GroupBox1.TabStop = False
+        Me.GroupBox1.Text = "Add Worktime"
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(20, 169)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(67, 25)
+        Me.Label1.TabIndex = 12
+        Me.Label1.Text = "Label1"
+        '
         'MainForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(10.0!, 25.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1176, 837)
+        Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.dtp)
-        Me.Controls.Add(Me.lblSelectedDay)
         Me.Controls.Add(Me.dgvRecords)
         Me.Controls.Add(Me.StatusStrip1)
         Me.Controls.Add(Me.Button2)
@@ -200,6 +223,8 @@ Partial Class MainForm
         Me.StatusStrip1.ResumeLayout(False)
         Me.StatusStrip1.PerformLayout()
         CType(Me.dgvRecords, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.GroupBox1.ResumeLayout(False)
+        Me.GroupBox1.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -220,4 +245,6 @@ Partial Class MainForm
     Friend WithEvents clnDuration As DataGridViewTextBoxColumn
     Friend WithEvents lblSelectedDay As Label
     Friend WithEvents dtp As DateTimePicker
+    Friend WithEvents GroupBox1 As GroupBox
+    Friend WithEvents Label1 As Label
 End Class

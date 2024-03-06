@@ -47,6 +47,7 @@ Public Class MainForm
         dtp.Value = DateTime.Now
 
         lbl_status.Text = $"Database: {My.Settings.db}"
+        PopulateDataGridView()
     End Sub
 
 
@@ -109,9 +110,12 @@ Public Class MainForm
 
     Private Sub dgvCalendar_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvCalendar.CellClick
         If dgvCalendar.Rows.Count > 0 Then
-            Dim strDate = Convert.ToDateTime(dgvCalendar.SelectedRows.Item(0).Cells("clnDate").Value).ToString("dddd, dd MMMM yyyy")
+            Dim row As DataGridViewRow = dgvCalendar.SelectedRows(0)
 
-            lblSelectedDay.Text = $"Currently Viewing Date: {strDate}"
+            Dim strDate = Convert.ToDateTime(row.Cells("clnDate").Value).ToString("dddd, dd MMMM yyyy")
+
+            lblSelectedDay.Text = $"Add Records to: {strDate}"
+            lblSelectedDay.BackColor = row.DefaultCellStyle.BackColor
         End If
 
     End Sub
