@@ -34,12 +34,14 @@ Module helpers
         Try
             OpenConnection()
 
-            Dim query As String = "INSERT INTO record (user, timestamp, duration) VALUES (@user, @timestamp, @duration)"
+            Dim query As String = "INSERT INTO record (User,DayDate,StartTime,EndTime,Duration) VALUES (@User,@DayDate,@StartTime,@EndTime,Duration)"
             Dim command As New SQLiteCommand(query, connection)
 
             ' Use parameters to avoid SQL injection
             command.Parameters.AddWithValue("@user", r.User)
-            command.Parameters.AddWithValue("@timestamp", r.Timestamp) ' Format the DateTime parameter to match SQLite DATETIME format
+            command.Parameters.AddWithValue("@DayDate", r.DayDate)
+            command.Parameters.AddWithValue("@StartTime", r.StartTime)
+            command.Parameters.AddWithValue("@EndTime", r.EndTime)
             command.Parameters.AddWithValue("@duration", r.Duration)
             command.ExecuteNonQuery()
 
@@ -55,15 +57,16 @@ Module helpers
         Try
             OpenConnection()
 
-            Dim query As String = "UPDATE record SET timestamp = @timestamp, duration = @duration, user = @user WHERE id = @id"
+            Dim query As String = "Update record set DayDate=@daydate, StartTime=@starttime, EndTime=@endtime, Duration=@duration where ID=@id and User=@user"
             Dim command As New SQLiteCommand(query, connection)
-
+            '
             ' Use parameters to avoid SQL injection
             command.Parameters.AddWithValue("@id", r.ID)
-            command.Parameters.AddWithValue("@timestamp", r.Timestamp)
-            command.Parameters.AddWithValue("@duration", r.Duration)
             command.Parameters.AddWithValue("@user", r.User)
-
+            command.Parameters.AddWithValue("@daydate", r.DayDate)
+            command.Parameters.AddWithValue("@starttime", r.StartTime)
+            command.Parameters.AddWithValue("@endtime", r.EndTime)
+            command.Parameters.AddWithValue("@duration", r.Duration)
             command.ExecuteNonQuery()
 
         Catch ex As Exception
