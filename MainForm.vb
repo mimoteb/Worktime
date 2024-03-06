@@ -42,10 +42,10 @@ Public Class MainForm
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ofd.FileName = My.Settings.db
         Cal.ShowTodayCircle = True
-        'Cal.Format = DateTimePickerFormat.Custom
-        'Cal.CustomFormat = DateFormat
+        dtp.Format = DateTimePickerFormat.Custom
+        dtp.CustomFormat = DateFormat
         ' Set the DateTimePicker to today's date and time
-        'Cal.Value = DateTime.Now
+        dtp.Value = DateTime.Now
 
         lbl_status.Text = $"Database: {My.Settings.db}"
     End Sub
@@ -61,8 +61,8 @@ Public Class MainForm
     Private Sub PopulateDataGridView()
         dgvCalendar.Rows.Clear()
         Debug.WriteLine("PopulateDataGridView() was called")
-        Dim Month As Integer = Cal.Value.Month
-        Dim Year As Integer = Cal.Value.Year
+        Dim Month As Integer = dtp.Value.Month
+        Dim Year As Integer = dtp.Value.Year
 
 
         Dim firstDayOfMonth As New DateTime(Year, Month, 1)

@@ -37,6 +37,7 @@ Partial Class MainForm
         Me.clnDuration = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.lblSelectedDay = New System.Windows.Forms.Label()
         Me.Cal = New System.Windows.Forms.MonthCalendar()
+        Me.dtp = New System.Windows.Forms.DateTimePicker()
         CType(Me.dgvCalendar, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.StatusStrip1.SuspendLayout()
         CType(Me.dgvRecords, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -169,11 +170,19 @@ Partial Class MainForm
         Me.Cal.Name = "Cal"
         Me.Cal.TabIndex = 9
         '
+        'dtp
+        '
+        Me.dtp.Location = New System.Drawing.Point(923, 366)
+        Me.dtp.Name = "dtp"
+        Me.dtp.Size = New System.Drawing.Size(200, 31)
+        Me.dtp.TabIndex = 10
+        '
         'MainForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(10.0!, 25.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1176, 837)
+        Me.Controls.Add(Me.dtp)
         Me.Controls.Add(Me.Cal)
         Me.Controls.Add(Me.lblSelectedDay)
         Me.Controls.Add(Me.dgvRecords)
@@ -209,4 +218,5 @@ Partial Class MainForm
     Friend WithEvents clnDuration As DataGridViewTextBoxColumn
     Friend WithEvents lblSelectedDay As Label
     Friend WithEvents Cal As MonthCalendar
+    Friend WithEvents dtp As DateTimePicker
 End Class
