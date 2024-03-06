@@ -120,16 +120,20 @@ Module helpers
 
     Function GetRecordsByDate(targetDate As DateTime) As List(Of Record)
         Dim records As New List(Of Record)
+        Dim Year As Integer = targetDate.Year
+        Dim Month As Integer = targetDate.Month
+        Dim Day As Integer = targetDate.Day
         Try
             OpenConnection()
 
-
             ' Use a parameterized query to filter records by date
-            Dim query As String = "SELECT * FROM record WHERE timestamp like '%@TargetDate%'"
+            Dim query As String = "SELECT * FROM record WHERE CAST(strftime('%m', timestamp) AS INTEGER) = @month AND CAST(strftime('%Y', timestamp) AS INTEGER) = @year  AND CAST(strftime('%d', timestamp) AS INTEGER) = @day"
             Dim command As New SQLiteCommand(query, connection)
-
             ' Use parameters to avoid SQL injection
-            command.Parameters.AddWithValue("@TargetDate", DatabaseFormat)
+            command.Parameters.AddWithValue("@year", Year)
+            command.Parameters.AddWithValue("@month", Month)
+            command.Parameters.AddWithValue("@day", Day)
+            'Add debug information to diagnose the sql query
             Debug.WriteLine($"[GetRecordsByDate] targetDate:{targetDate}")
             Debug.WriteLine($"[GetRecordsByDate] Query: {command.CommandText}")
             Dim reader As SQLiteDataReader = command.ExecuteReader()

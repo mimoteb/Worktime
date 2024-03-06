@@ -49,8 +49,6 @@ Public Class MainForm
         lbl_status.Text = $"Database: {My.Settings.db}"
         PopulateData()
     End Sub
-
-
     Private Sub PopulateData()
 
         dgvCalendar.Rows.Clear()
@@ -83,8 +81,7 @@ Public Class MainForm
             End If
         End If
         If dgvCalendar.SelectedRows.Count = 1 Then
-            Dim targetDate As New DateTime = dtp.
-            Dim records As List(Of Record) = GetRecordsByDate(targetDate)
+            Dim records As List(Of Record) = GetRecordsByDate(dtp.Value)
 
             'dgvRecords.Rows.Clear()
             dgvRecords.DataSource = records
@@ -184,4 +181,11 @@ Public Class MainForm
         End With
     End Sub
 
+    Private Sub dgvCalendar_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvCalendar.SelectionChanged
+        If dgvCalendar.Rows.Count > 0 Then
+            If dgvCalendar.SelectedRows.Count > 0 Then
+                PopulateData()
+            End If
+        End If
+    End Sub
 End Class

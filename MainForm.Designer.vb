@@ -29,8 +29,8 @@ Partial Class MainForm
         Me.Button2 = New System.Windows.Forms.Button()
         Me.ofd = New System.Windows.Forms.OpenFileDialog()
         Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
-        Me.lbl_status = New System.Windows.Forms.ToolStripStatusLabel()
         Me.Infolbl = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.lbl_status = New System.Windows.Forms.ToolStripStatusLabel()
         Me.dgvRecords = New System.Windows.Forms.DataGridView()
         Me.clnID = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -122,17 +122,17 @@ Partial Class MainForm
         Me.StatusStrip1.TabIndex = 6
         Me.StatusStrip1.Text = "StatusStrip1"
         '
-        'lbl_status
-        '
-        Me.lbl_status.Name = "lbl_status"
-        Me.lbl_status.Size = New System.Drawing.Size(199, 17)
-        Me.lbl_status.Text = "Database: No Datebase selected"
-        '
         'Infolbl
         '
         Me.Infolbl.Name = "Infolbl"
         Me.Infolbl.Size = New System.Drawing.Size(37, 17)
         Me.Infolbl.Text = "INFO"
+        '
+        'lbl_status
+        '
+        Me.lbl_status.Name = "lbl_status"
+        Me.lbl_status.Size = New System.Drawing.Size(199, 17)
+        Me.lbl_status.Text = "Database: No Datebase selected"
         '
         'dgvRecords
         '
