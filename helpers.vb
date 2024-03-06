@@ -1,6 +1,4 @@
 ﻿Imports System.Data.SQLite
-Imports System.IO
-Imports System.Globalization
 
 Module helpers
     Public DateFormat As String = "yyyy.MM.dd"
@@ -45,23 +43,20 @@ Module helpers
         End Try
     End Sub
 
-    ' Update the record in the database
-    Sub UpdateRecord(record As Record)
-
-        ' ID As Integer, timestamp As String, duration As Integer, user As Integer
+    ' Update a record in the database
+    Sub UpdateRecord(r As Record)
         Try
             OpenConnection()
 
-            Dim query As String = "UPDATE record SET Timestamp = @Timestamp, duration = @Duration, user = @User WHERE id = @ID"
+            Dim query As String = "UPDATE record SET timestamp = @timestamp, duration = @duration, user = @user WHERE id = @id"
             Dim command As New SQLiteCommand(query, connection)
 
             ' Use parameters to avoid SQL injection
-            command.Parameters.AddWithValue("@ID", record.ID)
-            command.Parameters.AddWithValue("@Timestamp", record.Timestamp)
-            command.Parameters.AddWithValue("@Duration", record.Duration)
-            command.Parameters.AddWithValue("@User", record.User)
+            command.Parameters.AddWithValue("@id", r.ID)
+            command.Parameters.AddWithValue("@timestamp", r.Timestamp)
+            command.Parameters.AddWithValue("@duration", r.Duration)
+            command.Parameters.AddWithValue("@user", r.User)
 
-            Debug.WriteLine(command.CommandText)
             command.ExecuteNonQuery()
 
         Catch ex As Exception
@@ -71,16 +66,17 @@ Module helpers
         End Try
     End Sub
 
-    ' Delete a record by ID
-    Sub DeleteRecord(id As Integer)
+    ' Delete a record
+    Sub DeleteRecord(r As Record)
         Try
             OpenConnection()
 
-            Dim query As String = "DELETE FROM record WHERE id = @ID"
+            Dim query As String = "DELETE FROM record WHERE id = @id and user=@user"
             Dim command As New SQLiteCommand(query, connection)
 
             ' Use parameters to avoid SQL injection
-            command.Parameters.AddWithValue("@ID", id)
+            command.Parameters.AddWithValue("@id", r.ID)
+            command.Parameters.AddWithValue("@user", r.User)
 
             command.ExecuteNonQuery()
 
