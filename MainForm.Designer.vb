@@ -32,10 +32,6 @@ Partial Class MainForm
         Me.Infolbl = New System.Windows.Forms.ToolStripStatusLabel()
         Me.lbl_status = New System.Windows.Forms.ToolStripStatusLabel()
         Me.dgvRecords = New System.Windows.Forms.DataGridView()
-        Me.clnID = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.clnDuration = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.lblSelectedDay = New System.Windows.Forms.Label()
         Me.dtp = New System.Windows.Forms.DateTimePicker()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
@@ -43,13 +39,13 @@ Partial Class MainForm
         Me.MinuteEnd = New System.Windows.Forms.NumericUpDown()
         Me.HourEnd = New System.Windows.Forms.NumericUpDown()
         Me.MinuteStart = New System.Windows.Forms.NumericUpDown()
+        Me.HourStart = New System.Windows.Forms.NumericUpDown()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.InsertConfirmLabel = New System.Windows.Forms.Label()
-        Me.HourStart = New System.Windows.Forms.NumericUpDown()
         CType(Me.dgvCalendar, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.StatusStrip1.SuspendLayout()
         CType(Me.dgvRecords, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -71,6 +67,7 @@ Partial Class MainForm
         Me.dgvCalendar.Margin = New System.Windows.Forms.Padding(5, 6, 5, 6)
         Me.dgvCalendar.MultiSelect = False
         Me.dgvCalendar.Name = "dgvCalendar"
+        Me.dgvCalendar.ReadOnly = True
         Me.dgvCalendar.RowHeadersWidth = 45
         Me.dgvCalendar.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.dgvCalendar.Size = New System.Drawing.Size(259, 729)
@@ -139,7 +136,6 @@ Partial Class MainForm
         Me.dgvRecords.AllowUserToAddRows = False
         Me.dgvRecords.AllowUserToDeleteRows = False
         Me.dgvRecords.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgvRecords.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.clnID, Me.DataGridViewTextBoxColumn1, Me.DataGridViewTextBoxColumn2, Me.clnDuration})
         Me.dgvRecords.Location = New System.Drawing.Point(281, 275)
         Me.dgvRecords.Margin = New System.Windows.Forms.Padding(5, 6, 5, 6)
         Me.dgvRecords.MultiSelect = False
@@ -148,36 +144,6 @@ Partial Class MainForm
         Me.dgvRecords.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.dgvRecords.Size = New System.Drawing.Size(533, 506)
         Me.dgvRecords.TabIndex = 7
-        '
-        'clnID
-        '
-        Me.clnID.HeaderText = "ID"
-        Me.clnID.MinimumWidth = 6
-        Me.clnID.Name = "clnID"
-        Me.clnID.Width = 110
-        '
-        'DataGridViewTextBoxColumn1
-        '
-        Me.DataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
-        Me.DataGridViewTextBoxColumn1.HeaderText = "Start"
-        Me.DataGridViewTextBoxColumn1.MinimumWidth = 6
-        Me.DataGridViewTextBoxColumn1.Name = "DataGridViewTextBoxColumn1"
-        Me.DataGridViewTextBoxColumn1.Width = 77
-        '
-        'DataGridViewTextBoxColumn2
-        '
-        Me.DataGridViewTextBoxColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
-        Me.DataGridViewTextBoxColumn2.HeaderText = "End"
-        Me.DataGridViewTextBoxColumn2.MinimumWidth = 6
-        Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
-        Me.DataGridViewTextBoxColumn2.Width = 71
-        '
-        'clnDuration
-        '
-        Me.clnDuration.HeaderText = "Duration"
-        Me.clnDuration.MinimumWidth = 6
-        Me.clnDuration.Name = "clnDuration"
-        Me.clnDuration.Width = 110
         '
         'lblSelectedDay
         '
@@ -251,6 +217,15 @@ Partial Class MainForm
         Me.MinuteStart.Size = New System.Drawing.Size(67, 31)
         Me.MinuteStart.TabIndex = 16
         '
+        'HourStart
+        '
+        Me.HourStart.Location = New System.Drawing.Point(25, 97)
+        Me.HourStart.Maximum = New Decimal(New Integer() {23, 0, 0, 0})
+        Me.HourStart.Name = "HourStart"
+        Me.HourStart.Size = New System.Drawing.Size(67, 31)
+        Me.HourStart.TabIndex = 16
+        Me.HourStart.Value = Global.Worktime.My.MySettings.Default.HourStart
+        '
         'Label6
         '
         Me.Label6.AutoSize = True
@@ -305,15 +280,6 @@ Partial Class MainForm
         Me.InsertConfirmLabel.TabIndex = 12
         Me.InsertConfirmLabel.Text = "Start: 08:00 End: 09:30 duration 1 Hour 30 Minutes"
         '
-        'HourStart
-        '
-        Me.HourStart.Location = New System.Drawing.Point(25, 97)
-        Me.HourStart.Maximum = New Decimal(New Integer() {23, 0, 0, 0})
-        Me.HourStart.Name = "HourStart"
-        Me.HourStart.Size = New System.Drawing.Size(67, 31)
-        Me.HourStart.TabIndex = 16
-        Me.HourStart.Value = Global.Worktime.My.MySettings.Default.HourStart
-        '
         'MainForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(10.0!, 25.0!)
@@ -354,10 +320,6 @@ Partial Class MainForm
     Friend WithEvents clnDate As DataGridViewTextBoxColumn
     Friend WithEvents clnDay As DataGridViewTextBoxColumn
     Friend WithEvents dgvRecords As DataGridView
-    Friend WithEvents clnID As DataGridViewTextBoxColumn
-    Friend WithEvents DataGridViewTextBoxColumn1 As DataGridViewTextBoxColumn
-    Friend WithEvents DataGridViewTextBoxColumn2 As DataGridViewTextBoxColumn
-    Friend WithEvents clnDuration As DataGridViewTextBoxColumn
     Friend WithEvents lblSelectedDay As Label
     Friend WithEvents dtp As DateTimePicker
     Friend WithEvents GroupBox1 As GroupBox

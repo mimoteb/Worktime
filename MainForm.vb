@@ -40,9 +40,9 @@
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ' Data Bindings (Settings)
         HourStart.DataBindings.Add("Value", My.Settings, "HourStart", False, DataSourceUpdateMode.OnPropertyChanged)
-        HourEnd.DataBindings.Add("Value", My.Settings, "HourEnd", False, DataSourceUpdateMode.OnPropertyChanged)
-        MinuteStart.DataBindings.Add("Value", My.Settings, "MinuteStart", DataSourceUpdateMode.OnPropertyChanged)
-        MinuteEnd.DataBindings.Add("Value", My.Settings, "MinuteEnd", DataSourceUpdateMode.OnPropertyChanged)
+        'HourEnd.DataBindings.Add("Value", My.Settings, "HourEnd", False, DataSourceUpdateMode.OnPropertyChanged)
+        'MinuteStart.DataBindings.Add("Value", My.Settings, "MinuteStart", DataSourceUpdateMode.OnPropertyChanged)
+        'MinuteEnd.DataBindings.Add("Value", My.Settings, "MinuteEnd", DataSourceUpdateMode.OnPropertyChanged)
 
         ofd.FileName = My.Settings.db
         dtp.Format = DateTimePickerFormat.Custom
@@ -117,7 +117,7 @@
     End Sub
 
     Private Sub dtp_ValueChanged(sender As Object, e As EventArgs) Handles dtp.ValueChanged
-        'PopulateData(dtp)
+        PopulateData(dtp)
         Dim records As List(Of Record) = GetMonthRecords(dtp.Value)
         dgvRecords.DataSource = records
     End Sub
@@ -168,21 +168,17 @@
         End With
     End Sub
 
-    Private Sub dgvCalendar_CellContentClick(sender As Object, e As EventArgs) Handles dgvCalendar.SelectionChanged
+    Private Sub dgvCalendar_CellContentClick(sender As Object, e As EventArgs) Handles dgvCalendar.SelectionChanged, dgvCalendar.CellContentClick ', dgvCalendar.CellContentClick
         If dgvCalendar.Rows.Count > 0 Then
             If dgvCalendar.SelectedRows.Count > 0 Then
-                PopulateData(dgvCalendar)
                 Dim records As List(Of Record) = GetDayRecords(dtp.Value)
                 dgvRecords.DataSource = records
+                dgvRecords.Columns("ID").Visible = False
+                dgvRecords.Columns("User").Visible = False
+                dgvRecords.Columns("Timestamp").Visible = False
             End If
         End If
     End Sub
 
-    Private Sub Insert_Controls(sender As Object, e As EventArgs) Handles MinuteStart.ValueChanged, MinuteStart.KeyUp, MinuteEnd.ValueChanged, MinuteEnd.KeyUp, HourStart.ValueChanged, HourStart.KeyUp, HourEnd.ValueChanged, HourEnd.KeyUp
 
-    End Sub
-
-    Private Sub Insert_Controls(sender As Object, e As KeyEventArgs)
-
-    End Sub
 End Class

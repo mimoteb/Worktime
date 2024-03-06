@@ -2,8 +2,7 @@
 
 Module helpers
     Public DateFormat As String = "yyyy.MM.dd"
-    Public TimeFormat As String = "HH:MM:00"
-    Public DatabaseFormat As String = "yyyy-MM-dd HH:MM:00"
+    Public TimeFormat As String = "HH:MM"
     'Dim DatabaseFileName As String = "C:\Users\sas822\OneDrive - Hanebutt IT-Consult GmbH\databases\worktime.db"
 
     Dim connectionString As String = $"Data Source={My.Settings.db};Version=3;"
@@ -24,6 +23,21 @@ Module helpers
 
     ' Insert a new record
     Sub InsertRecord(r As Record)
+        '        -- Insert a timestamp in the "yyyy.dd.MM" format
+        'INSERT INTO your_table (timestamp) VALUES ('2024.05.03');
+
+        '-- Query using strftime to retrieve the date components
+        'Select Case
+        '    strftime('%Y', timestamp) AS year,
+        '    strftime('%d', timestamp) AS day,
+        '    strftime('%m', timestamp) AS month
+        'From your_table;
+        'Dim query As String = "INSERT INTO your_table (timestamp) VALUES (strftime('%Y.%d.%m', @YourDate))"
+        'Dim command As New SQLiteCommand(query, connection)
+        'command.Parameters.AddWithValue("@YourDate", yourDateTime.ToString("yyyy-MM-dd"))
+
+        '' Execute the command to insert the record
+        'command.ExecuteNonQuery()
         Try
             OpenConnection()
 
@@ -160,7 +174,7 @@ Module helpers
     End Function
 
     Function GetDayRecords(TargetDate As DateTime) As List(Of Record)
-        Dim records As New List(Of Record)
+        Dim r As New List(Of Record)
         Dim Year As Integer = TargetDate.Year
         Dim Month As Integer = TargetDate.Month
         Dim Day As Integer = TargetDate.Day
@@ -186,7 +200,7 @@ Module helpers
                     record.Timestamp = reader.GetString(reader.GetOrdinal("timestamp"))
                     record.Duration = reader.GetInt32(reader.GetOrdinal("duration"))
                     record.User = reader.GetInt32(reader.GetOrdinal("user"))
-                    records.Add(record)
+                    r.Add(record)
                 End While
             Else
                 Debug.WriteLine($"[GetRecordsByDate] reader.HasRows: {reader.HasRows}")
@@ -198,7 +212,7 @@ Module helpers
             CloseConnection()
         End Try
 
-        Return records
+        Return r
     End Function
     Public Function FormatTimeDifference(totalMinutes As Integer) As String
         Dim formattedDifference As String = ""

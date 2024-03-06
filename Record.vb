@@ -2,8 +2,10 @@
     Public Property ID As Integer
     Public Property User As Integer
     Public Property Timestamp As String
+    Public Property DayDate As String
+    Public Property StartTime As String
+    Public Property EndTime As String
     Public Property Duration As Integer
-
 End Class
 Public Class C
     Private _timeStamp As DateTime
