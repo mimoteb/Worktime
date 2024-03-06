@@ -28,7 +28,6 @@ Partial Class MainForm
         Me.btnOpenDatabase = New System.Windows.Forms.Button()
         Me.Button2 = New System.Windows.Forms.Button()
         Me.ofd = New System.Windows.Forms.OpenFileDialog()
-        Me.dtp = New System.Windows.Forms.DateTimePicker()
         Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
         Me.lbl_status = New System.Windows.Forms.ToolStripStatusLabel()
         Me.dgvRecords = New System.Windows.Forms.DataGridView()
@@ -37,6 +36,7 @@ Partial Class MainForm
         Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.clnDuration = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.lblSelectedDay = New System.Windows.Forms.Label()
+        Me.Cal = New System.Windows.Forms.MonthCalendar()
         CType(Me.dgvCalendar, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.StatusStrip1.SuspendLayout()
         CType(Me.dgvRecords, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -92,15 +92,6 @@ Partial Class MainForm
         Me.Button2.TabIndex = 3
         Me.Button2.Text = "Button2"
         Me.Button2.UseVisualStyleBackColor = True
-        '
-        'dtp
-        '
-        Me.dtp.Format = System.Windows.Forms.DateTimePickerFormat.Custom
-        Me.dtp.Location = New System.Drawing.Point(822, 63)
-        Me.dtp.Name = "dtp"
-        Me.dtp.Size = New System.Drawing.Size(174, 31)
-        Me.dtp.TabIndex = 5
-        Me.dtp.Value = New Date(2024, 3, 1, 0, 0, 0, 0)
         '
         'StatusStrip1
         '
@@ -172,15 +163,21 @@ Partial Class MainForm
         Me.lblSelectedDay.TabIndex = 8
         Me.lblSelectedDay.Text = "Day"
         '
+        'Cal
+        '
+        Me.Cal.Location = New System.Drawing.Point(828, 106)
+        Me.Cal.Name = "Cal"
+        Me.Cal.TabIndex = 9
+        '
         'MainForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(10.0!, 25.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1176, 837)
+        Me.Controls.Add(Me.Cal)
         Me.Controls.Add(Me.lblSelectedDay)
         Me.Controls.Add(Me.dgvRecords)
         Me.Controls.Add(Me.StatusStrip1)
-        Me.Controls.Add(Me.dtp)
         Me.Controls.Add(Me.Button2)
         Me.Controls.Add(Me.btnOpenDatabase)
         Me.Controls.Add(Me.dgvCalendar)
@@ -201,7 +198,6 @@ Partial Class MainForm
     Friend WithEvents btnOpenDatabase As Button
     Friend WithEvents Button2 As Button
     Friend WithEvents ofd As OpenFileDialog
-    Friend WithEvents dtp As DateTimePicker
     Friend WithEvents StatusStrip1 As StatusStrip
     Friend WithEvents lbl_status As ToolStripStatusLabel
     Friend WithEvents clnDate As DataGridViewTextBoxColumn
@@ -212,4 +208,5 @@ Partial Class MainForm
     Friend WithEvents DataGridViewTextBoxColumn2 As DataGridViewTextBoxColumn
     Friend WithEvents clnDuration As DataGridViewTextBoxColumn
     Friend WithEvents lblSelectedDay As Label
+    Friend WithEvents Cal As MonthCalendar
 End Class
