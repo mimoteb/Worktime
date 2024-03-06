@@ -26,20 +26,16 @@ Module helpers
 
     ' Insert a new record
     Sub InsertRecord(r As Record)
-        Dim timestamp As Date, duration As Integer, user As Integer
         Try
             OpenConnection()
 
-            Dim query As String = "INSERT INTO record (timestamp, duration, user) VALUES (@timestamp, @Duration, @User)"
+            Dim query As String = "INSERT INTO record (user, timestamp, duration) VALUES (@user, @timestamp, @duration)"
             Dim command As New SQLiteCommand(query, connection)
 
-
-
             ' Use parameters to avoid SQL injection
-            command.Parameters.AddWithValue("@timestamp", timestamp.ToString("yyyy-MM-dd HH:mm:ss")) ' Format the DateTime parameter to match SQLite DATETIME format
-            command.Parameters.AddWithValue("@Duration", duration)
-            command.Parameters.AddWithValue("@User", user)
-
+            command.Parameters.AddWithValue("@user", r.User)
+            command.Parameters.AddWithValue("@timestamp", r.Timestamp) ' Format the DateTime parameter to match SQLite DATETIME format
+            command.Parameters.AddWithValue("@duration", r.Duration)
             command.ExecuteNonQuery()
 
         Catch ex As Exception
