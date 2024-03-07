@@ -54,8 +54,8 @@ Partial Class MainForm
         Me.Label1 = New System.Windows.Forms.Label()
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
         Me.calcIncome = New System.Windows.Forms.Label()
-        Me.Label11 = New System.Windows.Forms.Label()
-        Me.Label12 = New System.Windows.Forms.Label()
+        Me.calcWorkingHours = New System.Windows.Forms.Label()
+        Me.calcHoursSpent = New System.Windows.Forms.Label()
         Me.calcMinute = New System.Windows.Forms.NumericUpDown()
         Me.calcHour = New System.Windows.Forms.NumericUpDown()
         Me.Label10 = New System.Windows.Forms.Label()
@@ -359,8 +359,8 @@ Partial Class MainForm
         'GroupBox3
         '
         Me.GroupBox3.Controls.Add(Me.calcIncome)
-        Me.GroupBox3.Controls.Add(Me.Label11)
-        Me.GroupBox3.Controls.Add(Me.Label12)
+        Me.GroupBox3.Controls.Add(Me.calcWorkingHours)
+        Me.GroupBox3.Controls.Add(Me.calcHoursSpent)
         Me.GroupBox3.Controls.Add(Me.calcMinute)
         Me.GroupBox3.Controls.Add(Me.calcHour)
         Me.GroupBox3.Controls.Add(Me.Label10)
@@ -382,23 +382,23 @@ Partial Class MainForm
         Me.calcIncome.TabIndex = 17
         Me.calcIncome.Text = "Income:"
         '
-        'Label11
+        'calcWorkingHours
         '
-        Me.Label11.AutoSize = True
-        Me.Label11.Location = New System.Drawing.Point(20, 193)
-        Me.Label11.Name = "Label11"
-        Me.Label11.Size = New System.Drawing.Size(182, 25)
-        Me.Label11.TabIndex = 18
-        Me.Label11.Text = "Total working hours:"
+        Me.calcWorkingHours.AutoSize = True
+        Me.calcWorkingHours.Location = New System.Drawing.Point(20, 193)
+        Me.calcWorkingHours.Name = "calcWorkingHours"
+        Me.calcWorkingHours.Size = New System.Drawing.Size(182, 25)
+        Me.calcWorkingHours.TabIndex = 18
+        Me.calcWorkingHours.Text = "Total working hours:"
         '
-        'Label12
+        'calcHoursSpent
         '
-        Me.Label12.AutoSize = True
-        Me.Label12.Location = New System.Drawing.Point(20, 150)
-        Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(200, 25)
-        Me.Label12.TabIndex = 19
-        Me.Label12.Text = "Hours spent in School:"
+        Me.calcHoursSpent.AutoSize = True
+        Me.calcHoursSpent.Location = New System.Drawing.Point(20, 150)
+        Me.calcHoursSpent.Name = "calcHoursSpent"
+        Me.calcHoursSpent.Size = New System.Drawing.Size(200, 25)
+        Me.calcHoursSpent.TabIndex = 19
+        Me.calcHoursSpent.Text = "Hours spent in School:"
         '
         'calcMinute
         '
@@ -533,6 +533,6 @@ Partial Class MainForm
     Friend WithEvents ToolStripStatusLabel1 As ToolStripStatusLabel
     Friend WithEvents MenuStrip1 As MenuStrip
     Friend WithEvents calcIncome As Label
-    Friend WithEvents Label11 As Label
-    Friend WithEvents Label12 As Label
+    Friend WithEvents calcWorkingHours As Label
+    Friend WithEvents calcHoursSpent As Label
 End Class

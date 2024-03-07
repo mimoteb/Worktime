@@ -3,7 +3,7 @@ Imports System.Globalization
 
 Module helpers
 #Region "Variables and Place Holders"
-    Public DateFormat As String = "yyyy.MM.dd"
+    Public DateFormat As String = "yyyy-MM-dd"
     Public TimeFormat As String = "HH:MM"
     'Dim DatabaseFileName As String = "C:\Users\sas822\OneDrive - Hanebutt IT-Consult GmbH\databases\worktime.db"
 
@@ -121,7 +121,7 @@ Module helpers
 
     Function GetDayRecord(TargetDate As String) As List(Of Record)
         Dim Rows As New List(Of Record)
-        TargetDate = DateTime.ParseExact(TargetDate, "yyyy.MM.dd", CultureInfo.InvariantCulture).ToString("yyyy.MM.dd")
+        TargetDate = DateTime.ParseExact(TargetDate, DateFormat, CultureInfo.InvariantCulture).ToString(DateFormat)
         Debug.WriteLine($"GetDayRecord - TargetDate: {TargetDate}")
         Try
             OpenConnection()
@@ -227,6 +227,14 @@ Module helpers
         End If
 
         Return formattedDifference
+    End Function
+    Function ConvertMinutesToHHMM(TotalMinutes As Decimal) As String
+        ' Calculate hours and minutes
+        Dim HH As Integer = CInt(Math.Floor(TotalMinutes / 60))
+        Dim MM As Integer = CInt(TotalMinutes Mod 60)
+
+        ' Format the result
+        Return $"{HH:D2}:{MM:D2}"
     End Function
 #End Region
 
