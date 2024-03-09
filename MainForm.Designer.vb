@@ -43,7 +43,6 @@ Partial Class MainForm
         Me.MinuteEnd = New System.Windows.Forms.NumericUpDown()
         Me.HourEnd = New System.Windows.Forms.NumericUpDown()
         Me.MinuteStart = New System.Windows.Forms.NumericUpDown()
-        Me.HourStart = New System.Windows.Forms.NumericUpDown()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
@@ -57,10 +56,11 @@ Partial Class MainForm
         Me.TeacherLogToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuCalc = New System.Windows.Forms.ToolStripMenuItem()
         Me.SettingsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.mnuDisplaySaturdays = New System.Windows.Forms.ToolStripMenuItem()
-        Me.mnuDisplaySundays = New System.Windows.Forms.ToolStripMenuItem()
         Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuAbout = New System.Windows.Forms.ToolStripMenuItem()
+        Me.HourStart = New System.Windows.Forms.NumericUpDown()
+        Me.mnuDisplaySaturdays = New System.Windows.Forms.ToolStripMenuItem()
+        Me.mnuDisplaySundays = New System.Windows.Forms.ToolStripMenuItem()
         CType(Me.dgvCalendar, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.StatusStrip1.SuspendLayout()
         CType(Me.dgvRecords, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -68,9 +68,9 @@ Partial Class MainForm
         CType(Me.MinuteEnd, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.HourEnd, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.MinuteStart, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.HourStart, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox2.SuspendLayout()
         Me.MenuStrip1.SuspendLayout()
+        CType(Me.HourStart, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'dgvCalendar
@@ -265,15 +265,6 @@ Partial Class MainForm
         Me.MinuteStart.Size = New System.Drawing.Size(60, 29)
         Me.MinuteStart.TabIndex = 16
         '
-        'HourStart
-        '
-        Me.HourStart.Location = New System.Drawing.Point(22, 81)
-        Me.HourStart.Maximum = New Decimal(New Integer() {23, 0, 0, 0})
-        Me.HourStart.Name = "HourStart"
-        Me.HourStart.Size = New System.Drawing.Size(60, 29)
-        Me.HourStart.TabIndex = 16
-        Me.HourStart.Value = Global.Worktime.My.MySettings.Default.HourStart
-        '
         'Label6
         '
         Me.Label6.AutoSize = True
@@ -364,7 +355,7 @@ Partial Class MainForm
         Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TeacherLogToolStripMenuItem, Me.SettingsToolStripMenuItem, Me.HelpToolStripMenuItem})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
-        Me.MenuStrip1.Size = New System.Drawing.Size(1422, 25)
+        Me.MenuStrip1.Size = New System.Drawing.Size(1422, 26)
         Me.MenuStrip1.TabIndex = 15
         Me.MenuStrip1.Text = "MenuStrip1"
         '
@@ -372,7 +363,7 @@ Partial Class MainForm
         '
         Me.TeacherLogToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnuCalc})
         Me.TeacherLogToolStripMenuItem.Name = "TeacherLogToolStripMenuItem"
-        Me.TeacherLogToolStripMenuItem.Size = New System.Drawing.Size(91, 21)
+        Me.TeacherLogToolStripMenuItem.Size = New System.Drawing.Size(91, 22)
         Me.TeacherLogToolStripMenuItem.Text = "Teacher Log"
         '
         'mnuCalc
@@ -385,30 +376,14 @@ Partial Class MainForm
         '
         Me.SettingsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnuDisplaySaturdays, Me.mnuDisplaySundays})
         Me.SettingsToolStripMenuItem.Name = "SettingsToolStripMenuItem"
-        Me.SettingsToolStripMenuItem.Size = New System.Drawing.Size(66, 21)
+        Me.SettingsToolStripMenuItem.Size = New System.Drawing.Size(66, 22)
         Me.SettingsToolStripMenuItem.Text = "Settings"
-        '
-        'mnuDisplaySaturdays
-        '
-        Me.mnuDisplaySaturdays.Checked = Global.Worktime.My.MySettings.Default.mnuShowSaturdaysChecked
-        Me.mnuDisplaySaturdays.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.mnuDisplaySaturdays.Name = "mnuDisplaySaturdays"
-        Me.mnuDisplaySaturdays.Size = New System.Drawing.Size(198, 24)
-        Me.mnuDisplaySaturdays.Text = "Show Saturdays"
-        '
-        'mnuDisplaySundays
-        '
-        Me.mnuDisplaySundays.Checked = Global.Worktime.My.MySettings.Default.mnuShowSundaysChecked
-        Me.mnuDisplaySundays.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.mnuDisplaySundays.Name = "mnuDisplaySundays"
-        Me.mnuDisplaySundays.Size = New System.Drawing.Size(198, 24)
-        Me.mnuDisplaySundays.Text = "Show Sundays"
         '
         'HelpToolStripMenuItem
         '
         Me.HelpToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnuAbout})
         Me.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem"
-        Me.HelpToolStripMenuItem.Size = New System.Drawing.Size(47, 21)
+        Me.HelpToolStripMenuItem.Size = New System.Drawing.Size(47, 22)
         Me.HelpToolStripMenuItem.Text = "Help"
         '
         'mnuAbout
@@ -416,6 +391,27 @@ Partial Class MainForm
         Me.mnuAbout.Name = "mnuAbout"
         Me.mnuAbout.Size = New System.Drawing.Size(117, 24)
         Me.mnuAbout.Text = "About"
+        '
+        'HourStart
+        '
+        Me.HourStart.Location = New System.Drawing.Point(22, 81)
+        Me.HourStart.Maximum = New Decimal(New Integer() {23, 0, 0, 0})
+        Me.HourStart.Name = "HourStart"
+        Me.HourStart.Size = New System.Drawing.Size(60, 29)
+        Me.HourStart.TabIndex = 16
+        Me.HourStart.Value = Global.Worktime.My.MySettings.Default.HourStart
+        '
+        'mnuDisplaySaturdays
+        '
+        Me.mnuDisplaySaturdays.Name = "mnuDisplaySaturdays"
+        Me.mnuDisplaySaturdays.Size = New System.Drawing.Size(198, 24)
+        Me.mnuDisplaySaturdays.Text = "Show Saturdays"
+        '
+        'mnuDisplaySundays
+        '
+        Me.mnuDisplaySundays.Name = "mnuDisplaySundays"
+        Me.mnuDisplaySundays.Size = New System.Drawing.Size(198, 24)
+        Me.mnuDisplaySundays.Text = "Show Sundays"
         '
         'MainForm
         '
@@ -446,11 +442,11 @@ Partial Class MainForm
         CType(Me.MinuteEnd, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.HourEnd, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.MinuteStart, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.HourStart, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox2.ResumeLayout(False)
         Me.GroupBox2.PerformLayout()
         Me.MenuStrip1.ResumeLayout(False)
         Me.MenuStrip1.PerformLayout()
+        CType(Me.HourStart, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 

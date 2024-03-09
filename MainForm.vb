@@ -203,10 +203,14 @@ Public Class MainForm
         For Each row As DataGridViewRow In dgvCalendar.Rows
             Dim rowDayName As String = row.Cells("clnDayName").Value.ToString()
             If sender.Tag.ToString() = rowDayName Then
-                row.Visible = sender.Checked
+                'row.Visible = sender.Checked
             End If
         Next
         Me.Text = $"sender: {sender.Name} - Tag: {sender.Tag} -  Sender Checked: {sender.Checked}"
+
+    End Sub
+
+    Private Sub MainForm_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
         My.Settings.Save()
     End Sub
 
@@ -214,11 +218,11 @@ Public Class MainForm
 
     End Sub
 
-    Private Sub MainForm_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
-
-        My.Settings.Save()
+    Private Sub Insert_Controls(sender As Object, e As KeyEventArgs)
 
     End Sub
 
+    Private Sub mnuDisplaySaturdays_Click(sender As Object, e As EventArgs) Handles mnuDisplaySundays.Click, mnuDisplaySaturdays.Click
 
+    End Sub
 End Class
