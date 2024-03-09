@@ -3,10 +3,12 @@ Imports System.Net
 Imports Newtonsoft.Json.Linq
 
 Module UpdateChecker
-    Sub CheckForUpdates()
-        Dim appName As String = My.Application.Info.AssemblyName
-        Dim latestVersion As String = GetLatestVersionFromGitHub(appName)
-        Dim currentVersion As String = My.Application.Info.Version.ToString()
+    Dim AppName As String = My.Application.Info.AssemblyName
+    Dim currentVersion As String = My.Application.Info.Version.ToString()
+
+    Function GetLatestVersionFromGitHub(Developer As String, repo As String) As String
+        Dim apiUrl As String = $"https://api.github.com/repos/{Developer}/{repo}/releases/latest"
+        Dim latestVersion As String = ""
 
         If Version.Parse(latestVersion) > Version.Parse(currentVersion) Then
             ' Update is available, implement download and installation logic
@@ -14,12 +16,7 @@ Module UpdateChecker
         Else
             MessageBox.Show("Your application is up-to-date.")
         End If
-    End Sub
-
-    Function GetLatestVersionFromGitHub(appName As String) As String
-        Dim apiUrl As String = $"https://api.github.com/repos/mimoteb/{appName}/releases/latest"
-        Dim latestVersion As String = ""
-
+        Return latestVersion
         Try
             Using client As New WebClient()
                 client.Headers.Add("User-Agent", "request")
@@ -33,4 +30,5 @@ Module UpdateChecker
 
         Return latestVersion
     End Function
+
 End Module
