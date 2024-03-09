@@ -30,14 +30,13 @@ Module helpers
     Sub InsertRecord(r As Record)
         Try
             Connection()
-
             Dim query As String = "INSERT INTO record (User,StartTimeStamp,EndTimeStamp) VALUES (@User, @StartTimeStamp, @EndTimeStamp)"
             Dim cmd As New SQLiteCommand(query, conn)
-
-            ' Use parameters to avoid SQL injection
-            cmd.Parameters.AddWithValue("@user", r.User)
-            cmd.Parameters.AddWithValue("@StartTimeStamp", r.StartTimeStamp)
-            cmd.Parameters.AddWithValue("@EndTimeStamp", r.EndTimeStamp)
+            With cmd.Parameters
+                .AddWithValue("@User", r.User)
+                .AddWithValue("@StartTimeStamp", r.StartTimeStamp)
+                .AddWithValue("@EndTimeStamp", r.EndTimeStamp)
+            End With
             cmd.ExecuteNonQuery()
 
         Catch ex As Exception
