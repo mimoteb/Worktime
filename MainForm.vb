@@ -185,35 +185,26 @@ Public Class MainForm
     End Sub
 
     Private Sub TestToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TestToolStripMenuItem.Click
-        Dim TargetDate As String = "2024.03.10"
         Dim Rows As New List(Of Record)
-        TargetDate = DateTime.ParseExact(TargetDate, DateFormat, CultureInfo.InvariantCulture).ToString(DateFormat)
-        Debug.WriteLine($"GetDayRecord - TargetDate: {TargetDate}")
-        Try
-            Connection(True)
+        Connection()
 
-            Dim query As String = "SELECT * FROM record WHERE DayDate LIKE @TargetDate"
-
+        Dim query As String = "SELECT * FROM record"
             Dim command As New SQLiteCommand(query, conn)
-            command.Parameters.AddWithValue("@TargetDate", TargetDate)
             Dim r As SQLiteDataReader = command.ExecuteReader()
-            Debug.WriteLine($"GetDayRecord - Query: {query}")
+            ' User,DayDate,StartTime,EndTime,Duration
             If r.HasRows Then
                 While r.Read()
                     Dim rec As New Record()
                     With rec
                         .ID = r.GetInt32(r.GetOrdinal("id"))
                         .User = r.GetInt32(r.GetOrdinal("User"))
+                    .StartTimeStamp = r.GetDateTime(r.GetOrdinal("StartTimeStamp"))
+                    .EndTimeStamp = r.GetDateTime(r.GetOrdinal("EndTimeStamp"))
                     End With
                     Rows.Add(rec)
                 End While
-                Debug.WriteLine($"GetDayRecord: r.HasRows: {r.HasRows}")
             End If
+        dgRec.DataSource = Rows
 
-        Catch ex As Exception
-            MessageBox.Show("Error: " & ex.Message)
-        Finally
-            Connection(False)
-        End Try
     End Sub
 End Class

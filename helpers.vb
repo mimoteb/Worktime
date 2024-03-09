@@ -91,7 +91,6 @@ Module helpers
     ' Retrieve all records
     Function GetAllRecords() As List(Of Record)
         Dim Rows As New List(Of Record)
-
         Try
             Connection()
 
@@ -105,6 +104,8 @@ Module helpers
                     With rec
                         .ID = r.GetInt32(r.GetOrdinal("id"))
                         .User = r.GetInt32(r.GetOrdinal("User"))
+                        .StartTimeStamp = r.GetDateTime(r.GetOrdinal("StartTimeStamp"))
+                        .EndTimeStamp = r.GetDateTime(r.GetOrdinal("EndTimeStamp"))
                     End With
                     Rows.Add(rec)
                 End While
