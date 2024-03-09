@@ -45,7 +45,7 @@ Public Class MainForm
     End Sub
 
 
-    Private Sub MainForm_Load(sender As Object, e As EventArgs, c As C) Handles MyBase.Load
+    Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ' Load settings
         My.Settings.Reload()
         mnuDisplaySaturdays.Checked = My.Settings.mnuDisplaySaturdays

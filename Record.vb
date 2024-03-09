@@ -1,24 +1,24 @@
 ﻿Public Class Record
     Private Property _endTime As String
-    Private _tsEnd As DateTime
-    Private _tsStar As DateTime
+    Private _EndTimeStamp As DateTime
+    Private _StartTimeStamp As DateTime
     Public Property ID As Integer
     Public Property User As Integer
     Public Property DayDate As String
     Public Property StartTime As String
     Public Property Duration As Integer
-    Public Property tsStart As DateTime
+    Public Property StartTimeStamp As DateTime
         Get
-            Return tsStart
+            Return _StartTimeStamp
         End Get
         Set(value As DateTime)
 
         End Set
     End Property
 
-    Public Property tsEnd As DateTime
+    Public Property EndTimeStamp As DateTime
         Get
-            Return _tsEnd
+            Return _EndTimeStamp
         End Get
         Set(value As DateTime)
 

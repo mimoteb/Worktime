@@ -6,8 +6,9 @@ Module helpers
     Public TimeFormat As String = "HH:MM"
     Public dbFormat As String = "yyyy-MM-dd HH:mm:00"
     Public DateFormat As String = "yyyy-MM-dd"
-    Public conn As New SQLiteConnection(connectionString)
+
     Public connectionString As String = $"Data Source={My.Settings.ConnectionString};Version=3;"
+    Public conn As New SQLiteConnection(connectionString)
 #Region "Variables and Place Holders"
 
     ' public Variables
