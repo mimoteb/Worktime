@@ -31,8 +31,7 @@ Module helpers
         Try
             Connection()
 
-            Dim query As String = "INSERT INTO record (User,StartTimeStamp,EndTime) " &
-                "VALUES (@User,strftime('%Y.%d.%m', @),@StartTimeStamp,@EndTime)"
+            Dim query As String = "INSERT INTO record (User,StartTimeStamp,EndTimeStamp) VALUES (@User, @StartTimeStamp, @EndTimeStamp)"
             Dim cmd As New SQLiteCommand(query, conn)
 
             ' Use parameters to avoid SQL injection
@@ -53,13 +52,16 @@ Module helpers
         Try
             Connection()
 
-            Dim query As String = "Update record set DayDate=@daydate, StartTime=@starttime, EndTime=@endtime, Duration=@duration where ID=@id and User=@user"
-            Dim command As New SQLiteCommand(query, conn)
+            Dim query As String = "Update record set StartTimeStamp=@StartTimeStamp, EndTimeStamp=@EndTimeStamp where ID=@id and User=@user"
+            Dim cmd As New SQLiteCommand(query, conn)
             '
-            ' Use parameters to avoid SQL injection
-            command.Parameters.AddWithValue("@id", r.ID)
-            command.Parameters.AddWithValue("@user", r.User)
-            command.ExecuteNonQuery()
+            With cmd.Parameters
+                .AddWithValue("@ID", r.ID)
+                .AddWithValue("@User", r.User)
+                .AddWithValue("@StartTimeStamp", r.StartTimeStamp)
+                .AddWithValue("@EndTimeStamp", r.EndTimeStamp)
+            End With
+            cmd.ExecuteNonQuery()
 
         Catch ex As Exception
             MessageBox.Show("Error: " & ex.Message)
