@@ -3,8 +3,6 @@ Imports System.Globalization
 Imports System.Net.Mail
 
 Public Class MainForm
-
-    Public c As New C
     Private originalValue As Object
     Private edited_ID As Integer
 
@@ -48,7 +46,7 @@ Public Class MainForm
     End Sub
 
 
-    Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub MainForm_Load(sender As Object, e As EventArgs, c As C) Handles MyBase.Load
         ' Load settings
         My.Settings.Reload()
         mnuDisplaySaturdays.Checked = My.Settings.mnuDisplaySaturdays
@@ -71,7 +69,7 @@ Public Class MainForm
         End Try
 
         dtp.Format = DateTimePickerFormat.Custom
-        dtp.CustomFormat = DateFormat
+        dtp.CustomFormat = c.DateFormat
         ' Set the DateTimePicker to today's date and time
 
         lbl_status.Text = $"Database: {My.Settings.ConnectionString}"
@@ -80,7 +78,7 @@ Public Class MainForm
         Debug.WriteLine($"UpdateCalendar, displaySAT: {mnuDisplaySaturdays.Checked}, Sun: {mnuDisplaySundays.Checked}")
         ' store the selected item so it will selected again after cleraning the rows
         dgCal.Rows.Clear()
-        Dim sDate As String = dtp.Value.ToString(DateFormat)
+        Dim sDate As String = dtp.Value.ToString(C.DateFormat)
         Dim Month As Integer = dtp.Value.Month
         Dim Year As Integer = dtp.Value.Year
         Dim FirstDay As New DateTime(Year, Month, 1)
@@ -196,11 +194,11 @@ Public Class MainForm
         TargetDate = DateTime.ParseExact(TargetDate, DateFormat, CultureInfo.InvariantCulture).ToString(DateFormat)
         Debug.WriteLine($"GetDayRecord - TargetDate: {TargetDate}")
         Try
-            OpenConnection()
+            C.Connection(True)
 
             Dim query As String = "SELECT * FROM record WHERE DayDate LIKE @TargetDate"
 
-            Dim command As New SQLiteCommand(query, connection)
+            Dim command As New SQLiteCommand(query, C.connection)
             command.Parameters.AddWithValue("@TargetDate", TargetDate)
             Dim r As SQLiteDataReader = command.ExecuteReader()
             Debug.WriteLine($"GetDayRecord - Query: {query}")
@@ -223,7 +221,7 @@ Public Class MainForm
         Catch ex As Exception
             MessageBox.Show("Error: " & ex.Message)
         Finally
-            CloseConnection()
+            C.Connection(False)
         End Try
     End Sub
 End Class

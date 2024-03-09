@@ -3,36 +3,22 @@ Imports System.Data.SQLite
 Imports System.Globalization
 
 Module helpers
+    Public c As New C
 #Region "Variables and Place Holders"
-    Public DateFormat As String = "yyyy.MM.dd"
-    Public TimeFormat As String = "HH:MM"
-    Public dbFormat As String = "yyyy.MM.dd HH:MM:00"
-    Public connectionString As String = $"Data Source={My.Settings.ConnectionString};Version=3;"
 
-    Public connection As New SQLiteConnection(connectionString)
     ' public Variables
 #End Region
 
 #Region "SQL Functions"
-    Sub OpenConnection()
-        If connection.State = ConnectionState.Closed Then
-            connection.Open()
-        End If
-    End Sub
 
-    Sub CloseConnection()
-        If connection.State = ConnectionState.Open Then
-            connection.Close()
-        End If
-    End Sub
     ' Insert a new record
     Sub InsertRecord(r As Record)
         Try
-            OpenConnection()
+            C.Connection()
 
             Dim query As String = "INSERT INTO record (User,DayDate,StartTime,EndTime,Duration) " &
                 "VALUES (@User,strftime('%Y.%d.%m', @YourDate),@StartTime,@EndTime,Duration)"
-            Dim command As New SQLiteCommand(query, connection)
+            Dim command As New SQLiteCommand(query, C.connection)
 
             ' Use parameters to avoid SQL injection
             command.Parameters.AddWithValue("@user", r.User)
@@ -45,17 +31,17 @@ Module helpers
         Catch ex As Exception
             MessageBox.Show("Error: " & ex.Message)
         Finally
-            CloseConnection()
+            c.Connection(False)
         End Try
     End Sub
 
     ' Update a record in the database
     Sub UpdateRecord(r As Record)
         Try
-            OpenConnection()
+            c.Connection()
 
             Dim query As String = "Update record set DayDate=@daydate, StartTime=@starttime, EndTime=@endtime, Duration=@duration where ID=@id and User=@user"
-            Dim command As New SQLiteCommand(query, connection)
+            Dim command As New SQLiteCommand(query, c.Connection.conn)
             '
             ' Use parameters to avoid SQL injection
             command.Parameters.AddWithValue("@id", r.ID)
@@ -69,17 +55,17 @@ Module helpers
         Catch ex As Exception
             MessageBox.Show("Error: " & ex.Message)
         Finally
-            CloseConnection()
+            c.Connection(False)
         End Try
     End Sub
 
     ' Delete a record
     Sub DeleteRecord(r As Record)
         Try
-            OpenConnection()
+            c.Connection()
 
             Dim query As String = "DELETE FROM record WHERE ID=@id and User=@user"
-            Dim command As New SQLiteCommand(query, connection)
+            Dim command As New SQLiteCommand(query, c.conn)
 
             ' Use parameters to avoid SQL injection
             command.Parameters.AddWithValue("@id", r.ID)
@@ -90,7 +76,7 @@ Module helpers
         Catch ex As Exception
             MessageBox.Show("Error: " & ex.Message)
         Finally
-            CloseConnection()
+            c.Connection(False)
         End Try
     End Sub
 
@@ -99,10 +85,10 @@ Module helpers
         Dim Rows As New List(Of Record)
 
         Try
-            OpenConnection()
+            c.Connection()
 
             Dim query As String = "SELECT * FROM record"
-            Dim command As New SQLiteCommand(query, connection)
+            Dim command As New SQLiteCommand(query, c.conn)
             Dim r As SQLiteDataReader = command.ExecuteReader()
             ' User,DayDate,StartTime,EndTime,Duration
             If r.HasRows Then
@@ -123,7 +109,7 @@ Module helpers
         Catch ex As Exception
             MessageBox.Show("Error: " & ex.Message)
         Finally
-            CloseConnection()
+            c.Connection(False)
         End Try
 
         Return Rows
@@ -131,14 +117,14 @@ Module helpers
 
     Function GetDayRecord(TargetDate As String) As List(Of Record)
         Dim Rows As New List(Of Record)
-        TargetDate = DateTime.ParseExact(TargetDate, DateFormat, CultureInfo.InvariantCulture).ToString(DateFormat)
+        TargetDate = DateTime.ParseExact(TargetDate, C.DateFormat, CultureInfo.InvariantCulture).ToString(C.DateFormat)
 
         Try
-            OpenConnection()
+            c.Connection()
 
             Dim query As String = "SELECT * FROM record WHERE DayDate LIKE @TargetDate"
 
-            Dim command As New SQLiteCommand(query, connection)
+            Dim command As New SQLiteCommand(query, c.conn)
             command.Parameters.AddWithValue("@TargetDate", TargetDate)
             Dim r As SQLiteDataReader = command.ExecuteReader()
             If r.HasRows Then
@@ -160,21 +146,21 @@ Module helpers
         Catch ex As Exception
             MessageBox.Show("Error: " & ex.Message)
         Finally
-            CloseConnection()
+            c.Connection(False)
         End Try
 
         Return Rows
     End Function
     Function GetMonth_Records(TargetDate As String) As List(Of Record)
         Dim Rows As New List(Of Record)
-        TargetDate = DateTime.ParseExact(TargetDate, DateFormat, CultureInfo.InvariantCulture).ToString("yyyy.MM")
+        TargetDate = DateTime.ParseExact(TargetDate, C.DateFormat, CultureInfo.InvariantCulture).ToString("yyyy.MM")
 
         Try
-            OpenConnection()
+            c.Connection()
 
             Dim query As String = "SELECT * FROM record WHERE strftime('%Y.%m', DayDate) like '%@TargetDate%'"
 
-            Dim command As New SQLiteCommand(query, connection)
+            Dim command As New SQLiteCommand(query, c.conn)
             command.Parameters.AddWithValue("@TargetDate", TargetDate)
             Dim r As SQLiteDataReader = command.ExecuteReader()
             ' User,DayDate,StartTime,EndTime,Duration
@@ -196,7 +182,7 @@ Module helpers
         Catch ex As Exception
             MessageBox.Show("Error: " & ex.Message)
         Finally
-            CloseConnection()
+            c.Connection(False)
         End Try
 
         Return Rows
