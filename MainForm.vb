@@ -1,8 +1,8 @@
 ﻿Imports System.Data.SQLite
 Imports System.Globalization
-Imports System.Net.Mail
 
 Public Class MainForm
+    Public c As New C
     Private originalValue As Object
     Private edited_ID As Integer
 
@@ -88,10 +88,10 @@ Public Class MainForm
             Dim WillAddRow As Boolean = True
             If curDate.DayOfWeek = DayOfWeek.Saturday AndAlso Not mnuDisplaySaturdays.Checked Then WillAddRow = False
             If curDate.DayOfWeek = DayOfWeek.Sunday AndAlso Not mnuDisplaySundays.Checked Then WillAddRow = False
-            If WillAddRow Then dgCal.Rows.Add(curDate.ToString(DateFormat), curDate.DayOfWeek.ToString)
+            If WillAddRow Then dgCal.Rows.Add(curDate.ToString(C.DateFormat), curDate.DayOfWeek.ToString)
             curDate = curDate.AddDays(1)
         End While
-        c.ViewingMonth = dtp.Value.ToString("yyyy.MM")
+        C.ViewingMonth = dtp.Value.ToString("yyyy.MM")
     End Sub
     Private Sub PopulateData()
         dgCal.Rows.Clear()
@@ -124,7 +124,7 @@ Public Class MainForm
     End Sub
 
     Private Sub dtp_ValueChanged(sender As Object, e As EventArgs) Handles dtp.ValueChanged
-        If dtp.Value.ToString("yyyy.MM") <> c.ViewingMonth Then UpdateCalendar()
+        If dtp.Value.ToString("yyyy.MM") <> C.ViewingMonth Then UpdateCalendar()
     End Sub
 
     Private Sub Insert_Controls(sender As NumericUpDown, e As EventArgs) Handles HourStart.ValueChanged,
@@ -191,14 +191,14 @@ Public Class MainForm
     Private Sub TestToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TestToolStripMenuItem.Click
         Dim TargetDate As String = "2024.03.10"
         Dim Rows As New List(Of Record)
-        TargetDate = DateTime.ParseExact(TargetDate, DateFormat, CultureInfo.InvariantCulture).ToString(DateFormat)
+        TargetDate = DateTime.ParseExact(TargetDate, C.DateFormat, CultureInfo.InvariantCulture).ToString(C.DateFormat)
         Debug.WriteLine($"GetDayRecord - TargetDate: {TargetDate}")
         Try
             C.Connection(True)
 
             Dim query As String = "SELECT * FROM record WHERE DayDate LIKE @TargetDate"
 
-            Dim command As New SQLiteCommand(query, C.connection)
+            Dim command As New SQLiteCommand(query, C.Connection)
             command.Parameters.AddWithValue("@TargetDate", TargetDate)
             Dim r As SQLiteDataReader = command.ExecuteReader()
             Debug.WriteLine($"GetDayRecord - Query: {query}")
