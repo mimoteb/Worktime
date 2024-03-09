@@ -11,8 +11,6 @@ Module helpers
 
     Public connection As New SQLiteConnection(connectionString)
     ' public Variables
-    Public DisplaySaturdaysEnabled = True
-    Public DisplaySundaysEnabled = True
 #End Region
 
 

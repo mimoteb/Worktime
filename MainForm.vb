@@ -41,6 +41,8 @@ Public Class MainForm
     End Sub
 
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ' Load settings
+        My.Settings.Reload()
         ' Check for updates
 
         ' Data Bindings (Settings)
@@ -49,7 +51,11 @@ Public Class MainForm
         'MinuteStart.DataBindings.Add("Value", My.Settings, "MinuteStart", DataSourceUpdateMode.OnPropertyChanged)
         'MinuteEnd.DataBindings.Add("Value", My.Settings, "MinuteEnd", DataSourceUpdateMode.OnPropertyChanged)
 
-        ofd.FileName = My.Settings.db
+        ' Load Saved Settings
+        With My.Settings
+            ofd.FileName = .db
+
+        End With
         dtp.Format = DateTimePickerFormat.Custom
         dtp.CustomFormat = DateFormat
         ' Set the DateTimePicker to today's date and time
@@ -186,8 +192,6 @@ Public Class MainForm
 
     End Sub
 
-
-
     Private Sub mnuCalc_Click(sender As Object, e As EventArgs) Handles mnuCalc.Click
         CalcForm.ShowDialog()
     End Sub
@@ -196,7 +200,28 @@ Public Class MainForm
         AboutForm.ShowDialog()
     End Sub
 
-    Private Sub mnuDisplaySaturdays_Click(sender As Object, e As EventArgs) Handles mnuDisplaySaturdays.Click
+    Private Sub mnuDisplaySaturdays_Click(sender As ToolStripMenuItem, e As EventArgs) Handles mnuDisplaySaturdays.Click, mnuDisplaySundays.Click
+        sender.Checked = Not sender.Checked
+        sender.Tag = DateTime.Now.DayOfWeek
+
+        For Each row As DataGridViewRow In dgvCalendar.Rows
+            Dim rowDayName As String = row.Cells("clnDayName").Value.ToString()
+            If sender.Tag.ToString() = rowDayName Then
+                row.Visible = sender.Checked
+            End If
+        Next
+        Me.Text = $"sender: {sender.Name} - Tag: {sender.Tag} -  Sender Checked: {sender.Checked}"
+    End Sub
+
+    Private Sub Insert_Controls(sender As Object, e As EventArgs) Handles MinuteStart.ValueChanged, MinuteStart.KeyUp, MinuteEnd.ValueChanged, MinuteEnd.KeyUp, HourStart.ValueChanged, HourStart.KeyUp, HourEnd.ValueChanged, HourEnd.KeyUp
+
+    End Sub
+
+    Private Sub Insert_Controls(sender As Object, e As KeyEventArgs)
+
+    End Sub
+
+    Private Sub mnuDisplaySaturdays_Click(sender As Object, e As EventArgs) Handles mnuDisplaySundays.Click, mnuDisplaySaturdays.Click
 
     End Sub
 End Class

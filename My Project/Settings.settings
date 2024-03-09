@@ -20,5 +20,20 @@
     <Setting Name="HourStart" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">8</Value>
     </Setting>
+    <Setting Name="ShowSaturdays" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="mnuShowSaturdaysTag" Type="System.Object" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="mnuShowSaturdaysChecked" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="mnuShowSundaysChecked" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="mnuShowSundaysTag" Type="System.Object" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -125,6 +125,64 @@ Namespace My
                 Me("HourStart") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property ShowSaturdays() As Boolean
+            Get
+                Return CType(Me("ShowSaturdays"),Boolean)
+            End Get
+            Set
+                Me("ShowSaturdays") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute()>  _
+        Public Property mnuShowSaturdaysTag() As Object
+            Get
+                Return CType(Me("mnuShowSaturdaysTag"),Object)
+            End Get
+            Set
+                Me("mnuShowSaturdaysTag") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property mnuShowSaturdaysChecked() As Boolean
+            Get
+                Return CType(Me("mnuShowSaturdaysChecked"),Boolean)
+            End Get
+            Set
+                Me("mnuShowSaturdaysChecked") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property mnuShowSundaysChecked() As Boolean
+            Get
+                Return CType(Me("mnuShowSundaysChecked"),Boolean)
+            End Get
+            Set
+                Me("mnuShowSundaysChecked") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute()>  _
+        Public Property mnuShowSundaysTag() As Object
+            Get
+                Return CType(Me("mnuShowSundaysTag"),Object)
+            End Get
+            Set
+                Me("mnuShowSundaysTag") = value
+            End Set
+        End Property
     End Class
 End Namespace
 
