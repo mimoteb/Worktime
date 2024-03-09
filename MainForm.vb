@@ -3,14 +3,11 @@ Imports System.Globalization
 Imports System.Net.Mail
 
 Public Class MainForm
+
     Public c As New C
     Private originalValue As Object
     Private edited_ID As Integer
-    Dim curViewingMonth As String = Nothing
-    'Private var_year As Integer = 2024
-    'Private var_month As Integer = 4
-    ' Declare DateTimePicker1 with WithEvents
-    ' Hello from VS
+
 #Region "Interface"
     Private Sub mnuCalc_Click(sender As Object, e As EventArgs) Handles mnuCalc.Click
         CalcForm.ShowDialog()
@@ -96,7 +93,7 @@ Public Class MainForm
             If WillAddRow Then dgCal.Rows.Add(curDate.ToString(DateFormat), curDate.DayOfWeek.ToString)
             curDate = curDate.AddDays(1)
         End While
-        curViewingMonth = dtp.Value.ToString("yyyy.MM")
+        c.ViewingMonth = dtp.Value.ToString("yyyy.MM")
     End Sub
     Private Sub PopulateData()
         dgCal.Rows.Clear()
@@ -129,7 +126,7 @@ Public Class MainForm
     End Sub
 
     Private Sub dtp_ValueChanged(sender As Object, e As EventArgs) Handles dtp.ValueChanged
-        If dtp.Value.ToString("yyyy.MM") <> curViewingMonth Then UpdateCalendar()
+        If dtp.Value.ToString("yyyy.MM") <> c.ViewingMonth Then UpdateCalendar()
     End Sub
 
     Private Sub Insert_Controls(sender As NumericUpDown, e As EventArgs) Handles HourStart.ValueChanged,
