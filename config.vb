@@ -22,8 +22,6 @@ Public Class C
     End Property
 
 
-
-
     Public Property ViewingMonth As String
         Get
             Return _ViewingMonth
@@ -32,6 +30,7 @@ Public Class C
             _ViewingMonth = value
         End Set
     End Property
+
     Public Sub Connection(Optional ByVal WillConnect = True)
         If WillConnect Then
             Try
