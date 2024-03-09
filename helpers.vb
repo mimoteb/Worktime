@@ -1,7 +1,8 @@
 ﻿Imports System.Data.SQLite
+Imports System.Globalization
 
 Module helpers
-    Public iewingMonth As String = Nothing
+    Public ViewingMonth As String = Nothing
     Public TimeFormat As String = "HH:MM"
     Public dbFormat As String = "yyyy-MM-dd HH:mm:00"
     Public DateFormat As String = "yyyy-MM-dd"
@@ -13,7 +14,17 @@ Module helpers
 #End Region
 
 #Region "SQL Functions"
+    Public Sub Connection(Optional ByVal WillConnect = True)
+        If WillConnect Then
+            Try
+                conn.Open()
+            Catch ex As Exception
 
+            End Try
+        Else
+            conn.Close()
+        End If
+    End Sub
     ' Insert a new record
     Sub InsertRecord(r As Record)
         Try
@@ -21,7 +32,7 @@ Module helpers
 
             Dim query As String = "INSERT INTO record (User,DayDate,StartTime,EndTime,Duration) " &
                 "VALUES (@User,strftime('%Y.%d.%m', @YourDate),@StartTime,@EndTime,Duration)"
-            Dim command As New SQLiteCommand(query, C.Connection)
+            Dim command As New SQLiteCommand(query, conn)
 
             ' Use parameters to avoid SQL injection
             command.Parameters.AddWithValue("@user", r.User)
@@ -44,7 +55,7 @@ Module helpers
             Connection()
 
             Dim query As String = "Update record set DayDate=@daydate, StartTime=@starttime, EndTime=@endtime, Duration=@duration where ID=@id and User=@user"
-            Dim command As New SQLiteCommand(query, C.Connection.conn)
+            Dim command As New SQLiteCommand(query, conn)
             '
             ' Use parameters to avoid SQL injection
             command.Parameters.AddWithValue("@id", r.ID)
@@ -91,7 +102,7 @@ Module helpers
             Connection()
 
             Dim query As String = "SELECT * FROM record"
-            Dim command As New SQLiteCommand(query, C.conn)
+            Dim command As New SQLiteCommand(query, conn)
             Dim r As SQLiteDataReader = command.ExecuteReader()
             ' User,DayDate,StartTime,EndTime,Duration
             If r.HasRows Then
@@ -120,14 +131,14 @@ Module helpers
 
     Function GetDayRecord(TargetDate As String) As List(Of Record)
         Dim Rows As New List(Of Record)
-        TargetDate = DateTime.ParseExact(TargetDate, C.DateFormat, CultureInfo.InvariantCulture).ToString(C.DateFormat)
+        TargetDate = DateTime.ParseExact(TargetDate, DateFormat, CultureInfo.InvariantCulture).ToString(DateFormat)
 
         Try
             Connection()
 
             Dim query As String = "SELECT * FROM record WHERE DayDate LIKE @TargetDate"
 
-            Dim command As New SQLiteCommand(query, C.conn)
+            Dim command As New SQLiteCommand(query, conn)
             command.Parameters.AddWithValue("@TargetDate", TargetDate)
             Dim r As SQLiteDataReader = command.ExecuteReader()
             If r.HasRows Then

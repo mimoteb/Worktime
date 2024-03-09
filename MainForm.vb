@@ -2,7 +2,6 @@
 Imports System.Globalization
 
 Public Class MainForm
-    Public c As New C
     Private originalValue As Object
     Private edited_ID As Integer
 
@@ -69,7 +68,7 @@ Public Class MainForm
         End Try
 
         dtp.Format = DateTimePickerFormat.Custom
-        dtp.CustomFormat = c.DateFormat
+        dtp.CustomFormat = DateFormat
         ' Set the DateTimePicker to today's date and time
 
         lbl_status.Text = $"Database: {My.Settings.ConnectionString}"
@@ -78,7 +77,7 @@ Public Class MainForm
         Debug.WriteLine($"UpdateCalendar, displaySAT: {mnuDisplaySaturdays.Checked}, Sun: {mnuDisplaySundays.Checked}")
         ' store the selected item so it will selected again after cleraning the rows
         dgCal.Rows.Clear()
-        Dim sDate As String = dtp.Value.ToString(C.DateFormat)
+        Dim sDate As String = dtp.Value.ToString(DateFormat)
         Dim Month As Integer = dtp.Value.Month
         Dim Year As Integer = dtp.Value.Year
         Dim FirstDay As New DateTime(Year, Month, 1)
@@ -88,10 +87,10 @@ Public Class MainForm
             Dim WillAddRow As Boolean = True
             If curDate.DayOfWeek = DayOfWeek.Saturday AndAlso Not mnuDisplaySaturdays.Checked Then WillAddRow = False
             If curDate.DayOfWeek = DayOfWeek.Sunday AndAlso Not mnuDisplaySundays.Checked Then WillAddRow = False
-            If WillAddRow Then dgCal.Rows.Add(curDate.ToString(C.DateFormat), curDate.DayOfWeek.ToString)
+            If WillAddRow Then dgCal.Rows.Add(curDate.ToString(DateFormat), curDate.DayOfWeek.ToString)
             curDate = curDate.AddDays(1)
         End While
-        C.ViewingMonth = dtp.Value.ToString("yyyy.MM")
+        ViewingMonth = dtp.Value.ToString("yyyy.MM")
     End Sub
     Private Sub PopulateData()
         dgCal.Rows.Clear()
@@ -124,7 +123,7 @@ Public Class MainForm
     End Sub
 
     Private Sub dtp_ValueChanged(sender As Object, e As EventArgs) Handles dtp.ValueChanged
-        If dtp.Value.ToString("yyyy.MM") <> C.ViewingMonth Then UpdateCalendar()
+        If dtp.Value.ToString("yyyy.MM") <> ViewingMonth Then UpdateCalendar()
     End Sub
 
     Private Sub Insert_Controls(sender As NumericUpDown, e As EventArgs) Handles HourStart.ValueChanged,
@@ -191,14 +190,14 @@ Public Class MainForm
     Private Sub TestToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TestToolStripMenuItem.Click
         Dim TargetDate As String = "2024.03.10"
         Dim Rows As New List(Of Record)
-        TargetDate = DateTime.ParseExact(TargetDate, C.DateFormat, CultureInfo.InvariantCulture).ToString(C.DateFormat)
+        TargetDate = DateTime.ParseExact(TargetDate, DateFormat, CultureInfo.InvariantCulture).ToString(DateFormat)
         Debug.WriteLine($"GetDayRecord - TargetDate: {TargetDate}")
         Try
-            C.Connection(True)
+            Connection(True)
 
             Dim query As String = "SELECT * FROM record WHERE DayDate LIKE @TargetDate"
 
-            Dim command As New SQLiteCommand(query, C.Connection)
+            Dim command As New SQLiteCommand(query, conn)
             command.Parameters.AddWithValue("@TargetDate", TargetDate)
             Dim r As SQLiteDataReader = command.ExecuteReader()
             Debug.WriteLine($"GetDayRecord - Query: {query}")
@@ -221,7 +220,7 @@ Public Class MainForm
         Catch ex As Exception
             MessageBox.Show("Error: " & ex.Message)
         Finally
-            C.Connection(False)
+            Connection(False)
         End Try
     End Sub
 End Class
