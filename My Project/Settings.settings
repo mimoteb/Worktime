@@ -24,10 +24,10 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="mnuShowSaturdaysChecked" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="mnuShowSundaysChecked" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="mnuShowSundaysTag" Type="System.Object" Scope="User">
       <Value Profile="(Default)" />

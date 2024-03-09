@@ -220,4 +220,9 @@ Public Class MainForm
     Private Sub mnuDisplaySaturdays_Click(sender As Object, e As EventArgs) Handles mnuDisplaySundays.Click, mnuDisplaySaturdays.Click
 
     End Sub
+
+    Private Sub MainForm_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
+        My.Settings.Save()
+        MsgBox(mnuDisplaySaturdays.ToString)
+    End Sub
 End Class
