@@ -3,19 +3,27 @@ Imports System.Globalization
 
 Module helpers
 #Region "Variables and Place Holders"
-    Public DateFormat As String = "yyyy-MM-dd"
+    Public DateFormat As String = "yyyy.MM.dd"
     Public TimeFormat As String = "HH:MM"
-    'Dim DatabaseFileName As String = "C:\Users\sas822\OneDrive - Hanebutt IT-Consult GmbH\databases\worktime.db"
 
-    Public connectionString As String = $"Data Source={My.Settings.db};Version=3;"
+    Public connectionString As String = $"Data Source={My.Settings.ConnectionString};Version=3;"
 
     Public connection As New SQLiteConnection(connectionString)
     ' public Variables
 #End Region
 
-
-
 #Region "SQL Functions"
+    Sub OpenConnection()
+        If connection.State = ConnectionState.Closed Then
+            connection.Open()
+        End If
+    End Sub
+
+    Sub CloseConnection()
+        If connection.State = ConnectionState.Open Then
+            connection.Close()
+        End If
+    End Sub
     ' Insert a new record
     Sub InsertRecord(r As Record)
         Try
@@ -199,17 +207,7 @@ Module helpers
 
 
 #Region "general Functions"
-    Sub OpenConnection()
-        If connection.State = ConnectionState.Closed Then
-            connection.Open()
-        End If
-    End Sub
 
-    Sub CloseConnection()
-        If connection.State = ConnectionState.Open Then
-            connection.Close()
-        End If
-    End Sub
     Public Function FormatTimeDifference(totalMinutes As Integer) As String
         Dim formattedDifference As String = ""
 

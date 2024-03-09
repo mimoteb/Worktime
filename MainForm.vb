@@ -9,17 +9,46 @@ Public Class MainForm
     Private var_month As Integer = 4
     ' Declare DateTimePicker1 with WithEvents
     ' Hello from VS
-    Private Sub dgvRecords_CellBeginEdit(sender As Object, e As DataGridViewCellCancelEventArgs) Handles dgvCalendar.CellBeginEdit
-        originalValue = dgvCalendar.Rows(e.RowIndex).Cells(e.ColumnIndex).Value
-        edited_ID = CInt(dgvCalendar.Rows(e.RowIndex).Cells("ID").Value)
+#Region "Interface"
+    Private Sub mnuCalc_Click(sender As Object, e As EventArgs) Handles mnuCalc.Click
+        CalcForm.ShowDialog()
+    End Sub
+
+    Private Sub mnuAbout_Click(sender As Object, e As EventArgs) Handles mnuAbout.Click
+        AboutForm.ShowDialog()
+    End Sub
+
+    Private Sub mnuDisplaySaturdays_Click(sender As ToolStripMenuItem, e As EventArgs, Optional _UpdateCalendar As Boolean = True) Handles mnuDisplaySaturdays.Click, mnuDisplaySundays.Click
+        sender.Checked = Not sender.Checked
+        If _UpdateCalendar Then UpdateCalendar()
+    End Sub
+
+    Private Sub MainForm_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
+        HourStart.DataBindings.Add("Value", My.Settings, "HourStart", False, DataSourceUpdateMode.OnPropertyChanged)
+        HourEnd.DataBindings.Add("Value", My.Settings, "HourEnd", False, DataSourceUpdateMode.OnPropertyChanged)
+        MinuteStart.DataBindings.Add("Value", My.Settings, "MinuteStart", DataSourceUpdateMode.OnPropertyChanged)
+        MinuteEnd.DataBindings.Add("Value", My.Settings, "MinuteEnd", DataSourceUpdateMode.OnPropertyChanged)
+
+        My.Settings.mnuDisplaySaturdays = mnuDisplaySaturdays.Checked
+        My.Settings.mnuDisplaySundays = mnuDisplaySundays.Checked
+        My.Settings.Save()
+    End Sub
+
+    Private Sub mnuExit_Click(sender As Object, e As EventArgs) Handles mnuExit.Click
+        Application.Exit()
+    End Sub
+#End Region
+    Private Sub dgvRecords_CellBeginEdit(sender As Object, e As DataGridViewCellCancelEventArgs) Handles dgCal.CellBeginEdit
+        originalValue = dgCal.Rows(e.RowIndex).Cells(e.ColumnIndex).Value
+        edited_ID = CInt(dgCal.Rows(e.RowIndex).Cells("ID").Value)
         Debug.WriteLine($"[{edited_ID}] Original Cell Value: {originalValue.ToString()}")
     End Sub
 
-    Private Sub dgvRecords_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles dgvCalendar.CellEndEdit
-        Dim editedValue = dgvCalendar.Rows(e.RowIndex).Cells(e.ColumnIndex).Value
+    Private Sub dgvRecords_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles dgCal.CellEndEdit
+        Dim editedValue = dgCal.Rows(e.RowIndex).Cells(e.ColumnIndex).Value
 
         If Not Object.Equals(originalValue, editedValue) Then
-            Dim record As Record = dgvCalendar.Rows(e.RowIndex).DataBoundItem
+            Dim record As Record = dgCal.Rows(e.RowIndex).DataBoundItem
             UpdateRecord(record)
         End If
     End Sub
@@ -45,7 +74,6 @@ Public Class MainForm
         My.Settings.Reload()
         mnuDisplaySaturdays.Checked = My.Settings.mnuDisplaySaturdays
         mnuDisplaySundays.Checked = My.Settings.mnuDisplaySundays
-
         ' Check for updates
 
 
@@ -56,43 +84,53 @@ Public Class MainForm
 
         lbl_status.Text = $"Database: {My.Settings.db}"
     End Sub
-
-    Private Sub PopulateData(sender As Control)
-
-        dgvCalendar.Rows.Clear()
+    Private Sub UpdateCalendar()
+        Debug.WriteLine($"UpdateCalendar, displaySAT: {mnuDisplaySaturdays.Checked}, Sun: {mnuDisplaySundays.Checked}")
+        ' store the selected item so it will selected again after cleraning the rows
+        dgCal.Rows.Clear()
+        Dim sDate As String = dtp.Value.ToString(DateFormat)
         Dim Month As Integer = dtp.Value.Month
         Dim Year As Integer = dtp.Value.Year
-        Debug.WriteLine($"[PopulateData] - Year: {Year} Month: {Month} Selected dgvCalendar rows count: {dgvCalendar.SelectedRows.Count}")
-        Dim firstDayOfMonth As New DateTime(Year, Month, 1)
-        Dim lastDayOfMonth As New DateTime(Year, Month, DateTime.DaysInMonth(Year, Month))
-        Dim currentDate As DateTime = firstDayOfMonth
-
-        While currentDate <= lastDayOfMonth
-            dgvCalendar.Rows.Add(currentDate.ToString(DateFormat), currentDate.DayOfWeek.ToString)
-            Dim DayofWeek As String = currentDate.DayOfWeek.ToString
-            If DayofWeek = Day.Saturday.ToString Or DayofWeek = Day.Sunday.ToString Then
-                Dim lastRow As Integer = dgvCalendar.Rows.Count - 1
-                dgvCalendar.Rows(lastRow).DefaultCellStyle.BackColor = Color.Red
-            End If
-            currentDate = currentDate.AddDays(1)
+        Dim FirstDay As New DateTime(Year, Month, 1)
+        Dim LastDay As New DateTime(Year, Month, DateTime.DaysInMonth(Year, Month))
+        Dim curDate As DateTime = FirstDay
+        While curDate <= LastDay
+            Dim WillAddRow As Boolean = True
+            If curDate.DayOfWeek = DayOfWeek.Saturday AndAlso Not mnuDisplaySaturdays.Checked Then WillAddRow = False
+            If curDate.DayOfWeek = DayOfWeek.Sunday AndAlso Not mnuDisplaySundays.Checked Then WillAddRow = False
+            If WillAddRow Then dgCal.Rows.Add(curDate.ToString(DateFormat), curDate.DayOfWeek.ToString)
+            curDate = curDate.AddDays(1)
         End While
-        For Each row As DataGridViewRow In dgvCalendar.Rows
+    End Sub
+    Private Sub PopulateData(sender As Control)
+        dgCal.Rows.Clear()
+
+        For Each row As DataGridViewRow In dgCal.Rows
             Dim RowDate As DateTime = row.Cells("clnDate").Value
             ' check if weekends
+            If RowDate.DayOfWeek = DayOfWeek.Saturday Then
+
+            End If
             If RowDate.DayOfWeek = DayOfWeek.Saturday Or RowDate.DayOfWeek = DayOfWeek.Sunday Then
                 row.DefaultCellStyle.BackColor = Color.Red
+                If Not mnuDisplaySaturdays.Checked AndAlso RowDate.DayOfWeek.ToString = sender.Tag.ToString Then
+                    row.Visible = False
+                End If
+                If Not mnuDisplaySundays.Checked AndAlso RowDate.DayOfWeek.ToString = sender.Tag.ToString Then
+                    row.Visible = False
+                End If
             End If
         Next
-        If dgvCalendar.Rows.Count > 0 Then
-            If dgvCalendar.SelectedRows.Count = 0 Then
-                dgvCalendar.Rows(0).Selected = True
+        If dgCal.Rows.Count > 0 Then
+            If dgCal.SelectedRows.Count = 0 Then
+                dgCal.Rows(0).Selected = True
             End If
         End If
     End Sub
 
-    Private Sub dgvCalendar_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvCalendar.CellClick
-        If dgvCalendar.Rows.Count > 0 Then
-            Dim row As DataGridViewRow = dgvCalendar.SelectedRows(0)
+    Private Sub dgvCalendar_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgCal.CellClick
+        If dgCal.Rows.Count > 0 Then
+            Dim row As DataGridViewRow = dgCal.SelectedRows(0)
             Dim strDate = Convert.ToDateTime(row.Cells("clnDate").Value).ToString("dddd, dd MMMM yyyy")
 
             lblSelectedDay.Text = $"Add Records to: {strDate}"
@@ -102,7 +140,7 @@ Public Class MainForm
     End Sub
 
     Private Sub dtp_ValueChanged(sender As Object, e As EventArgs) Handles dtp.ValueChanged
-        PopulateData(dtp)
+        'UpdateCalendar()
     End Sub
 
     Private Sub Insert_Controls(sender As NumericUpDown, e As EventArgs) Handles HourStart.ValueChanged,
@@ -137,85 +175,54 @@ Public Class MainForm
         End With
     End Sub
 
-    Private Sub dgvCalendar_CellContentClick(sender As Object, e As EventArgs) Handles dgvCalendar.SelectionChanged, dgvCalendar.KeyUp
-        If dgvCalendar.SelectedRows.Count > 0 Then
-            Dim Rows As List(Of Record) = GetDayRecord(dgvCalendar.SelectedRows(0).Cells("clnDate").Value)
+    Private Sub dgvCalendar_CellContentClick(sender As Object, e As EventArgs) Handles dgCal.SelectionChanged, dgCal.KeyUp
+        If dgCal.SelectedRows.Count > 0 Then
+            Dim Rows As List(Of Record) = GetDayRecord(dgCal.SelectedRows(0).Cells("clnDate").Value)
             dgvRecords.DataSource = Rows
             dgvRecords.Columns("ID").Visible = False
             dgvRecords.Columns("User").Visible = False
-            Debug.WriteLine($"dgvCalendar_CellContentClick: {dgvCalendar.SelectedRows.Count} - Rows returned from GetDayRecord: {Rows.Count}")
-
+            Debug.WriteLine($"dgvCalendar_CellContentClick: {dgCal.SelectedRows.Count} - Rows returned from GetDayRecord: {Rows.Count}")
         End If
     End Sub
 
     Private Sub test_Click(sender As Object, e As EventArgs) Handles test.Click
-        Dim TargetDate As String = "2024.03.10"
-        Dim Rows As New List(Of Record)
-        TargetDate = DateTime.ParseExact(TargetDate, DateFormat, CultureInfo.InvariantCulture).ToString(DateFormat)
-        Debug.WriteLine($"GetDayRecord - TargetDate: {TargetDate}")
-        Try
-            OpenConnection()
+        UpdateCalendar()
+        'Dim TargetDate As String = "2024.03.10"
+        'Dim Rows As New List(Of Record)
+        'TargetDate = DateTime.ParseExact(TargetDate, DateFormat, CultureInfo.InvariantCulture).ToString(DateFormat)
+        'Debug.WriteLine($"GetDayRecord - TargetDate: {TargetDate}")
+        'Try
+        '    OpenConnection()
 
-            Dim query As String = "SELECT * FROM record WHERE DayDate LIKE @TargetDate"
+        '    Dim query As String = "SELECT * FROM record WHERE DayDate LIKE @TargetDate"
 
-            Dim command As New SQLiteCommand(query, connection)
-            command.Parameters.AddWithValue("@TargetDate", TargetDate)
-            Dim r As SQLiteDataReader = command.ExecuteReader()
-            Debug.WriteLine($"GetDayRecord - Query: {query}")
-            If r.HasRows Then
-                While r.Read()
-                    Dim rec As New Record()
-                    With rec
-                        .ID = r.GetInt32(r.GetOrdinal("id"))
-                        .User = r.GetInt32(r.GetOrdinal("User"))
-                        .DayDate = r.GetString(r.GetOrdinal("DayDate"))
-                        .StartTime = r.GetString(r.GetOrdinal("StartTime"))
-                        .EndTime = r.GetString(r.GetOrdinal("EndTime"))
-                        .Duration = r.GetInt32(r.GetOrdinal("Duration"))
-                    End With
-                    Rows.Add(rec)
-                End While
-                Debug.WriteLine($"GetDayRecord: r.HasRows: {r.HasRows}")
-            End If
+        '    Dim command As New SQLiteCommand(query, connection)
+        '    command.Parameters.AddWithValue("@TargetDate", TargetDate)
+        '    Dim r As SQLiteDataReader = command.ExecuteReader()
+        '    Debug.WriteLine($"GetDayRecord - Query: {query}")
+        '    If r.HasRows Then
+        '        While r.Read()
+        '            Dim rec As New Record()
+        '            With rec
+        '                .ID = r.GetInt32(r.GetOrdinal("id"))
+        '                .User = r.GetInt32(r.GetOrdinal("User"))
+        '                .DayDate = r.GetString(r.GetOrdinal("DayDate"))
+        '                .StartTime = r.GetString(r.GetOrdinal("StartTime"))
+        '                .EndTime = r.GetString(r.GetOrdinal("EndTime"))
+        '                .Duration = r.GetInt32(r.GetOrdinal("Duration"))
+        '            End With
+        '            Rows.Add(rec)
+        '        End While
+        '        Debug.WriteLine($"GetDayRecord: r.HasRows: {r.HasRows}")
+        '    End If
 
-        Catch ex As Exception
-            MessageBox.Show("Error: " & ex.Message)
-        Finally
-            CloseConnection()
-        End Try
+        'Catch ex As Exception
+        '    MessageBox.Show("Error: " & ex.Message)
+        'Finally
+        '    CloseConnection()
+        'End Try
 
     End Sub
 
-    Private Sub mnuCalc_Click(sender As Object, e As EventArgs) Handles mnuCalc.Click
-        CalcForm.ShowDialog()
-    End Sub
-
-    Private Sub mnuAbout_Click(sender As Object, e As EventArgs) Handles mnuAbout.Click
-        AboutForm.ShowDialog()
-    End Sub
-
-    Private Sub mnuDisplaySaturdays_Click(sender As ToolStripMenuItem, e As EventArgs) Handles mnuDisplaySaturdays.Click, mnuDisplaySundays.Click
-        sender.Checked = Not sender.Checked
-        sender.Tag = DateTime.Now.DayOfWeek
-
-        For Each row As DataGridViewRow In dgvCalendar.Rows
-            Dim rowDayName As String = row.Cells("clnDayName").Value.ToString()
-            If sender.Tag.ToString() = rowDayName Then
-                'row.Visible = sender.Checked
-            End If
-        Next
-        Me.Text = $"sender: {sender.Name} - Tag: {sender.Tag} -  Sender Checked: {sender.Checked}"
-    End Sub
-
-    Private Sub MainForm_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
-        HourStart.DataBindings.Add("Value", My.Settings, "HourStart", False, DataSourceUpdateMode.OnPropertyChanged)
-        HourEnd.DataBindings.Add("Value", My.Settings, "HourEnd", False, DataSourceUpdateMode.OnPropertyChanged)
-        MinuteStart.DataBindings.Add("Value", My.Settings, "MinuteStart", DataSourceUpdateMode.OnPropertyChanged)
-        MinuteEnd.DataBindings.Add("Value", My.Settings, "MinuteEnd", DataSourceUpdateMode.OnPropertyChanged)
-
-        My.Settings.mnuDisplaySaturdays = mnuDisplaySaturdays.Checked
-        My.Settings.mnuDisplaySundays = mnuDisplaySundays.Checked
-        My.Settings.Save()
-    End Sub
 
 End Class
