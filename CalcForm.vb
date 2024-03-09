@@ -1,4 +1,4 @@
-﻿Public Class RealTimeCalc
+﻿Public Class CalcForm
 
     Private Sub calculate(sender As Object, e As EventArgs) Handles calcHour.ValueChanged, calcMinute.ValueChanged
         Try

@@ -10,6 +10,9 @@ Module helpers
     Public connectionString As String = $"Data Source={My.Settings.db};Version=3;"
 
     Public connection As New SQLiteConnection(connectionString)
+    ' public Variables
+    Public DisplaySaturdaysEnabled = True
+    Public DisplaySundaysEnabled = True
 #End Region
 
 

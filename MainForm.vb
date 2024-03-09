@@ -189,6 +189,14 @@ Public Class MainForm
 
 
     Private Sub mnuCalc_Click(sender As Object, e As EventArgs) Handles mnuCalc.Click
-        RealTimeCalc.ShowDialog()
+        CalcForm.ShowDialog()
+    End Sub
+
+    Private Sub mnuAbout_Click(sender As Object, e As EventArgs) Handles mnuAbout.Click
+        AboutForm.ShowDialog()
+    End Sub
+
+    Private Sub mnuDisplaySaturdays_Click(sender As Object, e As EventArgs) Handles mnuDisplaySaturdays.Click
+
     End Sub
 End Class
