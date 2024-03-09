@@ -22,6 +22,7 @@ Public Class MainForm
     Private Sub MainForm_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
         My.Settings.mnuDisplaySaturdays = mnuDisplaySaturdays.Checked
         My.Settings.mnuDisplaySundays = mnuDisplaySundays.Checked
+        My.Settings.UID = UID
         My.Settings.Save()
     End Sub
 
@@ -85,30 +86,12 @@ Public Class MainForm
         Dim curDate As DateTime = FirstDay
         While curDate <= LastDay
             Dim WillAddRow As Boolean = True
-            If curDate.DayOfWeek = DayOfWeek.Saturday AndAlso Not mnuDisplaySaturdays.Checked Then WillAddRow = False
+            If curDate.Date.DayOfWeek = DayOfWeek.Saturday AndAlso Not mnuDisplaySaturdays.Checked Then WillAddRow = False
             If curDate.DayOfWeek = DayOfWeek.Sunday AndAlso Not mnuDisplaySundays.Checked Then WillAddRow = False
             If WillAddRow Then dgCal.Rows.Add(curDate.ToString(DateFormat), curDate.DayOfWeek.ToString)
             curDate = curDate.AddDays(1)
         End While
         ViewingMonth = dtp.Value.ToString("yyyy.MM")
-    End Sub
-    Private Sub PopulateData()
-        dgCal.Rows.Clear()
-        For Each row As DataGridViewRow In dgCal.Rows
-            Dim RowDate As DateTime = row.Cells("clnDate").Value
-            ' check if weekends
-            If RowDate.DayOfWeek = DayOfWeek.Saturday Then
-
-            End If
-            If RowDate.DayOfWeek = DayOfWeek.Saturday Or RowDate.DayOfWeek = DayOfWeek.Sunday Then
-                row.DefaultCellStyle.BackColor = Color.Red
-            End If
-        Next
-        If dgCal.Rows.Count > 0 Then
-            If dgCal.SelectedRows.Count = 0 Then
-                dgCal.Rows(0).Selected = True
-            End If
-        End If
     End Sub
 
     Private Sub dgvCalendar_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgCal.CellClick
@@ -152,24 +135,14 @@ Public Class MainForm
     Private Sub AddRecordbtn_Click(sender As Object, e As EventArgs) Handles AddRecordbtn.Click
         Dim r As New Record()
         With r
-            .User = 2
-            '.Timestamp = dgv
+            .User = UID
+            .StartTimeStamp = SelectedStart
+            .EndTimeStamp = SelectedEnd
         End With
+        InsertRecord(r)
     End Sub
-
-    Private Sub dgvCalendar_CellContentClick(sender As Object, e As EventArgs) Handles dgCal.SelectionChanged, dgCal.KeyUp
-        If dgCal.SelectedRows.Count > 0 Then
-            Dim Rows As List(Of Record) = GetDayRecord(dgCal.SelectedRows(0).Cells("clnDate").Value)
-            dgRec.DataSource = Rows
-            dgRec.Columns("ID").Visible = False
-            dgRec.Columns("User").Visible = False
-            Debug.WriteLine($"dgvCalendar_CellContentClick: {dgCal.SelectedRows.Count} - Rows returned from GetDayRecord: {Rows.Count}")
-        End If
-    End Sub
-
 
     Private Sub OpenDatabaeToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OpenDatabaeToolStripMenuItem.Click
-        PopulateData()
         ofd.Multiselect = False
         ofd.ShowDialog()
 
@@ -189,22 +162,34 @@ Public Class MainForm
         Connection()
 
         Dim query As String = "SELECT * FROM record"
-            Dim command As New SQLiteCommand(query, conn)
-            Dim r As SQLiteDataReader = command.ExecuteReader()
-            ' User,DayDate,StartTime,EndTime,Duration
-            If r.HasRows Then
-                While r.Read()
-                    Dim rec As New Record()
-                    With rec
-                        .ID = r.GetInt32(r.GetOrdinal("id"))
-                        .User = r.GetInt32(r.GetOrdinal("User"))
+        Dim command As New SQLiteCommand(query, conn)
+        Dim r As SQLiteDataReader = command.ExecuteReader()
+        ' User,DayDate,StartTime,EndTime,Duration
+        If r.HasRows Then
+            While r.Read()
+                Dim rec As New Record()
+                With rec
+                    .ID = r.GetInt32(r.GetOrdinal("id"))
+                    .User = r.GetInt32(r.GetOrdinal("User"))
                     .StartTimeStamp = r.GetDateTime(r.GetOrdinal("StartTimeStamp"))
                     .EndTimeStamp = r.GetDateTime(r.GetOrdinal("EndTimeStamp"))
-                    End With
-                    Rows.Add(rec)
-                End While
-            End If
+                End With
+                Rows.Add(rec)
+            End While
+        End If
         dgRec.DataSource = Rows
 
+    End Sub
+
+    Private Sub dgCal_Events(sender As Object, e As EventArgs) Handles dgCal.Click, dgCal.KeyUp
+        If dgCal.SelectedRows.Count > 0 AndAlso dgCal.SelectedRows.Count > 0 Then
+            Dim r As New DataGridViewRow
+            Dim curDate As String = dgCal.SelectedRows(0).Cells("clnDate").Value
+            Dim dt As DateTime = DateTime.ParseExact(curDate, DateFormat, CultureInfo.InvariantCulture)
+            Dim Rows As List(Of Record) = GetDayRecord(dt)
+            dgRec.DataSource = Rows
+            dgRec.Columns("ID").Visible = False
+            dgRec.Columns("User").Visible = False
+        End If
     End Sub
 End Class

@@ -1,4 +1,5 @@
 ﻿Imports System.Data.SQLite
+Imports System.Diagnostics.Eventing
 Imports System.Globalization
 Imports System.Security.Cryptography
 
@@ -10,6 +11,9 @@ Module helpers
 
     Public connectionString As String = $"Data Source={My.Settings.ConnectionString};Version=3;"
     Public conn As New SQLiteConnection(connectionString)
+    Public UID As Integer
+    Public SelectedStart As DateTime
+    Public SelectedEnd As DateTime
 #Region "Variables and Place Holders"
 
     ' public Variables
@@ -120,28 +124,27 @@ Module helpers
         Return Rows
     End Function
 
-    Function GetDayRecord(TargetDate As String) As List(Of Record)
+    Function GetDayRecord(curDate As DateTime) As List(Of Record)
         Dim Rows As New List(Of Record)
-        TargetDate = DateTime.ParseExact(TargetDate, DateFormat, CultureInfo.InvariantCulture).ToString(DateFormat)
-
         Try
             Connection()
+            Dim query As String = "SELECT * FROM record WHERE StartTimeStamp LIKE @curDate"
 
-            Dim query As String = "SELECT * FROM record WHERE DayDate LIKE @TargetDate"
-
-            Dim command As New SQLiteCommand(query, conn)
-            command.Parameters.AddWithValue("@TargetDate", TargetDate)
-            Dim r As SQLiteDataReader = command.ExecuteReader()
-            If r.HasRows Then
-                While r.Read()
+            Dim cmd As New SQLiteCommand(query, conn)
+            cmd.Parameters.AddWithValue("@curDate", "%" & curDate.ToString(DateFormat) & "%")
+            Dim Reader As SQLiteDataReader = cmd.ExecuteReader()
+            If Reader.HasRows Then
+                While Reader.Read()
                     Dim rec As New Record()
-                    With rec
-                        .ID = r.GetInt32(r.GetOrdinal("id"))
-                        .User = r.GetInt32(r.GetOrdinal("User"))
+                    With Reader
+                        rec.ID = .GetInt32(.GetOrdinal("ID"))
+                        rec.User = .GetInt32(.GetOrdinal("User"))
+                        rec.StartTimeStamp = .GetDateTime(.GetOrdinal("StartTimeStamp"))
+                        rec.EndTimeStamp = .GetDateTime(.GetOrdinal("EndTimeStamp"))
                     End With
+
                     Rows.Add(rec)
                 End While
-                Debug.WriteLine($"GetDayRecord - TargetDate: {TargetDate} Query: {query} r.HasRows: {r.HasRows}")
             End If
 
         Catch ex As Exception

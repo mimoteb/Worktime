@@ -148,6 +148,18 @@ Namespace My
                 Me("dtpValue") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("2")>  _
+        Public Property UID() As Integer
+            Get
+                Return CType(Me("UID"),Integer)
+            End Get
+            Set
+                Me("UID") = value
+            End Set
+        End Property
     End Class
 End Namespace
 
