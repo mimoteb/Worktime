@@ -5,16 +5,13 @@
     <Setting Name="db" Type="System.String" Scope="User">
       <Value Profile="(Default)">mnuDisplaySaturdays</Value>
     </Setting>
-    <Setting Name="StartHour" Type="System.Int32" Scope="User">
+    <Setting Name="MinuteStart" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="StartMinute" Type="System.Int32" Scope="User">
+    <Setting Name="HourEnd" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="EndHour" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
-    </Setting>
-    <Setting Name="EndMinute" Type="System.Int32" Scope="User">
+    <Setting Name="MInuteEnd" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="HourStart" Type="System.Decimal" Scope="User">
@@ -22,6 +19,12 @@
     </Setting>
     <Setting Name="DateFormat" Type="System.String" Scope="Application">
       <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="mnuDisplaySaturdays" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="mnuDisplaySundays" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>
 </SettingsFile>

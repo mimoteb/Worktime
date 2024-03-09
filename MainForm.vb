@@ -43,13 +43,10 @@ Public Class MainForm
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ' Load settings
         My.Settings.Reload()
-        ' Check for updates
+        mnuDisplaySaturdays.Checked = My.Settings.mnuDisplaySaturdays
+        mnuDisplaySundays.Checked = My.Settings.mnuDisplaySundays
 
-        ' Data Bindings (Settings)
-        HourStart.DataBindings.Add("Value", My.Settings, "HourStart", False, DataSourceUpdateMode.OnPropertyChanged)
-        'HourEnd.DataBindings.Add("Value", My.Settings, "HourEnd", False, DataSourceUpdateMode.OnPropertyChanged)
-        'MinuteStart.DataBindings.Add("Value", My.Settings, "MinuteStart", DataSourceUpdateMode.OnPropertyChanged)
-        'MinuteEnd.DataBindings.Add("Value", My.Settings, "MinuteEnd", DataSourceUpdateMode.OnPropertyChanged)
+        ' Check for updates
 
 
         dtp.Format = DateTimePickerFormat.Custom
@@ -59,6 +56,7 @@ Public Class MainForm
 
         lbl_status.Text = $"Database: {My.Settings.db}"
     End Sub
+
     Private Sub PopulateData(sender As Control)
 
         dgvCalendar.Rows.Clear()
@@ -115,6 +113,7 @@ Public Class MainForm
         'Start: 08:00 End: 09:30 duration 1 Hour 30 Minutes
         InsertConfirmLabel.Text = $"Start: {HourStart.Value}:{MinuteStart.Value} End: {HourEnd.Value}:{MinuteEnd.Value} Duration {FormatTimeDifference(duration)}"
     End Sub
+
     Private Function CalculateDuration() As Integer
         Dim timespan As New TimeSpan()
         ' Create DateTime objects for start and end times
@@ -128,7 +127,6 @@ Public Class MainForm
 
         Return TotalMinutes
     End Function
-
 
     Private Sub AddRecordbtn_Click(sender As Object, e As EventArgs) Handles AddRecordbtn.Click
         Dim r As New Record()
@@ -207,10 +205,16 @@ Public Class MainForm
             End If
         Next
         Me.Text = $"sender: {sender.Name} - Tag: {sender.Tag} -  Sender Checked: {sender.Checked}"
-
     End Sub
 
     Private Sub MainForm_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
+        HourStart.DataBindings.Add("Value", My.Settings, "HourStart", False, DataSourceUpdateMode.OnPropertyChanged)
+        HourEnd.DataBindings.Add("Value", My.Settings, "HourEnd", False, DataSourceUpdateMode.OnPropertyChanged)
+        MinuteStart.DataBindings.Add("Value", My.Settings, "MinuteStart", DataSourceUpdateMode.OnPropertyChanged)
+        MinuteEnd.DataBindings.Add("Value", My.Settings, "MinuteEnd", DataSourceUpdateMode.OnPropertyChanged)
+
+        My.Settings.mnuDisplaySaturdays = mnuDisplaySaturdays.Checked
+        My.Settings.mnuDisplaySundays = mnuDisplaySundays.Checked
         My.Settings.Save()
     End Sub
 

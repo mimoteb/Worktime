@@ -69,48 +69,36 @@ Namespace My
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
-        Public Property StartHour() As Integer
+        Public Property MinuteStart() As Integer
             Get
-                Return CType(Me("StartHour"),Integer)
+                Return CType(Me("MinuteStart"),Integer)
             End Get
             Set
-                Me("StartHour") = value
+                Me("MinuteStart") = value
             End Set
         End Property
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
-        Public Property StartMinute() As Integer
+        Public Property HourEnd() As Integer
             Get
-                Return CType(Me("StartMinute"),Integer)
+                Return CType(Me("HourEnd"),Integer)
             End Get
             Set
-                Me("StartMinute") = value
+                Me("HourEnd") = value
             End Set
         End Property
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
-        Public Property EndHour() As Integer
+        Public Property MInuteEnd() As Integer
             Get
-                Return CType(Me("EndHour"),Integer)
+                Return CType(Me("MInuteEnd"),Integer)
             End Get
             Set
-                Me("EndHour") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
-        Public Property EndMinute() As Integer
-            Get
-                Return CType(Me("EndMinute"),Integer)
-            End Get
-            Set
-                Me("EndMinute") = value
+                Me("MInuteEnd") = value
             End Set
         End Property
         
@@ -133,6 +121,30 @@ Namespace My
             Get
                 Return CType(Me("DateFormat"),String)
             End Get
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property mnuDisplaySaturdays() As Boolean
+            Get
+                Return CType(Me("mnuDisplaySaturdays"),Boolean)
+            End Get
+            Set
+                Me("mnuDisplaySaturdays") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property mnuDisplaySundays() As Boolean
+            Get
+                Return CType(Me("mnuDisplaySundays"),Boolean)
+            End Get
+            Set
+                Me("mnuDisplaySundays") = value
+            End Set
         End Property
     End Class
 End Namespace
