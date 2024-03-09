@@ -6,17 +6,11 @@ Module UpdateChecker
     Dim AppName As String = My.Application.Info.AssemblyName
     Dim currentVersion As String = My.Application.Info.Version.ToString()
 
-    Function GetLatestVersionFromGitHub(Developer As String, repo As String) As String
+    Public Function GetLatestVersionFromGitHub(ByVal Developer As String, ByVal repo As String) As String
         Dim apiUrl As String = $"https://api.github.com/repos/{Developer}/{repo}/releases/latest"
         Dim latestVersion As String = ""
 
-        If Version.Parse(latestVersion) > Version.Parse(currentVersion) Then
-            ' Update is available, implement download and installation logic
-            MessageBox.Show("An update is available! Please download and install the latest version.")
-        Else
-            MessageBox.Show("Your application is up-to-date.")
-        End If
-        Return latestVersion
+
         Try
             Using client As New WebClient()
                 client.Headers.Add("User-Agent", "request")
@@ -28,6 +22,13 @@ Module UpdateChecker
             ' Handle API request error
         End Try
 
+        If Version.Parse(latestVersion) > Version.Parse(currentVersion) Then
+            ' Update is available, implement download and installation logic
+            MessageBox.Show("An update is available! Please download and install the latest version.")
+        Else
+            MessageBox.Show("Your application is up-to-date.")
+        End If
+        Debug.WriteLine(latestVersion)
         Return latestVersion
     End Function
 

@@ -158,7 +158,7 @@ Module helpers
     End Function
     Function GetMonth_Records(TargetDate As String) As List(Of Record)
         Dim Rows As New List(Of Record)
-        TargetDate = DateTime.ParseExact(TargetDate, "yyyy.MM.dd", CultureInfo.InvariantCulture).ToString("yyyy.MM")
+        TargetDate = DateTime.ParseExact(TargetDate, DateFormat, CultureInfo.InvariantCulture).ToString("yyyy.MM")
 
         Try
             OpenConnection()

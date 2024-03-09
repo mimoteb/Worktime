@@ -41,6 +41,8 @@ Public Class MainForm
     End Sub
 
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ' Check for updates
+
         ' Data Bindings (Settings)
         HourStart.DataBindings.Add("Value", My.Settings, "HourStart", False, DataSourceUpdateMode.OnPropertyChanged)
         'HourEnd.DataBindings.Add("Value", My.Settings, "HourEnd", False, DataSourceUpdateMode.OnPropertyChanged)
@@ -149,7 +151,7 @@ Public Class MainForm
     Private Sub test_Click(sender As Object, e As EventArgs) Handles test.Click
         Dim TargetDate As String = "2024.03.10"
         Dim Rows As New List(Of Record)
-        TargetDate = DateTime.ParseExact(TargetDate, "yyyy.MM.dd", CultureInfo.InvariantCulture).ToString("yyyy.MM.dd")
+        TargetDate = DateTime.ParseExact(TargetDate, DateFormat, CultureInfo.InvariantCulture).ToString(DateFormat)
         Debug.WriteLine($"GetDayRecord - TargetDate: {TargetDate}")
         Try
             OpenConnection()
@@ -184,27 +186,9 @@ Public Class MainForm
 
     End Sub
 
-    Private Sub calculate(sender As Object, e As EventArgs) Handles calcHour.ValueChanged,
-        calcMinute.ValueChanged, calcHour.KeyUp, calcMinute.KeyUp
-        Try
-            'Correct order of the lines is important here! careful before making any changes
-            Dim H As Integer = calcHour.Value
-            Dim M As Integer = calcMinute.Value
-            calcHoursSpent.Text = $"Hours spent in School: {H}:{M}"
-            Dim result As Decimal = 0
-            result = H * 60 + M
-            result = result / 45
-            result = result * 60
-            calcWorkingHours.Text = $"Hours spent in School: {ConvertMinutesToHHMM(result)}"
-            result = result / 60
-            result = result * 18.5
-            result = Math.Round(result, 2, MidpointRounding.ToEven)
-            calcIncome.Text = $"Income: {result}"
-        Catch ex As Exception
-            MessageBox.Show("Error: " & ex.Message)
-        Finally
 
-        End Try
 
+    Private Sub mnuCalc_Click(sender As Object, e As EventArgs) Handles mnuCalc.Click
+        RealTimeCalc.ShowDialog()
     End Sub
 End Class
