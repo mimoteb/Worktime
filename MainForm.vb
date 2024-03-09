@@ -1,12 +1,14 @@
 ﻿Imports System.Data.SQLite
 Imports System.Globalization
+Imports System.Net.Mail
 
 Public Class MainForm
     Public c As New C
     Private originalValue As Object
     Private edited_ID As Integer
-    Private var_year As Integer = 2024
-    Private var_month As Integer = 4
+    Dim curViewingMonth As String = Nothing
+    'Private var_year As Integer = 2024
+    'Private var_month As Integer = 4
     ' Declare DateTimePicker1 with WithEvents
     ' Hello from VS
 #Region "Interface"
@@ -24,7 +26,6 @@ Public Class MainForm
     End Sub
 
     Private Sub MainForm_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
-
         My.Settings.mnuDisplaySaturdays = mnuDisplaySaturdays.Checked
         My.Settings.mnuDisplaySundays = mnuDisplaySundays.Checked
         My.Settings.Save()
@@ -72,7 +73,6 @@ Public Class MainForm
             End Try
         End Try
 
-
         dtp.Format = DateTimePickerFormat.Custom
         dtp.CustomFormat = DateFormat
         ' Set the DateTimePicker to today's date and time
@@ -96,10 +96,10 @@ Public Class MainForm
             If WillAddRow Then dgCal.Rows.Add(curDate.ToString(DateFormat), curDate.DayOfWeek.ToString)
             curDate = curDate.AddDays(1)
         End While
+        curViewingMonth = dtp.Value.ToString("yyyy.MM")
     End Sub
-    Private Sub PopulateData(sender As Control)
+    Private Sub PopulateData()
         dgCal.Rows.Clear()
-
         For Each row As DataGridViewRow In dgCal.Rows
             Dim RowDate As DateTime = row.Cells("clnDate").Value
             ' check if weekends
@@ -108,12 +108,6 @@ Public Class MainForm
             End If
             If RowDate.DayOfWeek = DayOfWeek.Saturday Or RowDate.DayOfWeek = DayOfWeek.Sunday Then
                 row.DefaultCellStyle.BackColor = Color.Red
-                If Not mnuDisplaySaturdays.Checked AndAlso RowDate.DayOfWeek.ToString = sender.Tag.ToString Then
-                    row.Visible = False
-                End If
-                If Not mnuDisplaySundays.Checked AndAlso RowDate.DayOfWeek.ToString = sender.Tag.ToString Then
-                    row.Visible = False
-                End If
             End If
         Next
         If dgCal.Rows.Count > 0 Then
@@ -135,7 +129,7 @@ Public Class MainForm
     End Sub
 
     Private Sub dtp_ValueChanged(sender As Object, e As EventArgs) Handles dtp.ValueChanged
-        UpdateCalendar()
+        If dtp.Value.ToString("yyyy.MM") <> curViewingMonth Then UpdateCalendar()
     End Sub
 
     Private Sub Insert_Controls(sender As NumericUpDown, e As EventArgs) Handles HourStart.ValueChanged,
@@ -165,6 +159,8 @@ Public Class MainForm
         Dim r As New Record()
         With r
             .User = 2
+            .tsStart = Nothing
+            .tsEnd = Nothing
             .Duration = CalculateDuration()
             '.Timestamp = dgv
         End With
@@ -173,54 +169,16 @@ Public Class MainForm
     Private Sub dgvCalendar_CellContentClick(sender As Object, e As EventArgs) Handles dgCal.SelectionChanged, dgCal.KeyUp
         If dgCal.SelectedRows.Count > 0 Then
             Dim Rows As List(Of Record) = GetDayRecord(dgCal.SelectedRows(0).Cells("clnDate").Value)
-            dgvRecords.DataSource = Rows
-            dgvRecords.Columns("ID").Visible = False
-            dgvRecords.Columns("User").Visible = False
+            dgRec.DataSource = Rows
+            dgRec.Columns("ID").Visible = False
+            dgRec.Columns("User").Visible = False
             Debug.WriteLine($"dgvCalendar_CellContentClick: {dgCal.SelectedRows.Count} - Rows returned from GetDayRecord: {Rows.Count}")
         End If
     End Sub
 
-    Private Sub test_Click(sender As Object, e As EventArgs) Handles test.Click
-        UpdateCalendar()
-        'Dim TargetDate As String = "2024.03.10"
-        'Dim Rows As New List(Of Record)
-        'TargetDate = DateTime.ParseExact(TargetDate, DateFormat, CultureInfo.InvariantCulture).ToString(DateFormat)
-        'Debug.WriteLine($"GetDayRecord - TargetDate: {TargetDate}")
-        'Try
-        '    OpenConnection()
-
-        '    Dim query As String = "SELECT * FROM record WHERE DayDate LIKE @TargetDate"
-
-        '    Dim command As New SQLiteCommand(query, connection)
-        '    command.Parameters.AddWithValue("@TargetDate", TargetDate)
-        '    Dim r As SQLiteDataReader = command.ExecuteReader()
-        '    Debug.WriteLine($"GetDayRecord - Query: {query}")
-        '    If r.HasRows Then
-        '        While r.Read()
-        '            Dim rec As New Record()
-        '            With rec
-        '                .ID = r.GetInt32(r.GetOrdinal("id"))
-        '                .User = r.GetInt32(r.GetOrdinal("User"))
-        '                .DayDate = r.GetString(r.GetOrdinal("DayDate"))
-        '                .StartTime = r.GetString(r.GetOrdinal("StartTime"))
-        '                .EndTime = r.GetString(r.GetOrdinal("EndTime"))
-        '                .Duration = r.GetInt32(r.GetOrdinal("Duration"))
-        '            End With
-        '            Rows.Add(rec)
-        '        End While
-        '        Debug.WriteLine($"GetDayRecord: r.HasRows: {r.HasRows}")
-        '    End If
-
-        'Catch ex As Exception
-        '    MessageBox.Show("Error: " & ex.Message)
-        'Finally
-        '    CloseConnection()
-        'End Try
-
-    End Sub
 
     Private Sub OpenDatabaeToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OpenDatabaeToolStripMenuItem.Click
-        PopulateData(btnOpenDatabase)
+        PopulateData()
         ofd.Multiselect = False
         ofd.ShowDialog()
 
@@ -233,5 +191,42 @@ Public Class MainForm
         Else
             MsgBox("Error wrong file", MsgBoxStyle.Critical)
         End If
+    End Sub
+
+    Private Sub TestToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TestToolStripMenuItem.Click
+        Dim TargetDate As String = "2024.03.10"
+        Dim Rows As New List(Of Record)
+        TargetDate = DateTime.ParseExact(TargetDate, DateFormat, CultureInfo.InvariantCulture).ToString(DateFormat)
+        Debug.WriteLine($"GetDayRecord - TargetDate: {TargetDate}")
+        Try
+            OpenConnection()
+
+            Dim query As String = "SELECT * FROM record WHERE DayDate LIKE @TargetDate"
+
+            Dim command As New SQLiteCommand(query, connection)
+            command.Parameters.AddWithValue("@TargetDate", TargetDate)
+            Dim r As SQLiteDataReader = command.ExecuteReader()
+            Debug.WriteLine($"GetDayRecord - Query: {query}")
+            If r.HasRows Then
+                While r.Read()
+                    Dim rec As New Record()
+                    With rec
+                        .ID = r.GetInt32(r.GetOrdinal("id"))
+                        .User = r.GetInt32(r.GetOrdinal("User"))
+                        .DayDate = r.GetString(r.GetOrdinal("DayDate"))
+                        .StartTime = r.GetString(r.GetOrdinal("StartTime"))
+                        .EndTime = r.GetString(r.GetOrdinal("EndTime"))
+                        .Duration = r.GetInt32(r.GetOrdinal("Duration"))
+                    End With
+                    Rows.Add(rec)
+                End While
+                Debug.WriteLine($"GetDayRecord: r.HasRows: {r.HasRows}")
+            End If
+
+        Catch ex As Exception
+            MessageBox.Show("Error: " & ex.Message)
+        Finally
+            CloseConnection()
+        End Try
     End Sub
 End Class

@@ -1,11 +1,12 @@
-﻿Imports System.Data.SQLite
+﻿Imports System.Data.Entity.Core
+Imports System.Data.SQLite
 Imports System.Globalization
 
 Module helpers
 #Region "Variables and Place Holders"
     Public DateFormat As String = "yyyy.MM.dd"
     Public TimeFormat As String = "HH:MM"
-
+    Public dbFormat As String = "yyyy.MM.dd HH:MM:00"
     Public connectionString As String = $"Data Source={My.Settings.ConnectionString};Version=3;"
 
     Public connection As New SQLiteConnection(connectionString)
@@ -131,7 +132,7 @@ Module helpers
     Function GetDayRecord(TargetDate As String) As List(Of Record)
         Dim Rows As New List(Of Record)
         TargetDate = DateTime.ParseExact(TargetDate, DateFormat, CultureInfo.InvariantCulture).ToString(DateFormat)
-        Debug.WriteLine($"GetDayRecord - TargetDate: {TargetDate}")
+
         Try
             OpenConnection()
 
@@ -140,7 +141,6 @@ Module helpers
             Dim command As New SQLiteCommand(query, connection)
             command.Parameters.AddWithValue("@TargetDate", TargetDate)
             Dim r As SQLiteDataReader = command.ExecuteReader()
-            Debug.WriteLine($"GetDayRecord - Query: {query}")
             If r.HasRows Then
                 While r.Read()
                     Dim rec As New Record()
@@ -154,7 +154,7 @@ Module helpers
                     End With
                     Rows.Add(rec)
                 End While
-                Debug.WriteLine($"GetDayRecord: r.HasRows: {r.HasRows}")
+                Debug.WriteLine($"GetDayRecord - TargetDate: {TargetDate} Query: {query} r.HasRows: {r.HasRows}")
             End If
 
         Catch ex As Exception
