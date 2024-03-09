@@ -1,30 +1,39 @@
 ﻿Public Class Record
-    Private Property _endTime As String
-    Private _EndTimeStamp As DateTime
-    Private _StartTimeStamp As DateTime
+
     Public Property ID As Integer
-    Public Property User As Integer
-    Public Property DayDate As String
-    Public Property StartTime As String
-    Public Property Duration As Integer
+    Public Property User As Integer = 2 ' 2 is for developer
+
+    Private _StartTimeStamp As DateTime
+    Private _EndTimeStamp As DateTime
+
+    Private _TimeStart As String = Nothing
+    Private _TimeEnd As String = Nothing
+
+    Private _Duration As Integer
     Public Property StartTimeStamp As DateTime
         Get
             Return _StartTimeStamp
         End Get
         Set(value As DateTime)
-
+            _StartTimeStamp = value
         End Set
     End Property
-
     Public Property EndTimeStamp As DateTime
         Get
             Return _EndTimeStamp
         End Get
         Set(value As DateTime)
+            _EndTimeStamp = value
+        End Set
+    End Property
+    Public Property TimeStart As String
+        Get
+            Return _TimeStart
+        End Get
+        Set(value As String)
 
         End Set
     End Property
-
     Public Property EndTime As String
         Get
             Return _endTime
