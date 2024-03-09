@@ -1,5 +1,6 @@
 ﻿Imports System.Data.SQLite
 Imports System.Globalization
+Imports System.Security.Cryptography
 
 Module helpers
     Public ViewingMonth As String = Nothing
@@ -73,16 +74,13 @@ Module helpers
     Sub DeleteRecord(r As Record)
         Try
             Connection()
-
-            Dim query As String = "DELETE FROM record WHERE ID=@id and User=@user"
-            Dim command As New SQLiteCommand(query, conn)
-
-            ' Use parameters to avoid SQL injection
-            command.Parameters.AddWithValue("@id", r.ID)
-            command.Parameters.AddWithValue("@user", r.User)
-
-            command.ExecuteNonQuery()
-
+            Dim query As String = "DELETE FROM record WHERE ID=@ID and User=@User"
+            Dim cmd As New SQLiteCommand(query, conn)
+            With cmd.Parameters
+                .AddWithValue("@ID", r.ID)
+                .AddWithValue("@User", r.User)
+            End With
+            cmd.ExecuteNonQuery()
         Catch ex As Exception
             MessageBox.Show("Error: " & ex.Message)
         Finally
