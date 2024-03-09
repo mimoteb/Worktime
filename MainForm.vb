@@ -207,22 +207,18 @@ Public Class MainForm
             End If
         Next
         Me.Text = $"sender: {sender.Name} - Tag: {sender.Tag} -  Sender Checked: {sender.Checked}"
+        My.Settings.Save()
     End Sub
 
     Private Sub Insert_Controls(sender As Object, e As EventArgs) Handles MinuteStart.ValueChanged, MinuteStart.KeyUp, MinuteEnd.ValueChanged, MinuteEnd.KeyUp, HourStart.ValueChanged, HourStart.KeyUp, HourEnd.ValueChanged, HourEnd.KeyUp
 
     End Sub
 
-    Private Sub Insert_Controls(sender As Object, e As KeyEventArgs)
-
-    End Sub
-
-    Private Sub mnuDisplaySaturdays_Click(sender As Object, e As EventArgs) Handles mnuDisplaySundays.Click, mnuDisplaySaturdays.Click
-
-    End Sub
-
     Private Sub MainForm_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
+
         My.Settings.Save()
-        MsgBox(mnuDisplaySaturdays.ToString)
+
     End Sub
+
+
 End Class

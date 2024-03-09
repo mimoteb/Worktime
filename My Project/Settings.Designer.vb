@@ -53,131 +53,109 @@ Namespace My
                 Return defaultInstance
             End Get
         End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+
+        <Global.System.Configuration.UserScopedSettingAttribute(),
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),
+         Global.System.Configuration.DefaultSettingValueAttribute("mnuDisplaySaturdays")>
         Public Property db() As String
             Get
-                Return CType(Me("db"),String)
+                Return CType(Me("db"), String)
             End Get
             Set
-                Me("db") = value
+                Me("db") = Value
             End Set
         End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
+
+        <Global.System.Configuration.UserScopedSettingAttribute(),
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),
+         Global.System.Configuration.DefaultSettingValueAttribute("0")>
         Public Property StartHour() As Integer
             Get
-                Return CType(Me("StartHour"),Integer)
+                Return CType(Me("StartHour"), Integer)
             End Get
             Set
-                Me("StartHour") = value
+                Me("StartHour") = Value
             End Set
         End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
+
+        <Global.System.Configuration.UserScopedSettingAttribute(),
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),
+         Global.System.Configuration.DefaultSettingValueAttribute("0")>
         Public Property StartMinute() As Integer
             Get
-                Return CType(Me("StartMinute"),Integer)
+                Return CType(Me("StartMinute"), Integer)
             End Get
             Set
-                Me("StartMinute") = value
+                Me("StartMinute") = Value
             End Set
         End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
+
+        <Global.System.Configuration.UserScopedSettingAttribute(),
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),
+         Global.System.Configuration.DefaultSettingValueAttribute("0")>
         Public Property EndHour() As Integer
             Get
-                Return CType(Me("EndHour"),Integer)
+                Return CType(Me("EndHour"), Integer)
             End Get
             Set
-                Me("EndHour") = value
+                Me("EndHour") = Value
             End Set
         End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
+
+        <Global.System.Configuration.UserScopedSettingAttribute(),
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),
+         Global.System.Configuration.DefaultSettingValueAttribute("0")>
         Public Property EndMinute() As Integer
             Get
-                Return CType(Me("EndMinute"),Integer)
+                Return CType(Me("EndMinute"), Integer)
             End Get
             Set
-                Me("EndMinute") = value
+                Me("EndMinute") = Value
             End Set
         End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("8")>  _
+
+        <Global.System.Configuration.UserScopedSettingAttribute(),
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),
+         Global.System.Configuration.DefaultSettingValueAttribute("8")>
         Public Property HourStart() As Decimal
             Get
-                Return CType(Me("HourStart"),Decimal)
+                Return CType(Me("HourStart"), Decimal)
             End Get
             Set
-                Me("HourStart") = value
+                Me("HourStart") = Value
             End Set
         End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute()>  _
-        Public Property mnuShowSaturdaysTag() As Object
-            Get
-                Return CType(Me("mnuShowSaturdaysTag"),Object)
-            End Get
-            Set
-                Me("mnuShowSaturdaysTag") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+
+        <Global.System.Configuration.UserScopedSettingAttribute(),
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>
         Public Property mnuShowSaturdaysChecked() As Boolean
             Get
-                Return CType(Me("mnuShowSaturdaysChecked"),Boolean)
+                Return CType(Me("mnuShowSaturdaysChecked"), Boolean)
             End Get
             Set
-                Me("mnuShowSaturdaysChecked") = value
+                Me("mnuShowSaturdaysChecked") = Value
             End Set
         End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+
+        <Global.System.Configuration.UserScopedSettingAttribute(),
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>
         Public Property mnuShowSundaysChecked() As Boolean
             Get
-                Return CType(Me("mnuShowSundaysChecked"),Boolean)
+                Return CType(Me("mnuShowSundaysChecked"), Boolean)
             End Get
             Set
-                Me("mnuShowSundaysChecked") = value
+                Me("mnuShowSundaysChecked") = Value
             End Set
         End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute()>  _
-        Public Property mnuShowSundaysTag() As Object
-            Get
-                Return CType(Me("mnuShowSundaysTag"),Object)
-            End Get
-            Set
-                Me("mnuShowSundaysTag") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+
+        <Global.System.Configuration.ApplicationScopedSettingAttribute(),
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),
+         Global.System.Configuration.DefaultSettingValueAttribute("")>
         Public ReadOnly Property DateFormat() As String
             Get
-                Return CType(Me("DateFormat"),String)
+                Return CType(Me("DateFormat"), String)
             End Get
         End Property
     End Class
