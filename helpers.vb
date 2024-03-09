@@ -12,8 +12,6 @@ Module helpers
     Public connectionString As String = $"Data Source={My.Settings.ConnectionString};Version=3;"
     Public conn As New SQLiteConnection(connectionString)
     Public UID As Integer
-    Public SelectedStart As DateTime
-    Public SelectedEnd As DateTime
 #Region "Variables and Place Holders"
 
     ' public Variables

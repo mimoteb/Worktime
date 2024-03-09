@@ -75,7 +75,6 @@ Public Class MainForm
         lbl_status.Text = $"Database: {My.Settings.ConnectionString}"
     End Sub
     Private Sub UpdateCalendar()
-        Debug.WriteLine($"UpdateCalendar, displaySAT: {mnuDisplaySaturdays.Checked}, Sun: {mnuDisplaySundays.Checked}")
         ' store the selected item so it will selected again after cleraning the rows
         dgCal.Rows.Clear()
         Dim sDate As String = dtp.Value.ToString(DateFormat)
@@ -112,34 +111,28 @@ Public Class MainForm
     Private Sub Insert_Controls(sender As NumericUpDown, e As EventArgs) Handles HourStart.ValueChanged,
         HourEnd.ValueChanged, MinuteStart.ValueChanged, MinuteEnd.ValueChanged,
         HourStart.KeyUp, HourEnd.KeyUp, MinuteStart.KeyUp, MinuteEnd.KeyUp
-        Dim duration As Integer = CalculateDuration()
 
-        'Start: 08:00 End: 09:30 duration 1 Hour 30 Minutes
-        InsertConfirmLabel.Text = $"Start: {HourStart.Value}:{MinuteStart.Value} End: {HourEnd.Value}:{MinuteEnd.Value} Duration {FormatTimeDifference(duration)}"
+
+
     End Sub
 
-    Private Function CalculateDuration() As Integer
-        Dim timespan As New TimeSpan()
-        ' Create DateTime objects for start and end times
-        Dim startTime As New DateTime(1, 1, 1, HourStart.Value, MinuteStart.Value, 0)
-        Dim endTime As New DateTime(1, 1, 1, HourEnd.Value, MinuteEnd.Value, 0)
-        ' Calculate the time difference
-        Dim timeDifference As TimeSpan = endTime - startTime
-        Dim TotalMinutes As Integer = timeDifference.TotalMinutes
-        Debug.WriteLine($"[startTime]: {startTime} [endTime]: {endTime} [timeDifference]: {timeDifference}")
-        Dim strTimeDifference As String = FormatTimeDifference(TotalMinutes)
-
-        Return TotalMinutes
-    End Function
-
     Private Sub AddRecordbtn_Click(sender As Object, e As EventArgs) Handles AddRecordbtn.Click
-        Dim r As New Record()
-        With r
-            .User = UID
-            .StartTimeStamp = SelectedStart
-            .EndTimeStamp = SelectedEnd
-        End With
-        InsertRecord(r)
+        If dgCal.SelectedRows.Count > 0 Then
+            Dim r As New Record()
+            With r
+                .User = UID
+                Dim c As DateTime = DateTime.ParseExact(dgCal.SelectedRows(0).Cells("clnDate").Value, DateFormat, CultureInfo.InvariantCulture)
+                .StartTimeStamp = New DateTime(c.Year, c.Month, c.Day, HourStart.Value, HourEnd.Value, 0)
+                .EndTimeStamp = New DateTime(c.Year, c.Month, c.Day, HourEnd.Value, MinuteEnd.Value, 0)
+                Dim duration As Integer = (SelectedEnd - SelectedStart).TotalMinutes
+
+                ''Start: 08:00 End: 09:30 duration 1 Hour 30 Minutes
+                InsertConfirmLabel.Text = $"Start: {HourStart.Value}:{MinuteStart.Value} End: {HourEnd.Value}:{MinuteEnd.Value} Duration {FormatTimeDifference(duration)}"
+
+            End With
+            InsertRecord(r)
+        End If
+
     End Sub
 
     Private Sub OpenDatabaeToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OpenDatabaeToolStripMenuItem.Click
@@ -190,6 +183,13 @@ Public Class MainForm
             dgRec.DataSource = Rows
             dgRec.Columns("ID").Visible = False
             dgRec.Columns("User").Visible = False
+        End If
+    End Sub
+
+
+    Private Sub dgCal_SelectionChanged(sender As Object, e As EventArgs) Handles dgCal.SelectionChanged
+        If dgCal.SelectedRows.Count > 0 Then
+
         End If
     End Sub
 End Class
