@@ -24,10 +24,6 @@ Public Class MainForm
     End Sub
 
     Private Sub MainForm_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
-        HourStart.DataBindings.Add("Value", My.Settings, "HourStart", False, DataSourceUpdateMode.OnPropertyChanged)
-        HourEnd.DataBindings.Add("Value", My.Settings, "HourEnd", False, DataSourceUpdateMode.OnPropertyChanged)
-        MinuteStart.DataBindings.Add("Value", My.Settings, "MinuteStart", DataSourceUpdateMode.OnPropertyChanged)
-        MinuteEnd.DataBindings.Add("Value", My.Settings, "MinuteEnd", DataSourceUpdateMode.OnPropertyChanged)
 
         My.Settings.mnuDisplaySaturdays = mnuDisplaySaturdays.Checked
         My.Settings.mnuDisplaySundays = mnuDisplaySundays.Checked
@@ -53,36 +49,35 @@ Public Class MainForm
         End If
     End Sub
 
-    Private Sub btnOpenDatabase_Click(sender As Object, e As EventArgs) Handles btnOpenDatabase.Click
-        PopulateData(btnOpenDatabase)
-        ofd.Multiselect = False
-        ofd.ShowDialog()
-
-        If IO.File.Exists(ofd.FileName) Then
-            My.Settings.db = ofd.FileName
-            lbl_status.Text = $"Database: {My.Settings.db}"
-            ofd.FileName = My.Settings.db
-
-            My.Settings.db = ofd.FileName
-        Else
-            MsgBox("Error wrong file", MsgBoxStyle.Critical)
-        End If
-    End Sub
 
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ' Load settings
         My.Settings.Reload()
         mnuDisplaySaturdays.Checked = My.Settings.mnuDisplaySaturdays
         mnuDisplaySundays.Checked = My.Settings.mnuDisplaySundays
+        HourStart.DataBindings.Add("Value", My.Settings, "HourStart", False, DataSourceUpdateMode.OnPropertyChanged)
+        HourEnd.DataBindings.Add("Value", My.Settings, "HourEnd", False, DataSourceUpdateMode.OnPropertyChanged)
+        MinuteStart.DataBindings.Add("Value", My.Settings, "MinuteStart", DataSourceUpdateMode.OnPropertyChanged)
+        MinuteEnd.DataBindings.Add("Value", My.Settings, "MinuteEnd", DataSourceUpdateMode.OnPropertyChanged)
+        dtp.DataBindings.Add("Value", My.Settings, "dtpValue", DataSourceUpdateMode.OnPropertyChanged)
         ' Check for updates
+        Try
+            dtp.Value = My.Settings.dtpValue
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Information)
+            Try
+                dtp.Value = Now
+            Catch exChange As Exception
+
+            End Try
+        End Try
 
 
         dtp.Format = DateTimePickerFormat.Custom
         dtp.CustomFormat = DateFormat
         ' Set the DateTimePicker to today's date and time
-        dtp.Value = DateTime.Now
 
-        lbl_status.Text = $"Database: {My.Settings.db}"
+        lbl_status.Text = $"Database: {My.Settings.ConnectionString}"
     End Sub
     Private Sub UpdateCalendar()
         Debug.WriteLine($"UpdateCalendar, displaySAT: {mnuDisplaySaturdays.Checked}, Sun: {mnuDisplaySundays.Checked}")
@@ -140,7 +135,7 @@ Public Class MainForm
     End Sub
 
     Private Sub dtp_ValueChanged(sender As Object, e As EventArgs) Handles dtp.ValueChanged
-        'UpdateCalendar()
+        UpdateCalendar()
     End Sub
 
     Private Sub Insert_Controls(sender As NumericUpDown, e As EventArgs) Handles HourStart.ValueChanged,
@@ -224,5 +219,19 @@ Public Class MainForm
 
     End Sub
 
+    Private Sub OpenDatabaeToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OpenDatabaeToolStripMenuItem.Click
+        PopulateData(btnOpenDatabase)
+        ofd.Multiselect = False
+        ofd.ShowDialog()
 
+        If IO.File.Exists(ofd.FileName) Then
+            My.Settings.ConnectionString = ofd.FileName
+            lbl_status.Text = $"Database: {My.Settings.ConnectionString}"
+            ofd.FileName = My.Settings.ConnectionString
+
+            My.Settings.ConnectionString = ofd.FileName
+        Else
+            MsgBox("Error wrong file", MsgBoxStyle.Critical)
+        End If
+    End Sub
 End Class

@@ -56,18 +56,6 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("mnuDisplaySaturdays")>  _
-        Public Property db() As String
-            Get
-                Return CType(Me("db"),String)
-            End Get
-            Set
-                Me("db") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
         Public Property MinuteStart() As Integer
             Get
@@ -156,6 +144,17 @@ Namespace My
             End Get
             Set
                 Me("ConnectionString") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute()>  _
+        Public Property dtpValue() As Date
+            Get
+                Return CType(Me("dtpValue"),Date)
+            End Get
+            Set
+                Me("dtpValue") = value
             End Set
         End Property
     End Class
