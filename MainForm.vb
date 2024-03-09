@@ -51,11 +51,7 @@ Public Class MainForm
         'MinuteStart.DataBindings.Add("Value", My.Settings, "MinuteStart", DataSourceUpdateMode.OnPropertyChanged)
         'MinuteEnd.DataBindings.Add("Value", My.Settings, "MinuteEnd", DataSourceUpdateMode.OnPropertyChanged)
 
-        ' Load Saved Settings
-        With My.Settings
-            ofd.FileName = .db
 
-        End With
         dtp.Format = DateTimePickerFormat.Custom
         dtp.CustomFormat = DateFormat
         ' Set the DateTimePicker to today's date and time

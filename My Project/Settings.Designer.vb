@@ -127,18 +127,6 @@ Namespace My
         End Property
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
-        Public Property ShowSaturdays() As Boolean
-            Get
-                Return CType(Me("ShowSaturdays"),Boolean)
-            End Get
-            Set
-                Me("ShowSaturdays") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute()>  _
         Public Property mnuShowSaturdaysTag() As Object
             Get
@@ -182,6 +170,15 @@ Namespace My
             Set
                 Me("mnuShowSundaysTag") = value
             End Set
+        End Property
+        
+        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public ReadOnly Property DateFormat() As String
+            Get
+                Return CType(Me("DateFormat"),String)
+            End Get
         End Property
     End Class
 End Namespace
