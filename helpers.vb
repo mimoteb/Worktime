@@ -31,17 +31,15 @@ Module helpers
         Try
             Connection()
 
-            Dim query As String = "INSERT INTO record (User,DayDate,StartTime,EndTime,Duration) " &
-                "VALUES (@User,strftime('%Y.%d.%m', @YourDate),@StartTime,@EndTime,Duration)"
-            Dim command As New SQLiteCommand(query, conn)
+            Dim query As String = "INSERT INTO record (User,StartTimeStamp,EndTime) " &
+                "VALUES (@User,strftime('%Y.%d.%m', @),@StartTimeStamp,@EndTime)"
+            Dim cmd As New SQLiteCommand(query, conn)
 
             ' Use parameters to avoid SQL injection
-            command.Parameters.AddWithValue("@user", r.User)
-            command.Parameters.AddWithValue("@DayDate", r.DayDate)
-            command.Parameters.AddWithValue("@StartTime", r.StartTime)
-            command.Parameters.AddWithValue("@EndTime", r.EndTime)
-            command.Parameters.AddWithValue("@duration", r.Duration)
-            command.ExecuteNonQuery()
+            cmd.Parameters.AddWithValue("@user", r.User)
+            cmd.Parameters.AddWithValue("@StartTimeStamp", r.StartTimeStamp)
+            cmd.Parameters.AddWithValue("@EndTimeStamp", r.EndTimeStamp)
+            cmd.ExecuteNonQuery()
 
         Catch ex As Exception
             MessageBox.Show("Error: " & ex.Message)
@@ -61,10 +59,6 @@ Module helpers
             ' Use parameters to avoid SQL injection
             command.Parameters.AddWithValue("@id", r.ID)
             command.Parameters.AddWithValue("@user", r.User)
-            command.Parameters.AddWithValue("@daydate", r.DayDate)
-            command.Parameters.AddWithValue("@starttime", r.StartTime)
-            command.Parameters.AddWithValue("@endtime", r.EndTime)
-            command.Parameters.AddWithValue("@duration", r.Duration)
             command.ExecuteNonQuery()
 
         Catch ex As Exception
@@ -112,10 +106,6 @@ Module helpers
                     With rec
                         .ID = r.GetInt32(r.GetOrdinal("id"))
                         .User = r.GetInt32(r.GetOrdinal("User"))
-                        .DayDate = r.GetString(r.GetOrdinal("DayDate"))
-                        .StartTime = r.GetString(r.GetOrdinal("StartHour"))
-                        .EndTime = r.GetString(r.GetOrdinal("EndTime"))
-                        .Duration = r.GetInt32(r.GetOrdinal("Duration"))
                     End With
                     Rows.Add(rec)
                 End While
@@ -148,10 +138,6 @@ Module helpers
                     With rec
                         .ID = r.GetInt32(r.GetOrdinal("id"))
                         .User = r.GetInt32(r.GetOrdinal("User"))
-                        .DayDate = r.GetString(r.GetOrdinal("DayDate"))
-                        .StartTime = r.GetString(r.GetOrdinal("StartTime"))
-                        .EndTime = r.GetString(r.GetOrdinal("EndTime"))
-                        .Duration = r.GetInt32(r.GetOrdinal("Duration"))
                     End With
                     Rows.Add(rec)
                 End While
@@ -185,10 +171,6 @@ Module helpers
                     With rec
                         .ID = r.GetInt32(r.GetOrdinal("id"))
                         .User = r.GetInt32(r.GetOrdinal("User"))
-                        .DayDate = r.GetString(r.GetOrdinal("DayDate"))
-                        .StartTime = r.GetString(r.GetOrdinal("StartHour"))
-                        .EndTime = r.GetString(r.GetOrdinal("EndTime"))
-                        .Duration = r.GetInt32(r.GetOrdinal("Duration"))
                     End With
                     Rows.Add(rec)
                 End While

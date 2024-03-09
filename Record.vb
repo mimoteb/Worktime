@@ -6,9 +6,6 @@
     Private _StartTimeStamp As DateTime
     Private _EndTimeStamp As DateTime
 
-    Private _TimeStart As String = Nothing
-    Private _TimeEnd As String = Nothing
-
     Private _Duration As Integer
     Public Property StartTimeStamp As DateTime
         Get
@@ -26,32 +23,11 @@
             _EndTimeStamp = value
         End Set
     End Property
-    Public Property TimeStart As String
+    Public ReadOnly Property Duration As Integer
         Get
-            Return _TimeStart
+            _Duration = (_EndTimeStamp - _StartTimeStamp).TotalMinutes
+            Return _Duration
         End Get
-        Set(value As String)
-
-        End Set
-    End Property
-    Public Property EndTime As String
-        Get
-            Return _endTime
-        End Get
-        Set(value As String)
-            _endTime = value
-            If value.Contains(":") Then
-                'update self duration variable's value
-                Dim HourStart As Integer = CInt(StartTime.Split(":")(0))
-                Dim MinuteStart As Integer = CInt(StartTime.Split(":")(1))
-                Dim HourEnd As Integer = CInt(value.Split(":")(0))
-                Dim MinuteEnd As Integer = CInt(value.Split(":")(1))
-                Dim tstart As New DateTime(1, 1, 1, HourStart, MinuteStart, 0)
-                Dim tend As New DateTime(1, 1, 1, HourEnd, MinuteEnd, 0)
-                Duration = (tend - tstart).TotalMinutes
-            End If
-
-        End Set
     End Property
 End Class
 'Public Class C

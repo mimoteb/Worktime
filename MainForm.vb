@@ -153,9 +153,6 @@ Public Class MainForm
         Dim r As New Record()
         With r
             .User = 2
-            .tsStart = Nothing
-            .tsEnd = Nothing
-            .Duration = CalculateDuration()
             '.Timestamp = dgv
         End With
     End Sub
@@ -207,10 +204,6 @@ Public Class MainForm
                     With rec
                         .ID = r.GetInt32(r.GetOrdinal("id"))
                         .User = r.GetInt32(r.GetOrdinal("User"))
-                        .DayDate = r.GetString(r.GetOrdinal("DayDate"))
-                        .StartTime = r.GetString(r.GetOrdinal("StartTime"))
-                        .EndTime = r.GetString(r.GetOrdinal("EndTime"))
-                        .Duration = r.GetInt32(r.GetOrdinal("Duration"))
                     End With
                     Rows.Add(rec)
                 End While
