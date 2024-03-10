@@ -30,23 +30,10 @@ Public Class MainForm
     Private Sub mnuExit_Click(sender As Object, e As EventArgs) Handles mnuExit.Click
         Application.Exit()
     End Sub
-#End Region
-
-
-
-
-    Private Sub MakeBindings()
-
-        My.Settings.Reload()
-        mnuDisplaySaturdays.Checked = My.Settings.mnuDisplaySaturdays
-        mnuDisplaySundays.Checked = My.Settings.mnuDisplaySundays
-        HourStart.DataBindings.Add("Value", My.Settings, "HourStart", False, DataSourceUpdateMode.OnPropertyChanged)
-        HourEnd.DataBindings.Add("Value", My.Settings, "HourEnd", False, DataSourceUpdateMode.OnPropertyChanged)
-        MinuteStart.DataBindings.Add("Value", My.Settings, "MinuteStart", DataSourceUpdateMode.OnPropertyChanged)
-        MinuteEnd.DataBindings.Add("Value", My.Settings, "MinuteEnd", DataSourceUpdateMode.OnPropertyChanged)
-        dtp.DataBindings.Add("Value", My.Settings, "dtpValue", DataSourceUpdateMode.OnPropertyChanged)
-        dgRec.DataSource = New List(Of Record)
+    Private Sub dtp_ValueChanged(sender As Object, e As EventArgs) Handles dtp.ValueChanged
+        If dtp.Value.ToString("yyyy.MM") <> ViewingMonth Then UpdateCalendar()
     End Sub
+#End Region
 
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
@@ -70,6 +57,21 @@ Public Class MainForm
 
         lbl_status.Text = $"Database: {My.Settings.ConnectionString}"
     End Sub
+
+
+#Region "Functions"
+    Private Sub MakeBindings()
+
+        My.Settings.Reload()
+        mnuDisplaySaturdays.Checked = My.Settings.mnuDisplaySaturdays
+        mnuDisplaySundays.Checked = My.Settings.mnuDisplaySundays
+        HourStart.DataBindings.Add("Value", My.Settings, "HourStart", False, DataSourceUpdateMode.OnPropertyChanged)
+        HourEnd.DataBindings.Add("Value", My.Settings, "HourEnd", False, DataSourceUpdateMode.OnPropertyChanged)
+        MinuteStart.DataBindings.Add("Value", My.Settings, "MinuteStart", DataSourceUpdateMode.OnPropertyChanged)
+        MinuteEnd.DataBindings.Add("Value", My.Settings, "MinuteEnd", DataSourceUpdateMode.OnPropertyChanged)
+        dtp.DataBindings.Add("Value", My.Settings, "dtpValue", DataSourceUpdateMode.OnPropertyChanged)
+        dgRec.DataSource = New List(Of Record)
+    End Sub
     Private Sub UpdateCalendar()
         ' store the selected item so it will selected again after cleraning the rows
         dgCal.Rows.Clear()
@@ -91,25 +93,32 @@ Public Class MainForm
             dgCal.Rows(0).Selected = True
         End If
     End Sub
+#End Region
 
-    Private Sub dgCal_Events(sender As Object, e As EventArgs) Handles dgCal.Click, dgCal.KeyUp, dgCal.SelectionChanged
-        If dgCal.SelectedRows.Count > 0 AndAlso dgCal.SelectedRows.Count > 0 Then
-            Dim row As DataGridViewRow = dgCal.SelectedRows(0)
-            Dim strDate = Convert.ToDateTime(row.Cells("clnDate").Value).ToString("dddd, dd MMMM yyyy")
+#Region "Menu"
+    Private Sub OpenDatabaeToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OpenDatabaeToolStripMenuItem.Click
+        ofd.Multiselect = False
+        ofd.ShowDialog()
 
-            lblSelectedDay.Text = $"Add Records to: {strDate}"
-            lblSelectedDay.BackColor = row.DefaultCellStyle.BackColor
+        If IO.File.Exists(ofd.FileName) Then
+            My.Settings.ConnectionString = ofd.FileName
+            lbl_status.Text = $"Database: {My.Settings.ConnectionString}"
+            ofd.FileName = My.Settings.ConnectionString
 
-            Dim curDate As String = dgCal.SelectedRows(0).Cells("clnDate").Value
-            Dim dt As DateTime = DateTime.ParseExact(curDate, DateFormat, CultureInfo.InvariantCulture)
-            Dim Rows As List(Of Record) = GetDayRecord(dt)
-            ShowRecordsInDgRec(Rows)
+            My.Settings.ConnectionString = ofd.FileName
+        Else
+            MsgBox("Error wrong file", MsgBoxStyle.Critical)
         End If
     End Sub
-    Private Sub dtp_ValueChanged(sender As Object, e As EventArgs) Handles dtp.ValueChanged
-        If dtp.Value.ToString("yyyy.MM") <> ViewingMonth Then UpdateCalendar()
+
+    Private Sub TestToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TestToolStripMenuItem.Click
+        dgRec.Rows(0).Cells(4).Value = "11:12"
+
     End Sub
 
+#End Region
+
+#Region "Buttons"
     Private Sub AddRecordbtn_Click(sender As Object, e As EventArgs) Handles AddRecordbtn.Click
         'If dgCal.SelectedRows.Count > 0 Then
         '    AddForm.Usertxt.Text = uid
@@ -135,27 +144,23 @@ Public Class MainForm
         End If
 
     End Sub
-#Region "Menu"
-    Private Sub OpenDatabaeToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OpenDatabaeToolStripMenuItem.Click
-        ofd.Multiselect = False
-        ofd.ShowDialog()
+#End Region
 
-        If IO.File.Exists(ofd.FileName) Then
-            My.Settings.ConnectionString = ofd.FileName
-            lbl_status.Text = $"Database: {My.Settings.ConnectionString}"
-            ofd.FileName = My.Settings.ConnectionString
+#Region "DG-Cal"
+    Private Sub dgCal_Events(sender As Object, e As EventArgs) Handles dgCal.Click, dgCal.KeyUp, dgCal.SelectionChanged
+        If dgCal.SelectedRows.Count > 0 AndAlso dgCal.SelectedRows.Count > 0 Then
+            Dim row As DataGridViewRow = dgCal.SelectedRows(0)
+            Dim strDate = Convert.ToDateTime(row.Cells("clnDate").Value).ToString("dddd, dd MMMM yyyy")
 
-            My.Settings.ConnectionString = ofd.FileName
-        Else
-            MsgBox("Error wrong file", MsgBoxStyle.Critical)
+            lblSelectedDay.Text = $"Add Records to: {strDate}"
+            lblSelectedDay.BackColor = row.DefaultCellStyle.BackColor
+
+            Dim curDate As String = dgCal.SelectedRows(0).Cells("clnDate").Value
+            Dim dt As DateTime = DateTime.ParseExact(curDate, DateFormat, CultureInfo.InvariantCulture)
+            Dim Rows As List(Of Record) = GetDayRecord(dt)
+            ShowRecordsInDgRec(Rows)
         End If
     End Sub
-
-    Private Sub TestToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TestToolStripMenuItem.Click
-        dgRec.Rows(0).Cells(4).Value = "11:12"
-
-    End Sub
-
 #End Region
 
 #Region "DG-RECORD"
