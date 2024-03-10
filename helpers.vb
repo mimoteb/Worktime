@@ -40,7 +40,7 @@ Module helpers
                 .AddWithValue("@ends", r.Ends.ToString(dbFormat))
             End With
             cmd.ExecuteNonQuery()
-
+            Debug.WriteLine($"[Insert] {r.User} - [Start]: {r.Starts.ToString} [Ends]: {r.Ends.ToString}")
         Catch ex As Exception
             MessageBox.Show("Error: " & ex.Message)
         Finally
