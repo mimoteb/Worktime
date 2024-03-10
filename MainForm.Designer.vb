@@ -57,12 +57,23 @@ Partial Class MainForm
         Me.mnuCalc = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuExit = New System.Windows.Forms.ToolStripMenuItem()
         Me.SettingsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.DeleteCurrentWorkToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuDisplaySaturdays = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuDisplaySundays = New System.Windows.Forms.ToolStripMenuItem()
         Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuAbout = New System.Windows.Forms.ToolStripMenuItem()
         Me.TestToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.DeleteCurrentWorkToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.GroupBox3 = New System.Windows.Forms.GroupBox()
+        Me.Button1 = New System.Windows.Forms.Button()
+        Me.NumericUpDown1 = New System.Windows.Forms.NumericUpDown()
+        Me.NumericUpDown2 = New System.Windows.Forms.NumericUpDown()
+        Me.NumericUpDown3 = New System.Windows.Forms.NumericUpDown()
+        Me.NumericUpDown4 = New System.Windows.Forms.NumericUpDown()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.Label9 = New System.Windows.Forms.Label()
+        Me.Label10 = New System.Windows.Forms.Label()
+        Me.Label11 = New System.Windows.Forms.Label()
         CType(Me.dgCal, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.StatusStrip1.SuspendLayout()
         CType(Me.dgRec, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -73,6 +84,11 @@ Partial Class MainForm
         CType(Me.HourStart, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox2.SuspendLayout()
         Me.m.SuspendLayout()
+        Me.GroupBox3.SuspendLayout()
+        CType(Me.NumericUpDown1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.NumericUpDown2, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.NumericUpDown3, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.NumericUpDown4, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'dgCal
@@ -82,7 +98,7 @@ Partial Class MainForm
         Me.dgCal.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.dgCal.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgCal.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.clnDate, Me.clnDayName, Me.clnWorkedHours, Me.clnWorkedHoursInSchool, Me.clnMonthlyIncome})
-        Me.dgCal.Location = New System.Drawing.Point(500, 29)
+        Me.dgCal.Location = New System.Drawing.Point(752, 29)
         Me.dgCal.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.dgCal.MultiSelect = False
         Me.dgCal.Name = "dgCal"
@@ -151,7 +167,7 @@ Partial Class MainForm
         Me.StatusStrip1.Location = New System.Drawing.Point(0, 681)
         Me.StatusStrip1.Name = "StatusStrip1"
         Me.StatusStrip1.Padding = New System.Windows.Forms.Padding(1, 0, 13, 0)
-        Me.StatusStrip1.Size = New System.Drawing.Size(1174, 22)
+        Me.StatusStrip1.Size = New System.Drawing.Size(1316, 22)
         Me.StatusStrip1.TabIndex = 6
         Me.StatusStrip1.Text = "StatusStrip1"
         '
@@ -184,7 +200,7 @@ Partial Class MainForm
         Me.dgRec.Name = "dgRec"
         Me.dgRec.RowHeadersWidth = 45
         Me.dgRec.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgRec.Size = New System.Drawing.Size(480, 194)
+        Me.dgRec.Size = New System.Drawing.Size(731, 194)
         Me.dgRec.TabIndex = 7
         '
         'lblSelectedDay
@@ -218,7 +234,7 @@ Partial Class MainForm
         Me.GroupBox1.Controls.Add(Me.lblSelectedDay)
         Me.GroupBox1.Location = New System.Drawing.Point(13, 231)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(480, 180)
+        Me.GroupBox1.Size = New System.Drawing.Size(363, 180)
         Me.GroupBox1.TabIndex = 12
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Add Worktime"
@@ -310,7 +326,7 @@ Partial Class MainForm
         Me.GroupBox2.Controls.Add(Me.Label1)
         Me.GroupBox2.Location = New System.Drawing.Point(13, 431)
         Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(480, 210)
+        Me.GroupBox2.Size = New System.Drawing.Size(363, 210)
         Me.GroupBox2.TabIndex = 14
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "Statistics"
@@ -348,7 +364,7 @@ Partial Class MainForm
         Me.m.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TeacherLogToolStripMenuItem, Me.SettingsToolStripMenuItem, Me.HelpToolStripMenuItem, Me.TestToolStripMenuItem})
         Me.m.Location = New System.Drawing.Point(0, 0)
         Me.m.Name = "m"
-        Me.m.Size = New System.Drawing.Size(1174, 24)
+        Me.m.Size = New System.Drawing.Size(1316, 24)
         Me.m.TabIndex = 15
         Me.m.Text = "MenuStrip1"
         '
@@ -362,19 +378,19 @@ Partial Class MainForm
         'OpenDatabaeToolStripMenuItem
         '
         Me.OpenDatabaeToolStripMenuItem.Name = "OpenDatabaeToolStripMenuItem"
-        Me.OpenDatabaeToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.OpenDatabaeToolStripMenuItem.Size = New System.Drawing.Size(160, 22)
         Me.OpenDatabaeToolStripMenuItem.Text = "Open Database"
         '
         'mnuCalc
         '
         Me.mnuCalc.Name = "mnuCalc"
-        Me.mnuCalc.Size = New System.Drawing.Size(180, 22)
+        Me.mnuCalc.Size = New System.Drawing.Size(160, 22)
         Me.mnuCalc.Text = "Open Calculator"
         '
         'mnuExit
         '
         Me.mnuExit.Name = "mnuExit"
-        Me.mnuExit.Size = New System.Drawing.Size(180, 22)
+        Me.mnuExit.Size = New System.Drawing.Size(160, 22)
         Me.mnuExit.Text = "Exit"
         '
         'SettingsToolStripMenuItem
@@ -384,16 +400,22 @@ Partial Class MainForm
         Me.SettingsToolStripMenuItem.Size = New System.Drawing.Size(71, 20)
         Me.SettingsToolStripMenuItem.Text = "Functions"
         '
+        'DeleteCurrentWorkToolStripMenuItem
+        '
+        Me.DeleteCurrentWorkToolStripMenuItem.Name = "DeleteCurrentWorkToolStripMenuItem"
+        Me.DeleteCurrentWorkToolStripMenuItem.Size = New System.Drawing.Size(181, 22)
+        Me.DeleteCurrentWorkToolStripMenuItem.Text = "Delete Current Work"
+        '
         'mnuDisplaySaturdays
         '
         Me.mnuDisplaySaturdays.Name = "mnuDisplaySaturdays"
-        Me.mnuDisplaySaturdays.Size = New System.Drawing.Size(157, 22)
+        Me.mnuDisplaySaturdays.Size = New System.Drawing.Size(181, 22)
         Me.mnuDisplaySaturdays.Text = "Show Saturdays"
         '
         'mnuDisplaySundays
         '
         Me.mnuDisplaySundays.Name = "mnuDisplaySundays"
-        Me.mnuDisplaySundays.Size = New System.Drawing.Size(157, 22)
+        Me.mnuDisplaySundays.Size = New System.Drawing.Size(181, 22)
         Me.mnuDisplaySundays.Text = "Show Sundays"
         '
         'HelpToolStripMenuItem
@@ -415,18 +437,122 @@ Partial Class MainForm
         Me.TestToolStripMenuItem.Size = New System.Drawing.Size(39, 20)
         Me.TestToolStripMenuItem.Text = "Test"
         '
-        'DeleteCurrentWorkToolStripMenuItem
+        'GroupBox3
         '
-        Me.DeleteCurrentWorkToolStripMenuItem.Name = "DeleteCurrentWorkToolStripMenuItem"
-        Me.DeleteCurrentWorkToolStripMenuItem.Size = New System.Drawing.Size(181, 22)
-        Me.DeleteCurrentWorkToolStripMenuItem.Text = "Delete Current Work"
+        Me.GroupBox3.Controls.Add(Me.Button1)
+        Me.GroupBox3.Controls.Add(Me.NumericUpDown1)
+        Me.GroupBox3.Controls.Add(Me.NumericUpDown2)
+        Me.GroupBox3.Controls.Add(Me.NumericUpDown3)
+        Me.GroupBox3.Controls.Add(Me.NumericUpDown4)
+        Me.GroupBox3.Controls.Add(Me.Label4)
+        Me.GroupBox3.Controls.Add(Me.Label5)
+        Me.GroupBox3.Controls.Add(Me.Label9)
+        Me.GroupBox3.Controls.Add(Me.Label10)
+        Me.GroupBox3.Controls.Add(Me.Label11)
+        Me.GroupBox3.Location = New System.Drawing.Point(382, 231)
+        Me.GroupBox3.Name = "GroupBox3"
+        Me.GroupBox3.Size = New System.Drawing.Size(363, 180)
+        Me.GroupBox3.TabIndex = 12
+        Me.GroupBox3.TabStop = False
+        Me.GroupBox3.Text = "Update Selected Item"
+        '
+        'Button1
+        '
+        Me.Button1.Location = New System.Drawing.Point(5, 141)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(174, 34)
+        Me.Button1.TabIndex = 17
+        Me.Button1.Text = "Add New Record"
+        Me.Button1.UseVisualStyleBackColor = True
+        '
+        'NumericUpDown1
+        '
+        Me.NumericUpDown1.Location = New System.Drawing.Point(253, 81)
+        Me.NumericUpDown1.Maximum = New Decimal(New Integer() {59, 0, 0, 0})
+        Me.NumericUpDown1.Name = "NumericUpDown1"
+        Me.NumericUpDown1.Size = New System.Drawing.Size(60, 27)
+        Me.NumericUpDown1.TabIndex = 16
+        Me.NumericUpDown1.Value = New Decimal(New Integer() {30, 0, 0, 0})
+        '
+        'NumericUpDown2
+        '
+        Me.NumericUpDown2.Location = New System.Drawing.Point(187, 81)
+        Me.NumericUpDown2.Maximum = New Decimal(New Integer() {23, 0, 0, 0})
+        Me.NumericUpDown2.Name = "NumericUpDown2"
+        Me.NumericUpDown2.Size = New System.Drawing.Size(60, 27)
+        Me.NumericUpDown2.TabIndex = 16
+        Me.NumericUpDown2.Value = New Decimal(New Integer() {9, 0, 0, 0})
+        '
+        'NumericUpDown3
+        '
+        Me.NumericUpDown3.Location = New System.Drawing.Point(88, 81)
+        Me.NumericUpDown3.Maximum = New Decimal(New Integer() {59, 0, 0, 0})
+        Me.NumericUpDown3.Name = "NumericUpDown3"
+        Me.NumericUpDown3.Size = New System.Drawing.Size(60, 27)
+        Me.NumericUpDown3.TabIndex = 16
+        '
+        'NumericUpDown4
+        '
+        Me.NumericUpDown4.Location = New System.Drawing.Point(22, 81)
+        Me.NumericUpDown4.Maximum = New Decimal(New Integer() {23, 0, 0, 0})
+        Me.NumericUpDown4.Name = "NumericUpDown4"
+        Me.NumericUpDown4.Size = New System.Drawing.Size(60, 27)
+        Me.NumericUpDown4.TabIndex = 16
+        Me.NumericUpDown4.Value = Global.Worktime.My.MySettings.Default.HourStart
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(183, 58)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(106, 20)
+        Me.Label4.TabIndex = 15
+        Me.Label4.Text = "Work end time"
+        '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Location = New System.Drawing.Point(154, 83)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(25, 20)
+        Me.Label5.TabIndex = 14
+        Me.Label5.Text = "To"
+        '
+        'Label9
+        '
+        Me.Label9.AutoSize = True
+        Me.Label9.Location = New System.Drawing.Point(18, 58)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(112, 20)
+        Me.Label9.TabIndex = 15
+        Me.Label9.Text = "Work Start time"
+        '
+        'Label10
+        '
+        Me.Label10.AutoSize = True
+        Me.Label10.Location = New System.Drawing.Point(18, 110)
+        Me.Label10.Name = "Label10"
+        Me.Label10.Size = New System.Drawing.Size(338, 20)
+        Me.Label10.TabIndex = 12
+        Me.Label10.Text = "Start: 08:00 End: 09:30 duration 1 Hour 30 Minutes"
+        '
+        'Label11
+        '
+        Me.Label11.AutoSize = True
+        Me.Label11.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label11.Location = New System.Drawing.Point(18, 23)
+        Me.Label11.Name = "Label11"
+        Me.Label11.Size = New System.Drawing.Size(36, 20)
+        Me.Label11.TabIndex = 8
+        Me.Label11.Text = "Day"
         '
         'MainForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 19.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1174, 703)
+        Me.ClientSize = New System.Drawing.Size(1316, 703)
         Me.Controls.Add(Me.GroupBox2)
+        Me.Controls.Add(Me.GroupBox3)
         Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.dtp)
         Me.Controls.Add(Me.dgRec)
@@ -453,6 +579,12 @@ Partial Class MainForm
         Me.GroupBox2.PerformLayout()
         Me.m.ResumeLayout(False)
         Me.m.PerformLayout()
+        Me.GroupBox3.ResumeLayout(False)
+        Me.GroupBox3.PerformLayout()
+        CType(Me.NumericUpDown1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.NumericUpDown2, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.NumericUpDown3, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.NumericUpDown4, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -499,4 +631,15 @@ Partial Class MainForm
     Friend WithEvents OpenDatabaeToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents TestToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents DeleteCurrentWorkToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents GroupBox3 As GroupBox
+    Friend WithEvents Button1 As Button
+    Friend WithEvents NumericUpDown1 As NumericUpDown
+    Friend WithEvents NumericUpDown2 As NumericUpDown
+    Friend WithEvents NumericUpDown3 As NumericUpDown
+    Friend WithEvents NumericUpDown4 As NumericUpDown
+    Friend WithEvents Label4 As Label
+    Friend WithEvents Label5 As Label
+    Friend WithEvents Label9 As Label
+    Friend WithEvents Label10 As Label
+    Friend WithEvents Label11 As Label
 End Class

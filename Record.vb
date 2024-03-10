@@ -54,9 +54,12 @@ Public Class Record
             'End If
         End Set
     End Property
-    Public ReadOnly Property WorkDate As String
+    Public Property WorkDate As String
         Get
             Return _WorkDate
         End Get
+        Set(value As String)
+
+        End Set
     End Property
 End Class
