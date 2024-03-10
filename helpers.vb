@@ -33,12 +33,12 @@ Module helpers
     Sub InsertRecord(r As Record)
         Try
             Connection()
-            Dim query As String = "INSERT INTO record (User,StartTimeStamp,EndTimeStamp) VALUES (@User, @StartTimeStamp, @EndTimeStamp)"
+            Dim query As String = "INSERT INTO record (User,starts,ends) VALUES (@User, @starts, @ends)"
             Dim cmd As New SQLiteCommand(query, conn)
             With cmd.Parameters
                 .AddWithValue("@User", r.User)
-                .AddWithValue("@StartTimeStamp", r.StartTimeStamp)
-                .AddWithValue("@EndTimeStamp", r.EndTimeStamp)
+                .AddWithValue("@starts", r.Starts.ToString(dbFormat))
+                .AddWithValue("@ends", r.Ends.ToString(dbFormat))
             End With
             cmd.ExecuteNonQuery()
 
@@ -54,14 +54,14 @@ Module helpers
         Try
             Connection()
 
-            Dim query As String = "Update record set StartTimeStamp=@StartTimeStamp, EndTimeStamp=@EndTimeStamp where ID=@id and User=@user"
+            Dim query As String = "Update record set starts=@starts, ends=@ends where ID=@id and User=@user"
             Dim cmd As New SQLiteCommand(query, conn)
             '
             With cmd.Parameters
                 .AddWithValue("@ID", r.ID)
                 .AddWithValue("@User", r.User)
-                .AddWithValue("@StartTimeStamp", r.StartTimeStamp)
-                .AddWithValue("@EndTimeStamp", r.EndTimeStamp)
+                .AddWithValue("@starts", r.Starts)
+                .AddWithValue("@ends", r.Ends)
             End With
             cmd.ExecuteNonQuery()
 
@@ -106,8 +106,8 @@ Module helpers
                     With rec
                         .ID = r.GetInt32(r.GetOrdinal("id"))
                         .User = r.GetInt32(r.GetOrdinal("User"))
-                        .StartTimeStamp = r.GetDateTime(r.GetOrdinal("StartTimeStamp"))
-                        .EndTimeStamp = r.GetDateTime(r.GetOrdinal("EndTimeStamp"))
+                        .Starts = r.GetDateTime(r.GetOrdinal("starts"))
+                        .Ends = r.GetDateTime(r.GetOrdinal("ends"))
                     End With
                     Rows.Add(rec)
                 End While
@@ -126,7 +126,7 @@ Module helpers
         Dim Rows As New List(Of Record)
         Try
             Connection()
-            Dim query As String = "SELECT * FROM record WHERE StartTimeStamp LIKE @curDate"
+            Dim query As String = "SELECT * FROM record WHERE starts LIKE @curDate"
 
             Dim cmd As New SQLiteCommand(query, conn)
             cmd.Parameters.AddWithValue("@curDate", "%" & curDate.ToString(DateFormat) & "%")
@@ -137,8 +137,8 @@ Module helpers
                     With Reader
                         rec.ID = .GetInt32(.GetOrdinal("ID"))
                         rec.User = .GetInt32(.GetOrdinal("User"))
-                        rec.StartTimeStamp = .GetDateTime(.GetOrdinal("StartTimeStamp"))
-                        rec.EndTimeStamp = .GetDateTime(.GetOrdinal("EndTimeStamp"))
+                        rec.Starts = .GetDateTime(.GetOrdinal("starts")).ToString(dbFormat)
+                        rec.Ends = .GetDateTime(.GetOrdinal("ends")).ToString(dbFormat)
                     End With
 
                     Rows.Add(rec)

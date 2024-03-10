@@ -122,9 +122,9 @@ Public Class MainForm
             With r
                 .User = UID
                 Dim c As DateTime = DateTime.ParseExact(dgCal.SelectedRows(0).Cells("clnDate").Value, DateFormat, CultureInfo.InvariantCulture)
-                .StartTimeStamp = New DateTime(c.Year, c.Month, c.Day, HourStart.Value, HourEnd.Value, 0)
-                .EndTimeStamp = New DateTime(c.Year, c.Month, c.Day, HourEnd.Value, MinuteEnd.Value, 0)
-                Dim duration As Integer = (SelectedEnd - SelectedStart).TotalMinutes
+                .starts = New DateTime(c.Year, c.Month, c.Day, HourStart.Value, HourEnd.Value, 0)
+                .ends = New DateTime(c.Year, c.Month, c.Day, HourEnd.Value, MinuteEnd.Value, 0)
+                Dim duration As Integer = (.ends - .starts).TotalMinutes
 
                 ''Start: 08:00 End: 09:30 duration 1 Hour 30 Minutes
                 InsertConfirmLabel.Text = $"Start: {HourStart.Value}:{MinuteStart.Value} End: {HourEnd.Value}:{MinuteEnd.Value} Duration {FormatTimeDifference(duration)}"
@@ -164,8 +164,8 @@ Public Class MainForm
                 With rec
                     .ID = r.GetInt32(r.GetOrdinal("id"))
                     .User = r.GetInt32(r.GetOrdinal("User"))
-                    .StartTimeStamp = r.GetDateTime(r.GetOrdinal("StartTimeStamp"))
-                    .EndTimeStamp = r.GetDateTime(r.GetOrdinal("EndTimeStamp"))
+                    .starts = r.GetDateTime(r.GetOrdinal("starts"))
+                    .ends = r.GetDateTime(r.GetOrdinal("ends"))
                 End With
                 Rows.Add(rec)
             End While
@@ -174,22 +174,26 @@ Public Class MainForm
 
     End Sub
 
-    Private Sub dgCal_Events(sender As Object, e As EventArgs) Handles dgCal.Click, dgCal.KeyUp
+    Private Sub dgCal_Events(sender As Object, e As EventArgs) Handles dgCal.Click, dgCal.KeyUp, dgCal.CellContentClick
         If dgCal.SelectedRows.Count > 0 AndAlso dgCal.SelectedRows.Count > 0 Then
-            Dim r As New DataGridViewRow
             Dim curDate As String = dgCal.SelectedRows(0).Cells("clnDate").Value
             Dim dt As DateTime = DateTime.ParseExact(curDate, DateFormat, CultureInfo.InvariantCulture)
             Dim Rows As List(Of Record) = GetDayRecord(dt)
             dgRec.DataSource = Rows
-            dgRec.Columns("ID").Visible = False
-            dgRec.Columns("User").Visible = False
         End If
     End Sub
+    Private Sub dgRec_CellFormatting(sender As Object, e As DataGridViewCellFormattingEventArgs) Handles dgRec.CellFormatting
+        If e.ColumnIndex >= 0 AndAlso e.RowIndex >= 0 Then
+            Dim columnName As String = dgRec.Columns(e.ColumnIndex).Name
 
-
-    Private Sub dgCal_SelectionChanged(sender As Object, e As EventArgs) Handles dgCal.SelectionChanged
-        If dgCal.SelectedRows.Count > 0 Then
-
+            If columnName = "Starts" OrElse columnName = "Ends" Then
+                ' Check if the cell value is a DateTime
+                If TypeOf e.Value Is DateTime Then
+                    ' Format the DateTime value
+                    e.Value = DirectCast(e.Value, DateTime).ToString(dbFormat)
+                    e.FormattingApplied = True
+                End If
+            End If
         End If
     End Sub
 End Class

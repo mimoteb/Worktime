@@ -3,30 +3,22 @@
     Public Property ID As Integer
     Public Property User As Integer = 2 ' 2 is for developer
 
-    Private _StartTimeStamp As DateTime
-    Private _EndTimeStamp As DateTime
-
-    Private _Duration As Integer
-    Public Property StartTimeStamp As DateTime
+    Private _Starts As DateTime
+    Private _Ends As DateTime
+    Public Property Starts As DateTime
         Get
-            Return _StartTimeStamp
+            Return _Starts
         End Get
         Set(value As DateTime)
-            _StartTimeStamp = value
+            _Starts = value
         End Set
     End Property
-    Public Property EndTimeStamp As DateTime
+    Public Property Ends As DateTime
         Get
-            Return _EndTimeStamp
+            Return _Ends
         End Get
         Set(value As DateTime)
-            _EndTimeStamp = value
+            _Ends = value
         End Set
-    End Property
-    Public ReadOnly Property Duration As Integer
-        Get
-            _Duration = (_EndTimeStamp - _StartTimeStamp).TotalMinutes
-            Return _Duration
-        End Get
     End Property
 End Class

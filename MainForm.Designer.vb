@@ -42,6 +42,7 @@ Partial Class MainForm
         Me.MinuteEnd = New System.Windows.Forms.NumericUpDown()
         Me.HourEnd = New System.Windows.Forms.NumericUpDown()
         Me.MinuteStart = New System.Windows.Forms.NumericUpDown()
+        Me.HourStart = New System.Windows.Forms.NumericUpDown()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
@@ -61,7 +62,6 @@ Partial Class MainForm
         Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuAbout = New System.Windows.Forms.ToolStripMenuItem()
         Me.TestToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.HourStart = New System.Windows.Forms.NumericUpDown()
         CType(Me.dgCal, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.StatusStrip1.SuspendLayout()
         CType(Me.dgRec, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -69,9 +69,9 @@ Partial Class MainForm
         CType(Me.MinuteEnd, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.HourEnd, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.MinuteStart, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.HourStart, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox2.SuspendLayout()
         Me.m.SuspendLayout()
-        CType(Me.HourStart, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'dgCal
@@ -257,6 +257,15 @@ Partial Class MainForm
         Me.MinuteStart.Size = New System.Drawing.Size(60, 27)
         Me.MinuteStart.TabIndex = 16
         '
+        'HourStart
+        '
+        Me.HourStart.Location = New System.Drawing.Point(22, 81)
+        Me.HourStart.Maximum = New Decimal(New Integer() {23, 0, 0, 0})
+        Me.HourStart.Name = "HourStart"
+        Me.HourStart.Size = New System.Drawing.Size(60, 27)
+        Me.HourStart.TabIndex = 16
+        Me.HourStart.Value = Global.Worktime.My.MySettings.Default.HourStart
+        '
         'Label6
         '
         Me.Label6.AutoSize = True
@@ -405,15 +414,6 @@ Partial Class MainForm
         Me.TestToolStripMenuItem.Size = New System.Drawing.Size(39, 20)
         Me.TestToolStripMenuItem.Text = "Test"
         '
-        'HourStart
-        '
-        Me.HourStart.Location = New System.Drawing.Point(22, 81)
-        Me.HourStart.Maximum = New Decimal(New Integer() {23, 0, 0, 0})
-        Me.HourStart.Name = "HourStart"
-        Me.HourStart.Size = New System.Drawing.Size(60, 27)
-        Me.HourStart.TabIndex = 16
-        Me.HourStart.Value = Global.Worktime.My.MySettings.Default.HourStart
-        '
         'MainForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 19.0!)
@@ -441,11 +441,11 @@ Partial Class MainForm
         CType(Me.MinuteEnd, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.HourEnd, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.MinuteStart, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.HourStart, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox2.ResumeLayout(False)
         Me.GroupBox2.PerformLayout()
         Me.m.ResumeLayout(False)
         Me.m.PerformLayout()
-        CType(Me.HourStart, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
