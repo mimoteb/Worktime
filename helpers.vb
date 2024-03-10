@@ -28,7 +28,7 @@ Module helpers
             conn.Close()
         End If
     End Sub
-    ' Insert a new record
+    ' Insert a new record 
     Sub InsertRecord(r As Record)
         Try
             Connection()
