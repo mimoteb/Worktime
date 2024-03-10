@@ -81,14 +81,14 @@ Partial Class MainForm
         Me.dgCal.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.dgCal.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgCal.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.clnDate, Me.clnDayName, Me.clnWorkedHours, Me.clnWorkedHoursInSchool, Me.clnMonthlyIncome})
-        Me.dgCal.Location = New System.Drawing.Point(13, 27)
+        Me.dgCal.Location = New System.Drawing.Point(500, 29)
         Me.dgCal.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.dgCal.MultiSelect = False
         Me.dgCal.Name = "dgCal"
         Me.dgCal.ReadOnly = True
         Me.dgCal.RowHeadersWidth = 45
         Me.dgCal.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgCal.Size = New System.Drawing.Size(556, 612)
+        Me.dgCal.Size = New System.Drawing.Size(556, 625)
         Me.dgCal.TabIndex = 0
         '
         'clnDate
@@ -150,7 +150,7 @@ Partial Class MainForm
         Me.StatusStrip1.Location = New System.Drawing.Point(0, 681)
         Me.StatusStrip1.Name = "StatusStrip1"
         Me.StatusStrip1.Padding = New System.Windows.Forms.Padding(1, 0, 13, 0)
-        Me.StatusStrip1.Size = New System.Drawing.Size(1095, 22)
+        Me.StatusStrip1.Size = New System.Drawing.Size(1934, 22)
         Me.StatusStrip1.TabIndex = 6
         Me.StatusStrip1.Text = "StatusStrip1"
         '
@@ -177,7 +177,7 @@ Partial Class MainForm
         Me.dgRec.AllowUserToAddRows = False
         Me.dgRec.AllowUserToDeleteRows = False
         Me.dgRec.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgRec.Location = New System.Drawing.Point(577, 29)
+        Me.dgRec.Location = New System.Drawing.Point(13, 29)
         Me.dgRec.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.dgRec.MultiSelect = False
         Me.dgRec.Name = "dgRec"
@@ -215,7 +215,7 @@ Partial Class MainForm
         Me.GroupBox1.Controls.Add(Me.Label3)
         Me.GroupBox1.Controls.Add(Me.InsertConfirmLabel)
         Me.GroupBox1.Controls.Add(Me.lblSelectedDay)
-        Me.GroupBox1.Location = New System.Drawing.Point(577, 231)
+        Me.GroupBox1.Location = New System.Drawing.Point(13, 231)
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.Size = New System.Drawing.Size(480, 180)
         Me.GroupBox1.TabIndex = 12
@@ -226,9 +226,9 @@ Partial Class MainForm
         '
         Me.AddRecordbtn.Location = New System.Drawing.Point(5, 141)
         Me.AddRecordbtn.Name = "AddRecordbtn"
-        Me.AddRecordbtn.Size = New System.Drawing.Size(308, 34)
+        Me.AddRecordbtn.Size = New System.Drawing.Size(174, 34)
         Me.AddRecordbtn.TabIndex = 17
-        Me.AddRecordbtn.Text = "Add"
+        Me.AddRecordbtn.Text = "Add New Record"
         Me.AddRecordbtn.UseVisualStyleBackColor = True
         '
         'MinuteEnd
@@ -307,9 +307,9 @@ Partial Class MainForm
         Me.GroupBox2.Controls.Add(Me.Label8)
         Me.GroupBox2.Controls.Add(Me.Label7)
         Me.GroupBox2.Controls.Add(Me.Label1)
-        Me.GroupBox2.Location = New System.Drawing.Point(577, 431)
+        Me.GroupBox2.Location = New System.Drawing.Point(13, 431)
         Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(480, 223)
+        Me.GroupBox2.Size = New System.Drawing.Size(480, 210)
         Me.GroupBox2.TabIndex = 14
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "Statistics"
@@ -347,7 +347,7 @@ Partial Class MainForm
         Me.m.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TeacherLogToolStripMenuItem, Me.SettingsToolStripMenuItem, Me.HelpToolStripMenuItem, Me.TestToolStripMenuItem})
         Me.m.Location = New System.Drawing.Point(0, 0)
         Me.m.Name = "m"
-        Me.m.Size = New System.Drawing.Size(1095, 24)
+        Me.m.Size = New System.Drawing.Size(1934, 24)
         Me.m.TabIndex = 15
         Me.m.Text = "MenuStrip1"
         '
@@ -418,7 +418,7 @@ Partial Class MainForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 19.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1095, 703)
+        Me.ClientSize = New System.Drawing.Size(1934, 703)
         Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.dtp)

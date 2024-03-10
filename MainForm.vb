@@ -22,7 +22,6 @@ Public Class MainForm
     Private Sub MainForm_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
         My.Settings.mnuDisplaySaturdays = mnuDisplaySaturdays.Checked
         My.Settings.mnuDisplaySundays = mnuDisplaySundays.Checked
-        My.Settings.UID = UID
         My.Settings.Save()
     End Sub
 
@@ -45,9 +44,8 @@ Public Class MainForm
         End If
     End Sub
 
+    Private Sub MakeBindings()
 
-    Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        ' Load settings
         My.Settings.Reload()
         mnuDisplaySaturdays.Checked = My.Settings.mnuDisplaySaturdays
         mnuDisplaySundays.Checked = My.Settings.mnuDisplaySundays
@@ -56,7 +54,14 @@ Public Class MainForm
         MinuteStart.DataBindings.Add("Value", My.Settings, "MinuteStart", DataSourceUpdateMode.OnPropertyChanged)
         MinuteEnd.DataBindings.Add("Value", My.Settings, "MinuteEnd", DataSourceUpdateMode.OnPropertyChanged)
         dtp.DataBindings.Add("Value", My.Settings, "dtpValue", DataSourceUpdateMode.OnPropertyChanged)
-        ' Check for updates
+    End Sub
+    Private Sub CheckForUpdates()
+
+    End Sub
+    Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        MakeBindings() ' Load settings and Make Bindings
+        CheckForUpdates() ' Check for updates
+
         Try
             dtp.Value = My.Settings.dtpValue
         Catch ex As Exception
@@ -91,19 +96,29 @@ Public Class MainForm
             curDate = curDate.AddDays(1)
         End While
         ViewingMonth = dtp.Value.ToString("yyyy.MM")
+        If dgCal.Rows.Count > 0 AndAlso dgCal.SelectedRows.Count = 0 Then
+            dgCal.Rows(0).Selected = True
+        End If
     End Sub
 
-    Private Sub dgvCalendar_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgCal.CellClick
-        If dgCal.Rows.Count > 0 Then
+    Private Sub dgCal_Events(sender As Object, e As EventArgs) Handles dgCal.Click, dgCal.KeyUp, dgCal.SelectionChanged
+        If dgCal.SelectedRows.Count > 0 AndAlso dgCal.SelectedRows.Count > 0 Then
             Dim row As DataGridViewRow = dgCal.SelectedRows(0)
             Dim strDate = Convert.ToDateTime(row.Cells("clnDate").Value).ToString("dddd, dd MMMM yyyy")
 
             lblSelectedDay.Text = $"Add Records to: {strDate}"
             lblSelectedDay.BackColor = row.DefaultCellStyle.BackColor
+
+            Dim curDate As String = dgCal.SelectedRows(0).Cells("clnDate").Value
+            Dim dt As DateTime = DateTime.ParseExact(curDate, DateFormat, CultureInfo.InvariantCulture)
+            Dim Rows As List(Of Record) = GetDayRecord(dt)
+            dgRec.DataSource = Rows
+            dgRec.Columns("ID").Visible = False
+            dgRec.Columns("User").Visible = False
+            dgRec.Columns("Ends").Visible = False
+            dgRec.Columns("Starts").Visible = False
         End If
-
     End Sub
-
     Private Sub dtp_ValueChanged(sender As Object, e As EventArgs) Handles dtp.ValueChanged
         If dtp.Value.ToString("yyyy.MM") <> ViewingMonth Then UpdateCalendar()
     End Sub
@@ -120,7 +135,7 @@ Public Class MainForm
         If dgCal.SelectedRows.Count > 0 Then
             Dim r As New Record()
             With r
-                .User = UID
+                .User = uid ' Developer
                 Dim c As DateTime = DateTime.ParseExact(dgCal.SelectedRows(0).Cells("clnDate").Value, DateFormat, CultureInfo.InvariantCulture)
                 .starts = New DateTime(c.Year, c.Month, c.Day, HourStart.Value, HourEnd.Value, 0)
                 .ends = New DateTime(c.Year, c.Month, c.Day, HourEnd.Value, MinuteEnd.Value, 0)
@@ -134,7 +149,7 @@ Public Class MainForm
         End If
 
     End Sub
-
+#Region "Menu"
     Private Sub OpenDatabaeToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OpenDatabaeToolStripMenuItem.Click
         ofd.Multiselect = False
         ofd.ShowDialog()
@@ -164,8 +179,8 @@ Public Class MainForm
                 With rec
                     .ID = r.GetInt32(r.GetOrdinal("id"))
                     .User = r.GetInt32(r.GetOrdinal("User"))
-                    .starts = r.GetDateTime(r.GetOrdinal("starts"))
-                    .ends = r.GetDateTime(r.GetOrdinal("ends"))
+                    .Starts = r.GetDateTime(r.GetOrdinal("starts"))
+                    .Ends = r.GetDateTime(r.GetOrdinal("ends"))
                 End With
                 Rows.Add(rec)
             End While
@@ -174,14 +189,9 @@ Public Class MainForm
 
     End Sub
 
-    Private Sub dgCal_Events(sender As Object, e As EventArgs) Handles dgCal.Click, dgCal.KeyUp, dgCal.CellContentClick
-        If dgCal.SelectedRows.Count > 0 AndAlso dgCal.SelectedRows.Count > 0 Then
-            Dim curDate As String = dgCal.SelectedRows(0).Cells("clnDate").Value
-            Dim dt As DateTime = DateTime.ParseExact(curDate, DateFormat, CultureInfo.InvariantCulture)
-            Dim Rows As List(Of Record) = GetDayRecord(dt)
-            dgRec.DataSource = Rows
-        End If
-    End Sub
+#End Region
+
+
     Private Sub dgRec_CellFormatting(sender As Object, e As DataGridViewCellFormattingEventArgs) Handles dgRec.CellFormatting
         If e.ColumnIndex >= 0 AndAlso e.RowIndex >= 0 Then
             Dim columnName As String = dgRec.Columns(e.ColumnIndex).Name
