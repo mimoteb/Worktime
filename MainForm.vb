@@ -2,8 +2,9 @@
 Imports System.Globalization
 
 Public Class MainForm
-    Private originalValue As Object
-    Private edited_ID As Integer
+    Private EditedOriginalValue As Object
+    Private EditedID As Integer
+    Private EditedRow As New DataGridViewRow
 
 #Region "Interface"
     Private Sub mnuCalc_Click(sender As Object, e As EventArgs) Handles mnuCalc.Click
@@ -29,20 +30,9 @@ Public Class MainForm
         Application.Exit()
     End Sub
 #End Region
-    Private Sub dgvRecords_CellBeginEdit(sender As Object, e As DataGridViewCellCancelEventArgs) Handles dgCal.CellBeginEdit
-        originalValue = dgCal.Rows(e.RowIndex).Cells(e.ColumnIndex).Value
-        edited_ID = CInt(dgCal.Rows(e.RowIndex).Cells("ID").Value)
-        Debug.WriteLine($"[{edited_ID}] Original Cell Value: {originalValue.ToString()}")
-    End Sub
 
-    Private Sub dgvRecords_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles dgCal.CellEndEdit
-        Dim editedValue = dgCal.Rows(e.RowIndex).Cells(e.ColumnIndex).Value
 
-        If Not Object.Equals(originalValue, editedValue) Then
-            Dim record As Record = dgCal.Rows(e.RowIndex).DataBoundItem
-            UpdateRecord(record)
-        End If
-    End Sub
+
 
     Private Sub MakeBindings()
 
@@ -127,8 +117,6 @@ Public Class MainForm
         HourEnd.ValueChanged, MinuteStart.ValueChanged, MinuteEnd.ValueChanged,
         HourStart.KeyUp, HourEnd.KeyUp, MinuteStart.KeyUp, MinuteEnd.KeyUp
 
-
-
     End Sub
 
     Private Sub AddRecordbtn_Click(sender As Object, e As EventArgs) Handles AddRecordbtn.Click
@@ -191,7 +179,7 @@ Public Class MainForm
 
 #End Region
 
-
+#Region "DG-RECORD"
     Private Sub dgRec_CellFormatting(sender As Object, e As DataGridViewCellFormattingEventArgs) Handles dgRec.CellFormatting
         If e.ColumnIndex >= 0 AndAlso e.RowIndex >= 0 Then
             Dim columnName As String = dgRec.Columns(e.ColumnIndex).Name
@@ -206,4 +194,28 @@ Public Class MainForm
             End If
         End If
     End Sub
+    Private Sub dgRec_CellBeginEdit(sender As Object, e As DataGridViewCellCancelEventArgs) Handles dgRec.CellBeginEdit
+        EditedRow = dgRec.Rows(e.RowIndex)
+        EditedOriginalValue = dgRec.Rows(e.RowIndex).Cells(e.ColumnIndex).Value
+        EditedID = CInt(dgRec.Rows(e.RowIndex).Cells("ID").Value)
+        Debug.WriteLine($"[{EditedID}] Original Cell Value: {EditedOriginalValue.ToString()}")
+        For i As Integer = 0 To EditedRow.Cells.Count - 1
+            Debug.WriteLine($"[{i}]Row-{EditedRow.Cells(i).OwningColumn.Name} : {EditedRow.Cells(i).Value}")
+        Next
+
+    End Sub
+    Private Sub dgRec_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles dgRec.CellEndEdit
+        Debug.WriteLine($"Before: {EditedRow.Cells(e.ColumnIndex).Value}")
+        EditedRow.Cells(e.ColumnIndex).Value = dgCal.Rows(e.RowIndex).Cells(e.ColumnIndex).Value
+        Debug.WriteLine($"After: {EditedRow.Cells(e.ColumnIndex).Value}")
+        'Dim editedValue = dgRec.Rows(e.RowIndex).Cells(e.ColumnIndex).Value
+        'Debug.WriteLine($"[{EditedID}] editedValue: {editedValue}")
+        'If Not Object.Equals(EditedOriginalValue, editedValue) Then
+        '    Dim record As Record = dgRec.Rows(e.RowIndex).DataBoundItem
+
+        '    UpdateRecord(record)
+        'End If
+    End Sub
+#End Region
+
 End Class

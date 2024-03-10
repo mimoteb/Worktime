@@ -35,7 +35,8 @@ Public Class Record
             Return _Started
         End Get
         Set(value As String)
-            Dim tm As DateTime = DateTime.ParseExact(value, TimeFormat, CultureInfo.InvariantCulture)
+            Dim tm As New DateTime
+            tm = DateTime.ParseExact(value, TimeFormat, CultureInfo.InvariantCulture)
             Starts = New DateTime(Starts.Year, Starts.Month, Starts.Day, tm.Hour, tm.Minute, 0)
         End Set
     End Property

@@ -62,6 +62,7 @@ Partial Class MainForm
         Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuAbout = New System.Windows.Forms.ToolStripMenuItem()
         Me.TestToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.DeleteCurrentWorkToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         CType(Me.dgCal, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.StatusStrip1.SuspendLayout()
         CType(Me.dgRec, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -150,7 +151,7 @@ Partial Class MainForm
         Me.StatusStrip1.Location = New System.Drawing.Point(0, 681)
         Me.StatusStrip1.Name = "StatusStrip1"
         Me.StatusStrip1.Padding = New System.Windows.Forms.Padding(1, 0, 13, 0)
-        Me.StatusStrip1.Size = New System.Drawing.Size(1934, 22)
+        Me.StatusStrip1.Size = New System.Drawing.Size(1174, 22)
         Me.StatusStrip1.TabIndex = 6
         Me.StatusStrip1.Text = "StatusStrip1"
         '
@@ -347,7 +348,7 @@ Partial Class MainForm
         Me.m.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TeacherLogToolStripMenuItem, Me.SettingsToolStripMenuItem, Me.HelpToolStripMenuItem, Me.TestToolStripMenuItem})
         Me.m.Location = New System.Drawing.Point(0, 0)
         Me.m.Name = "m"
-        Me.m.Size = New System.Drawing.Size(1934, 24)
+        Me.m.Size = New System.Drawing.Size(1174, 24)
         Me.m.TabIndex = 15
         Me.m.Text = "MenuStrip1"
         '
@@ -355,33 +356,33 @@ Partial Class MainForm
         '
         Me.TeacherLogToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.OpenDatabaeToolStripMenuItem, Me.mnuCalc, Me.mnuExit})
         Me.TeacherLogToolStripMenuItem.Name = "TeacherLogToolStripMenuItem"
-        Me.TeacherLogToolStripMenuItem.Size = New System.Drawing.Size(82, 20)
-        Me.TeacherLogToolStripMenuItem.Text = "Teacher Log"
+        Me.TeacherLogToolStripMenuItem.Size = New System.Drawing.Size(80, 20)
+        Me.TeacherLogToolStripMenuItem.Text = "Application"
         '
         'OpenDatabaeToolStripMenuItem
         '
         Me.OpenDatabaeToolStripMenuItem.Name = "OpenDatabaeToolStripMenuItem"
-        Me.OpenDatabaeToolStripMenuItem.Size = New System.Drawing.Size(154, 22)
+        Me.OpenDatabaeToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.OpenDatabaeToolStripMenuItem.Text = "Open Database"
         '
         'mnuCalc
         '
         Me.mnuCalc.Name = "mnuCalc"
-        Me.mnuCalc.Size = New System.Drawing.Size(154, 22)
-        Me.mnuCalc.Text = "Calculator"
+        Me.mnuCalc.Size = New System.Drawing.Size(180, 22)
+        Me.mnuCalc.Text = "Open Calculator"
         '
         'mnuExit
         '
         Me.mnuExit.Name = "mnuExit"
-        Me.mnuExit.Size = New System.Drawing.Size(154, 22)
+        Me.mnuExit.Size = New System.Drawing.Size(180, 22)
         Me.mnuExit.Text = "Exit"
         '
         'SettingsToolStripMenuItem
         '
-        Me.SettingsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnuDisplaySaturdays, Me.mnuDisplaySundays})
+        Me.SettingsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DeleteCurrentWorkToolStripMenuItem, Me.mnuDisplaySaturdays, Me.mnuDisplaySundays})
         Me.SettingsToolStripMenuItem.Name = "SettingsToolStripMenuItem"
-        Me.SettingsToolStripMenuItem.Size = New System.Drawing.Size(61, 20)
-        Me.SettingsToolStripMenuItem.Text = "Settings"
+        Me.SettingsToolStripMenuItem.Size = New System.Drawing.Size(71, 20)
+        Me.SettingsToolStripMenuItem.Text = "Functions"
         '
         'mnuDisplaySaturdays
         '
@@ -414,11 +415,17 @@ Partial Class MainForm
         Me.TestToolStripMenuItem.Size = New System.Drawing.Size(39, 20)
         Me.TestToolStripMenuItem.Text = "Test"
         '
+        'DeleteCurrentWorkToolStripMenuItem
+        '
+        Me.DeleteCurrentWorkToolStripMenuItem.Name = "DeleteCurrentWorkToolStripMenuItem"
+        Me.DeleteCurrentWorkToolStripMenuItem.Size = New System.Drawing.Size(181, 22)
+        Me.DeleteCurrentWorkToolStripMenuItem.Text = "Delete Current Work"
+        '
         'MainForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 19.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1934, 703)
+        Me.ClientSize = New System.Drawing.Size(1174, 703)
         Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.dtp)
@@ -491,4 +498,5 @@ Partial Class MainForm
     Friend WithEvents mnuExit As ToolStripMenuItem
     Friend WithEvents OpenDatabaeToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents TestToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents DeleteCurrentWorkToolStripMenuItem As ToolStripMenuItem
 End Class
