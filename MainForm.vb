@@ -47,9 +47,7 @@ Public Class MainForm
         dtp.DataBindings.Add("Value", My.Settings, "dtpValue", DataSourceUpdateMode.OnPropertyChanged)
         dgRec.DataSource = New List(Of Record)
     End Sub
-    Private Sub CheckForUpdates()
 
-    End Sub
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         MakeBindings() ' Load settings and Make Bindings
@@ -58,9 +56,9 @@ Public Class MainForm
         Try
             dtp.Value = My.Settings.dtpValue
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Information)
             Try
                 dtp.Value = Now
+                My.Settings.dtpValue = dtp.Value
             Catch exChange As Exception
 
             End Try
@@ -106,33 +104,24 @@ Public Class MainForm
             Dim dt As DateTime = DateTime.ParseExact(curDate, DateFormat, CultureInfo.InvariantCulture)
             Dim Rows As List(Of Record) = GetDayRecord(dt)
             ShowRecordsInDgRec(Rows)
-
-
         End If
     End Sub
     Private Sub dtp_ValueChanged(sender As Object, e As EventArgs) Handles dtp.ValueChanged
         If dtp.Value.ToString("yyyy.MM") <> ViewingMonth Then UpdateCalendar()
     End Sub
 
-    Private Sub Insert_Controls(sender As NumericUpDown, e As EventArgs) Handles HourStart.ValueChanged,
-        HourEnd.ValueChanged, MinuteStart.ValueChanged, MinuteEnd.ValueChanged,
-        HourStart.KeyUp, HourEnd.KeyUp, MinuteStart.KeyUp, MinuteEnd.KeyUp
-
-    End Sub
-
     Private Sub AddRecordbtn_Click(sender As Object, e As EventArgs) Handles AddRecordbtn.Click
-        If dgCal.SelectedRows.Count > 0 Then
-            Dim F As New AddForm
-            F.Usertxt.Text = uid
-            F.Startstxt.Text = dgCal.SelectedRows(0).Cells("clnDate").Value
-            F.ShowDialog()
-        End If
+        'If dgCal.SelectedRows.Count > 0 Then
+        '    AddForm.Usertxt.Text = uid
+        '    AddForm.Startstxt.Text = dgCal.SelectedRows(0).Cells("clnDate").Value
+        '    AddForm.ShowDialog()
+        'End If
 
-        Return
+        'Return
         If dgCal.SelectedRows.Count > 0 Then
             Dim r As New Record()
             With r
-                .User = uid ' Developer
+                .User = uid
                 Dim c As DateTime = DateTime.ParseExact(dgCal.SelectedRows(0).Cells("clnDate").Value, DateFormat, CultureInfo.InvariantCulture)
                 .Starts = New DateTime(c.Year, c.Month, c.Day, HourStart.Value, HourEnd.Value, 0)
                 .Ends = New DateTime(c.Year, c.Month, c.Day, HourEnd.Value, MinuteEnd.Value, 0)

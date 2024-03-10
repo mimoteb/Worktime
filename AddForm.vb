@@ -20,4 +20,9 @@ Public Class AddForm
             e.Handled = True
         End If
     End Sub
+
+    Private Sub AddForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        AddHandler Startedtxt.KeyPress, AddressOf TimeTextBoxes_KeyPress_Events
+        AddHandler Endedtxt.KeyPress, AddressOf TimeTextBoxes_KeyPress_Events
+    End Sub
 End Class

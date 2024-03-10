@@ -219,7 +219,9 @@ Module helpers
         Return $"{HH:D2}:{MM:D2}"
     End Function
 #End Region
+    Public Sub CheckForUpdates()
 
+    End Sub
 End Module
 
 
