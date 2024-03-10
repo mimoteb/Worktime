@@ -161,7 +161,7 @@ Partial Class AddForm
         Me.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.Name = "AddForm"
-        Me.Text = "AddForm"
+        Me.Text = "Add Work Record"
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
