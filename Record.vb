@@ -35,9 +35,11 @@ Public Class Record
             Return _Started
         End Get
         Set(value As String)
-            Dim tm As New DateTime
-            tm = DateTime.ParseExact(value, TimeFormat, CultureInfo.InvariantCulture)
-            Starts = New DateTime(Starts.Year, Starts.Month, Starts.Day, tm.Hour, tm.Minute, 0)
+            'If Not String.IsNullOrEmpty(value) Then
+            '    Dim tm As DateTime = DateTime.ParseExact(value, TimeFormat, CultureInfo.InvariantCulture)
+            '    _Started = tm.ToString(TimeFormat)
+            '    Starts = New DateTime(Starts.Year, Starts.Month, Starts.Day, tm.Hour, tm.Minute, 0)
+            'End If
         End Set
     End Property
     Public Property Ended As String
@@ -45,8 +47,11 @@ Public Class Record
             Return _Ended
         End Get
         Set(value As String)
-            Dim tm As DateTime = DateTime.ParseExact(value, TimeFormat, CultureInfo.InvariantCulture)
-            Ends = New DateTime(Ends.Year, Ends.Month, Ends.Day, tm.Hour, tm.Minute, 0)
+            'If Not String.IsNullOrEmpty(value) Then
+            '    Dim tm As DateTime = DateTime.ParseExact(value, TimeFormat, CultureInfo.InvariantCulture)
+            '    _Started = tm.ToString(TimeFormat)
+            '    Ends = New DateTime(Ends.Year, Ends.Month, Ends.Day, tm.Hour, tm.Minute, 0)
+            'End If
         End Set
     End Property
     Public ReadOnly Property WorkDate As String

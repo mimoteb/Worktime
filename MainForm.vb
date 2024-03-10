@@ -1,5 +1,6 @@
 ﻿Imports System.Data.SQLite
 Imports System.Globalization
+Imports System.Reflection
 
 Public Class MainForm
     Private EditedOriginalValue As Object
@@ -49,6 +50,7 @@ Public Class MainForm
 
     End Sub
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
         MakeBindings() ' Load settings and Make Bindings
         CheckForUpdates() ' Check for updates
 
@@ -103,10 +105,14 @@ Public Class MainForm
             Dim dt As DateTime = DateTime.ParseExact(curDate, DateFormat, CultureInfo.InvariantCulture)
             Dim Rows As List(Of Record) = GetDayRecord(dt)
             dgRec.DataSource = Rows
-            dgRec.Columns("ID").Visible = False
-            dgRec.Columns("User").Visible = False
-            dgRec.Columns("Ends").Visible = False
-            dgRec.Columns("Starts").Visible = False
+            With dgRec.Columns
+                '.Item("ID").Visible = False
+                '.Item("User").Visible = False
+                .Item("Starts").DefaultCellStyle.Format = dbFormat
+                '.Item("Starts").Visible = False
+                .Item("Ends").DefaultCellStyle.Format = dbFormat
+                '.Item("Ends").Visible = False
+            End With
         End If
     End Sub
     Private Sub dtp_ValueChanged(sender As Object, e As EventArgs) Handles dtp.ValueChanged
@@ -125,8 +131,8 @@ Public Class MainForm
             With r
                 .User = uid ' Developer
                 Dim c As DateTime = DateTime.ParseExact(dgCal.SelectedRows(0).Cells("clnDate").Value, DateFormat, CultureInfo.InvariantCulture)
-                .starts = New DateTime(c.Year, c.Month, c.Day, HourStart.Value, HourEnd.Value, 0)
-                .ends = New DateTime(c.Year, c.Month, c.Day, HourEnd.Value, MinuteEnd.Value, 0)
+                .Starts = New DateTime(c.Year, c.Month, c.Day, HourStart.Value, HourEnd.Value, 0)
+                .Ends = New DateTime(c.Year, c.Month, c.Day, HourEnd.Value, MinuteEnd.Value, 0)
                 Dim duration As Integer = (.ends - .starts).TotalMinutes
 
                 ''Start: 08:00 End: 09:30 duration 1 Hour 30 Minutes
@@ -180,41 +186,42 @@ Public Class MainForm
 #End Region
 
 #Region "DG-RECORD"
-    Private Sub dgRec_CellFormatting(sender As Object, e As DataGridViewCellFormattingEventArgs) Handles dgRec.CellFormatting
-        If e.ColumnIndex >= 0 AndAlso e.RowIndex >= 0 Then
-            Dim columnName As String = dgRec.Columns(e.ColumnIndex).Name
-
-            If columnName = "Starts" OrElse columnName = "Ends" Then
-                ' Check if the cell value is a DateTime
-                If TypeOf e.Value Is DateTime Then
-                    ' Format the DateTime value
-                    e.Value = DirectCast(e.Value, DateTime).ToString(dbFormat)
-                    e.FormattingApplied = True
-                End If
-            End If
-        End If
-    End Sub
     Private Sub dgRec_CellBeginEdit(sender As Object, e As DataGridViewCellCancelEventArgs) Handles dgRec.CellBeginEdit
+        Dim row As New DataGridViewRow
         EditedRow = dgRec.Rows(e.RowIndex)
-        EditedOriginalValue = dgRec.Rows(e.RowIndex).Cells(e.ColumnIndex).Value
-        EditedID = CInt(dgRec.Rows(e.RowIndex).Cells("ID").Value)
-        Debug.WriteLine($"[{EditedID}] Original Cell Value: {EditedOriginalValue.ToString()}")
-        For i As Integer = 0 To EditedRow.Cells.Count - 1
-            Debug.WriteLine($"[{i}]Row-{EditedRow.Cells(i).OwningColumn.Name} : {EditedRow.Cells(i).Value}")
-        Next
+        'EditedRow = dgRec.Rows(e.RowIndex)
+        Dim msg As String = "Before - "
 
+        For i As Integer = 0 To EditedRow.Cells.Count - 1
+            msg &= "[" & i & "] " & EditedRow.Cells(i).OwningColumn.Name & ": " & EditedRow.Cells(i).Value & " "
+        Next
+        Debug.WriteLine(msg)
     End Sub
     Private Sub dgRec_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles dgRec.CellEndEdit
-        Debug.WriteLine($"Before: {EditedRow.Cells(e.ColumnIndex).Value}")
-        EditedRow.Cells(e.ColumnIndex).Value = dgCal.Rows(e.RowIndex).Cells(e.ColumnIndex).Value
-        Debug.WriteLine($"After: {EditedRow.Cells(e.ColumnIndex).Value}")
-        'Dim editedValue = dgRec.Rows(e.RowIndex).Cells(e.ColumnIndex).Value
-        'Debug.WriteLine($"[{EditedID}] editedValue: {editedValue}")
-        'If Not Object.Equals(EditedOriginalValue, editedValue) Then
-        '    Dim record As Record = dgRec.Rows(e.RowIndex).DataBoundItem
+        EditedRow.Cells(e.ColumnIndex).Value = dgRec.Rows(e.RowIndex).Cells(e.ColumnIndex).Value
+        Dim dtStarted As DateTime = Date.ParseExact(EditedRow.Cells("Started").Value, TimeFormat, CultureInfo.InvariantCulture)
+        Dim dtEnded As DateTime = Date.ParseExact(EditedRow.Cells("Ended").Value, TimeFormat, CultureInfo.InvariantCulture)
 
-        '    UpdateRecord(record)
-        'End If
+        Dim dtStarts As DateTime = Date.ParseExact(EditedRow.Cells("Starts").Value, dbFormat, CultureInfo.InvariantCulture)
+        Dim dtEnds As DateTime = Date.ParseExact(EditedRow.Cells("Ends").Value, dbFormat, CultureInfo.InvariantCulture)
+
+        Dim record As New Record
+        record.ID = EditedRow.Cells("ID").Value
+        record.User = uid
+        With dtStarts
+            record.Starts = New Date(.Year, .Month, .Day, dtStarted.Hour, dtStarted.Minute, 0)
+        End With
+        With dtEnds
+            record.Ends = New Date(.Year, .Month, .Day, dtEnded.Hour, dtEnded.Minute, 0)
+        End With
+
+        Dim msg As String = "After - "
+
+        For i As Integer = 0 To EditedRow.Cells.Count - 1
+            msg &= "[" & i & "] " & EditedRow.Cells(i).OwningColumn.Name & ": " & EditedRow.Cells(i).Value & " "
+        Next
+        Debug.WriteLine(msg)
+        UpdateRecord(record)
     End Sub
 #End Region
 

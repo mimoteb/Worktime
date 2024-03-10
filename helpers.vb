@@ -136,8 +136,8 @@ Module helpers
                     With Reader
                         rec.ID = .GetInt32(.GetOrdinal("ID"))
                         rec.User = .GetInt32(.GetOrdinal("User"))
-                        rec.Starts = .GetDateTime(.GetOrdinal("starts")).ToString(dbFormat)
-                        rec.Ends = .GetDateTime(.GetOrdinal("ends")).ToString(dbFormat)
+                        rec.Starts = .GetDateTime(.GetOrdinal("starts"))
+                        rec.Ends = .GetDateTime(.GetOrdinal("ends"))
                     End With
 
                     Rows.Add(rec)
