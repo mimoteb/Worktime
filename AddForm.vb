@@ -25,4 +25,5 @@ Public Class AddForm
         AddHandler Startedtxt.KeyPress, AddressOf TimeTextBoxes_KeyPress_Events
         AddHandler Endedtxt.KeyPress, AddressOf TimeTextBoxes_KeyPress_Events
     End Sub
+
 End Class
